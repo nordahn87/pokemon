@@ -1,4 +1,28 @@
 .player-pokemon {
     image-rendering: pixelated;
-    width: 250px;
+    width: 280px;
+}
+
+.action-button {
+    font-size: 14px;
+    color: black;
+}
+
+.player-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-action {
+    background-color: white;
+    padding: 10px;
+}
+
+button {
+    border: solid 2px black;
+    background-color: red;
+    padding: 10px;
+    text-transform: capitalize;
+    font-size: 1rem;
+    cursor: pointer;
 }
