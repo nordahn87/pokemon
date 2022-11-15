@@ -1,5 +1,5 @@
 import {FC} from "react";
-import './Arena.css'
+import './Arena.scss'
 
 interface ArenaProps {
     children: JSX.Element[] | JSX.Element

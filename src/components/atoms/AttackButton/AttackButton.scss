@@ -1,0 +1,11 @@
+@import "./src/styles/helpers/all.scss";
+
+button {
+  @include clean-button;
+  border: solid 2px black;
+  background-color: #de8282;
+  color: black;
+  width: 180px;
+  padding: 10px;
+  text-transform: capitalize;
+}
