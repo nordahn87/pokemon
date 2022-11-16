@@ -1,8 +1,8 @@
 import React from 'react';
 import "../src/styles/global/main.scss";
-import PA_Player from "./components/molecules/player/Player.component";
-import PA_Opponent from "./components/molecules/opponent/Opponent.component";
-import PA_Arena from "./components/organisms/arena/Arena.component";
+import PA_Player from "./components/molecules/pokemons/Player/Player.component";
+import PA_Opponent from "./components/molecules/pokemons/Opponent/Opponent.component";
+import PA_Arena from "./components/organisms/Arena/Arena.component";
 
 function App() {
   return (

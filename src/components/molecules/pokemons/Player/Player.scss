@@ -1,0 +1,14 @@
+.player-pokemon {
+    position: absolute;
+    bottom: -160px;
+    image-rendering: pixelated;
+    width: 450px;
+}
+
+.player-container {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    height: 400px;
+}

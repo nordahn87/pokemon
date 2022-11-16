@@ -1,7 +1,8 @@
 import {FC, useEffect, useState} from "react";
-import {API_BASE_URL, ENDPOINT_PLAYER} from "../../../constants/baseUrls";
-import {PA_API} from "../../../interface/api";
-import PA_AttackButton from "../../atoms/AttackButton/AttackButton.component";
+import {API_BASE_URL} from "../../../../constants/baseUrls";
+import {ENDPOINT_PLAYER} from "../../../../constants/endpoints";
+import {PA_API} from "../../../../interface/api";
+import PA_PlayerAction from "../../actions/PlayerAction/PlayerAction.component";
 import './Player.scss'
 
 const PA_Player:FC = () => {
@@ -22,9 +23,12 @@ const PA_Player:FC = () => {
 
 
     return (
-        <div className="player-section">
-            <img className="player-pokemon" src={playerData.sprites?.back_default} alt={playerData.species?.name} />
-            <PA_AttackButton />
+
+        <div>
+            <div className="player-container">
+                <img className="player-pokemon" src={playerData.sprites?.back_default} alt={playerData.species?.name} />
+            </div>
+            <PA_PlayerAction />
         </div>
     );
 };

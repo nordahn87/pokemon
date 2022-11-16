@@ -1,7 +1,8 @@
-import {FC, useCallback, useEffect, useState} from "react";
-import {API_BASE_URL, ENDPOINT_PLAYER} from "../../../constants/baseUrls";
-import {PA_API} from "../../../interface/api";
-import "../AttackButton/AttackButton.scss"
+import {FC, useEffect, useState} from "react";
+import {API_BASE_URL} from "../../../../constants/baseUrls";
+import { ENDPOINT_PLAYER} from "../../../../constants/endpoints";
+import {PA_API} from "../../../../interface/api";
+import "./AttackButton.scss"
 
 const PA_AttackButton:FC = () => {
     const [playerData, setPlayerData ] = useState<PA_API>({})
@@ -19,20 +20,27 @@ const PA_AttackButton:FC = () => {
         return item.move.name === "quick-attack"
     })
 
-    const handleAttack = useCallback(() => {
+    /*const handleAttack = useCallback(() => {
         console.log("Quick attack")
         setQuickAttackDamage(quickAttackDamage - currentHealth)
-    }, [quickAttackDamage])
+    }, [quickAttackDamage])*/
 
     return (
         <>
             {moves?.map((item:any, index:any) => {
                 return (
-                    <button key={index} onClick={handleAttack}>
-                        {item.move.name}
+                    <button className="btn-attack-container" key={index} onClick={() => console.log("Quick attack")}>
+                        <div className="btn-content">
+                            {item.move?.name.replace('-',' ')}
+                        </div>
                     </button>
                 )
             })}
+
+
+
+
+
         </>
     );
 };
