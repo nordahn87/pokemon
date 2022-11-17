@@ -19,7 +19,9 @@ const PA_Opponent:FC = () => {
     return (
         <div>
             <PA_OpponentAction />
-            <img className="opponent-pokemon" src={opponentData.sprites?.front_default} alt={opponentData.species?.name} />
+            <div className="opponent-pokemon-container">
+                <img className="opponent-pokemon" src={opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default} alt={opponentData.species?.name} />
+            </div>
         </div>
     );
 };

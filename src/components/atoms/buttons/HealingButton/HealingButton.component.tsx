@@ -13,7 +13,7 @@ const PA_HealingButton:FC = () => {
             .then((data) => {
                 setPotionData(data)
             })
-    }, [potionData]);
+    }, []);
 
     return (
         <button className="btn-healing-container" onClick={() => console.log("Use potion")}>

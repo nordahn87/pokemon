@@ -15,18 +15,13 @@ const PA_Player:FC = () => {
                 setPlayerData(data)
             })
     }, []);
-
-    const moves = playerData.moves?.filter((item: any) => {
-        return item.move.name === "quick-attack"
-    })
-    console.log(moves)
-
+    console.log(playerData.sprites?.versions["generation-v"]["black-white"].animated.back_default)
 
     return (
 
         <div>
             <div className="player-container">
-                <img className="player-pokemon" src={playerData.sprites?.back_default} alt={playerData.species?.name} />
+                <img className="player-pokemon" src={playerData.sprites?.versions["generation-v"]["black-white"].animated.back_default} alt={playerData.species?.name} />
             </div>
             <PA_PlayerAction />
         </div>

@@ -1,5 +1,11 @@
 .opponent-pokemon {
     image-rendering: pixelated;
-    width: 300px;
+    width: 150px;
 }
 
+.opponent-pokemon-container {
+    display: flex;
+
+    justify-content: center;
+    padding-top: 40px;
+}
