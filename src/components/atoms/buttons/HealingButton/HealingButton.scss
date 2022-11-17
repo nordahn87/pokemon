@@ -1,0 +1,7 @@
+@import "../../../../styles/helpers/all";
+
+.btn-healing-container {
+  @include clean-button;
+  @include action-button;
+  background: linear-gradient(0deg, rgba(102,147,41,1) 5%, rgba(146,205,65,1) 5%, rgba(146,205,65,1) 95%, rgba(186,238,114,1) 95%);
+}

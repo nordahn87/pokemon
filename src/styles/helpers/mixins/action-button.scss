@@ -1,0 +1,17 @@
+@mixin action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  border: solid 2px #664027;
+  text-transform: capitalize;
+  border-radius: 5px;
+  padding: 0 5px;
+  width: 200px;
+
+  .icon {
+    image-rendering: pixelated;
+    height: 60px;
+  }
+}
