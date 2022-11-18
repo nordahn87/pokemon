@@ -7,11 +7,15 @@ import {FetchApi} from "../../../helpers/api.helper";
 import './Arena.scss'
 
 const PA_Arena:FC = () => {
+    // State Pokémon
     const [playerData, setPlayerData ] = useState<PA_API>({})
     const [opponentData, setOpponentData ] = useState<PA_API>({})
+
+    // State item
     const [potionData, setPotionData ] = useState<PA_API>({})
     const [pokeBallData, setPokeBallData ] = useState<PA_API>({})
 
+    // Fetch Pokémon
     useEffect(() => {
         FetchApi(ENDPOINT_PLAYER)
             .then((data) => {
@@ -26,6 +30,7 @@ const PA_Arena:FC = () => {
             })
     }, [setOpponentData]);
 
+    // Fetch item
     useEffect(() => {
         FetchApi(ENDPOINT_POTION)
             .then((data) => {
