@@ -1,25 +1,12 @@
-import {FC, useEffect, useState} from "react";
+import {FC} from "react";
+import {PA_PlayerActionProps} from "./PlayerAction.props";
+import PA_PlayerHealthBar from "../../../atoms/healthBar/PlayerHealthBar/PlayerHealthBar.component";
 import PA_AttackButton from "../../../atoms/buttons/AttackButton/AttackButton.component";
 import PA_CaptureButton from "../../../atoms/buttons/CaptureButton/CaptureButton.component";
 import PA_HealingButton from "../../../atoms/buttons/HealingButton/HealingButton.component";
 import './PlayerAction.scss'
-import PA_PlayerHealthBar from "../../../atoms/healthBar/PlayerHealthBar/PlayerHealthBar.component";
-import {PA_API} from "../../../../interface/api";
-import {API_BASE_URL} from "../../../../constants/baseUrls";
-import {ENDPOINT_PLAYER} from "../../../../constants/endpoints";
 
-const PA_PlayerAction:FC = () => {
-    const [playerData, setPlayerData ] = useState<PA_API>({})
-
-    useEffect(() => {
-        fetch(`${API_BASE_URL}${ENDPOINT_PLAYER}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setPlayerData(data)
-            })
-    }, []);
-
-
+const PA_PlayerAction:FC<PA_PlayerActionProps> = ({playerData, potionData, pokeballData}) => {
     return (
         <div className="player-action-wrapper">
             <div className="player-name">
@@ -27,9 +14,9 @@ const PA_PlayerAction:FC = () => {
             </div>
             <PA_PlayerHealthBar />
             <div className="player-action-container">
-                <PA_AttackButton />
-                <PA_HealingButton />
-                <PA_CaptureButton />
+                <PA_AttackButton playerData={playerData}/>
+                <PA_HealingButton potionData={potionData} />
+                <PA_CaptureButton pokeballData={pokeballData} />
             </div>
         </div>
     );
