@@ -3,14 +3,14 @@ import {PA_PlayerProps} from "./Player.props";
 import PA_PlayerAction from "../../actions/PlayerAction/PlayerAction.component";
 import './Player.scss'
 
-const PA_Player:FC<PA_PlayerProps> = ({playerData, potionData, pokeballData}) => {
+const PA_Player:FC<PA_PlayerProps> = ({playerData, potionData, pokeBallData}) => {
     return (
 
         <div>
             <div className="player-container">
                 <img className="player-pokemon" src={playerData.sprites?.versions["generation-v"]["black-white"].animated.back_default} alt={playerData.species?.name} />
             </div>
-            <PA_PlayerAction playerData={playerData} potionData={potionData} pokeballData={pokeballData}/>
+            <PA_PlayerAction playerData={playerData} potionData={potionData} pokeBallData={pokeBallData}/>
         </div>
     );
 };

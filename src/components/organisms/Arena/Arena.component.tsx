@@ -1,7 +1,6 @@
 import React, {FC, useEffect, useState} from "react";
 import {PA_API} from "../../../interface/api";
 import {ENDPOINT_OPPONENT, ENDPOINT_PLAYER, ENDPOINT_POKEBALL, ENDPOINT_POTION} from "../../../constants/endpoints";
-import {API_BASE_URL} from "../../../constants/baseUrls";
 import PA_Player from "../../molecules/pokemons/Player/Player.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import {FetchApi} from "../../../helpers/api.helper";
@@ -11,7 +10,7 @@ const PA_Arena:FC = () => {
     const [playerData, setPlayerData ] = useState<PA_API>({})
     const [opponentData, setOpponentData ] = useState<PA_API>({})
     const [potionData, setPotionData ] = useState<PA_API>({})
-    const [pokeballData, setPokeballData ] = useState<PA_API>({})
+    const [pokeBallData, setPokeBallData ] = useState<PA_API>({})
 
     useEffect(() => {
         FetchApi(ENDPOINT_PLAYER)
@@ -35,16 +34,15 @@ const PA_Arena:FC = () => {
     }, [setPotionData]);
 
     useEffect(() => {
-        fetch(`${API_BASE_URL}${ENDPOINT_POKEBALL}`)
-            .then((response) => response.json())
+        FetchApi(ENDPOINT_POKEBALL)
             .then((data) => {
-                setPokeballData(data)
+                setPokeBallData (data)
             })
-    }, [setPokeballData]);
+    }, [setPokeBallData ]);
 
     return (
         <div className="arena-wrapper">
-            <PA_Player playerData={playerData} potionData={potionData} pokeballData={pokeballData} />
+            <PA_Player playerData={playerData} potionData={potionData} pokeBallData={pokeBallData} />
             <PA_Opponent opponentData={opponentData} />
            <div className="arena-scene">
                 <span className="skye"></span>
