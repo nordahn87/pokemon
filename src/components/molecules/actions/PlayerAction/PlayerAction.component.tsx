@@ -6,7 +6,7 @@ import PA_CaptureButton from "../../../atoms/buttons/CaptureButton/CaptureButton
 import PA_HealingButton from "../../../atoms/buttons/HealingButton/HealingButton.component";
 import './PlayerAction.scss'
 
-const PA_PlayerAction:FC<PA_PlayerActionProps> = ({playerData, potionData, pokeballData}) => {
+const PA_PlayerAction:FC<PA_PlayerActionProps> = ({playerData, potionData, pokeBallData}) => {
     return (
         <div className="player-action-wrapper">
             <div className="player-name">
@@ -16,7 +16,7 @@ const PA_PlayerAction:FC<PA_PlayerActionProps> = ({playerData, potionData, pokeb
             <div className="player-action-container">
                 <PA_AttackButton playerData={playerData}/>
                 <PA_HealingButton potionData={potionData} />
-                <PA_CaptureButton pokeballData={pokeballData} />
+                <PA_CaptureButton pokeBallData={pokeBallData} />
             </div>
         </div>
     );
