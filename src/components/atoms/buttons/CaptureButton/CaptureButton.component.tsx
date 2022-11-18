@@ -1,20 +1,8 @@
-import {FC, useEffect, useState} from "react";
-import {API_BASE_URL} from "../../../../constants/baseUrls";
-import {ENDPOINT_POKEBALL} from "../../../../constants/endpoints";
-import {PA_API} from "../../../../interface/api";
+import {FC} from "react";
+import {PA_CaptureButtonProps} from "./CaptureButton.props";
 import "./CaptureButton.scss"
 
-const PA_CaptureButton:FC = () => {
-    const [pokeballData, setPokeballData ] = useState<PA_API>({})
-    
-    useEffect(() => {
-        fetch(`${API_BASE_URL}${ENDPOINT_POKEBALL}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setPokeballData(data)
-            })
-    }, []);
-
+const PA_CaptureButton:FC<PA_CaptureButtonProps> = ({pokeballData}) => {
     return (
         <>
             <button className="btn-capture-container" onClick={() => console.log("Capture pokemon")}>

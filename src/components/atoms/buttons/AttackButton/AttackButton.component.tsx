@@ -1,29 +1,12 @@
-import {FC, useEffect, useState} from "react";
-import {API_BASE_URL} from "../../../../constants/baseUrls";
-import { ENDPOINT_PLAYER} from "../../../../constants/endpoints";
-import {PA_API} from "../../../../interface/api";
+import {FC} from "react";
+import {PA_AttackButtonProps} from "./AttackButton.props";
 import "./AttackButton.scss"
 
-const PA_AttackButton:FC = () => {
-    const [playerData, setPlayerData ] = useState<PA_API>({})
-    const [quickAttackDamage, setQuickAttackDamage, ] = useState(5)
-
-    useEffect(() => {
-        fetch(`${API_BASE_URL}${ENDPOINT_PLAYER}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setPlayerData(data)
-            })
-    }, []);
+const PA_AttackButton:FC<PA_AttackButtonProps> = ({playerData}) => {
 
     const moves = playerData.moves?.filter((item: any) => {
         return item.move.name === "quick-attack"
     })
-
-    /*const handleAttack = useCallback(() => {
-        console.log("Quick attack")
-        setQuickAttackDamage(quickAttackDamage - currentHealth)
-    }, [quickAttackDamage])*/
 
     return (
         <>
@@ -36,11 +19,6 @@ const PA_AttackButton:FC = () => {
                     </button>
                 )
             })}
-
-
-
-
-
         </>
     );
 };
