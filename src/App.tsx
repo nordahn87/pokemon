@@ -1,9 +1,12 @@
 import "../src/styles/global/main.scss";
 import PA_Arena from "./components/organisms/Arena/Arena.component";
+import {MessagesProvider} from "./hooks/messages.provider";
 
 const App =() => {
     return (
-        <PA_Arena />
+        <MessagesProvider>
+            <PA_Arena />
+        </MessagesProvider>
   );
 }
 
