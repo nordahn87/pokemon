@@ -1,11 +1,10 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import {PA_MessageBoxProps} from "./MessageBox.props";
-import './MessageBox.scss';
 import {useMessages} from "../../../hooks/messages.provider";
+import './MessageBox.scss';
 
 const PA_MessageBox:FC<PA_MessageBoxProps> = (props) => {
-    const { message, clearMessage } = useMessages();
-    console.log(message);
+    const { message } = useMessages();
 
     // TODO: Run clearMessage after some time.
 

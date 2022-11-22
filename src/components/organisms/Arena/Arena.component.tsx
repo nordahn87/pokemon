@@ -74,19 +74,18 @@ const PA_Arena:FC = () => {
 
     //Player doing quick attack
     const handlePlayerAttack = useCallback(() => {
-        const isDealingDamage = currentOppponentHealth! - quickAttackDamage!
+        const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
 
-        SetCurrentOppponentHealth(isDealingDamage)
-
-        if (currentOppponentHealth! <= 0) {
+      if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOppponentHealth(0)
+            showMessage(MessagesEnum.OPPONENT_KO, playerName, opponentName, quickAttackDamage);
             return false
-        } else if (isDealingDamage < 0) {
-            SetCurrentOppponentHealth(0)
         } else {
-            SetCurrentOppponentHealth(isDealingDamage)
+            SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
         }
-            showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, "damageAmount");
+            showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
+
+        console.log(updatedCurrentOpponentHealth)
 
     },[currentOppponentHealth, opponentName, playerName, quickAttackDamage, showMessage])
 

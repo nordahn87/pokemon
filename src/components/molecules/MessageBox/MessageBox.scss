@@ -1,10 +1,13 @@
 .message-container {
   position: absolute;
-  left: 10px;
+  line-height: 1.6;
+  left: 5%;
+  top: 5%;
+  height: 120px;
+  width: 500px;
+  padding: 20px;
   background-color: #ffffff;
   border: 2px solid #000000;
   color: #000000;
-  width: 500px;
-  padding: 20px;
   z-index: 20;
 }
