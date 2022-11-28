@@ -7,7 +7,7 @@ const PA_Player:FC<PA_PlayerProps> = ({
       playerData,
       potionData,
       pokeBallData,
-      handlePlayerAttack
+      handlePlayerAttack,
     }) => {
 
     return (

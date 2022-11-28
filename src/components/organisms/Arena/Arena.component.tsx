@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useContext, useEffect, useState} from "react";
+import React, {FC, useCallback, useEffect, useState} from "react";
 import {PA_API} from "../../../interface/api";
 import {ENDPOINT_OPPONENT, ENDPOINT_PLAYER, ENDPOINT_POKEBALL, ENDPOINT_POTION} from "../../../constants/endpoints";
 import PA_Player from "../../molecules/pokemons/Player/Player.component";
@@ -12,6 +12,7 @@ const PA_Arena:FC = () => {
     //Game state - "LOADING", "READY_PLAYER1", "READY_PLAYER2", "PLAYER1_ACTING"
     // const [gamestate, SetGameState] = useState("LOADING")
 
+    // Show message Hook
     const { showMessage } = useMessages();
 
     //Pokémon data
@@ -72,22 +73,29 @@ const PA_Arena:FC = () => {
     },[])
 
 
+
+
+
     //Player doing quick attack
     const handlePlayerAttack = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
 
-      if (updatedCurrentOpponentHealth <= 0) {
+        if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOppponentHealth(0)
             showMessage(MessagesEnum.OPPONENT_KO, playerName, opponentName, quickAttackDamage);
             return false
         } else {
             SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
         }
-            showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
 
-        console.log(updatedCurrentOpponentHealth)
+        showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
 
     },[currentOppponentHealth, opponentName, playerName, quickAttackDamage, showMessage])
+
+
+
+
+
 
     return (
         <div className="arena-wrapper">
