@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from "react";
+import React, {FC, useCallback, useEffect, useRef, useState} from "react";
 import {PA_API} from "../../../interface/api";
 import {ENDPOINT_OPPONENT, ENDPOINT_PLAYER, ENDPOINT_POKEBALL, ENDPOINT_POTION} from "../../../constants/endpoints";
 import PA_Player from "../../molecules/pokemons/Player/Player.component";
@@ -28,6 +28,8 @@ const PA_Arena:FC = () => {
 
     //Health state
     const [currentOppponentHealth, SetCurrentOppponentHealth ] = useState<number | null>(null)
+
+    const playerElement = useRef(null);
 
     const playerName = playerData.species?.name
     const opponentName = opponentData.species?.name
@@ -85,6 +87,8 @@ const PA_Arena:FC = () => {
             showMessage(MessagesEnum.OPPONENT_KO, playerName, opponentName, quickAttackDamage);
             return false
         } else {
+            // @ts-ignore
+            playerElement.current.classList.add("quick-attack-animation");
             SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
         }
 
@@ -103,6 +107,7 @@ const PA_Arena:FC = () => {
                 playerData={playerData}
                 potionData={potionData}
                 pokeBallData={pokeBallData}
+                playerElement={playerElement}
                 handlePlayerAttack={handlePlayerAttack}
             />
 

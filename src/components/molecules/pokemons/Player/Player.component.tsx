@@ -8,6 +8,7 @@ const PA_Player:FC<PA_PlayerProps> = ({
       potionData,
       pokeBallData,
       handlePlayerAttack,
+      playerElement
     }) => {
 
     return (
@@ -15,6 +16,8 @@ const PA_Player:FC<PA_PlayerProps> = ({
             <div className="player-container">
                 <img
                     className="player-pokemon"
+                    ref={playerElement}
+                    onAnimationEnd={() => {playerElement.current.classList.remove("quick-attack-animation");}}
                     src={playerData.sprites?.versions["generation-v"]["black-white"].animated.back_default}
                     alt={playerData.species?.name}
                 />
