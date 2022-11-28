@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import PA_MessageBox from "../components/molecules/MessageBox/MessageBox.component";
 import {MessagesEnum} from "../models/messages.enum";
-import {convertToCapitalized} from "../helpers/convertToCapitalized";
+import {convertToCapitalizedHelper} from "../helpers/convertToCapitalized.helper";
 
 const MessagesContext = React.createContext<any>({});
 
@@ -13,14 +13,14 @@ export const MessagesProvider = ({ children }: any): JSX.Element => {
         let result = "";
         switch (alias) {
             case MessagesEnum.PLAYER_ATTACK: {
-                const playerName = convertToCapitalized(rest?.[0]);
+                const playerName = convertToCapitalizedHelper(rest?.[0]);
                 const damageAmount = rest?.[2];
 
                 result = `${playerName}: Does a quick attack and deals ${damageAmount} damage`;
                 break;
             }
             case MessagesEnum.OPPONENT_KO: {
-                const opponentName = convertToCapitalized(rest?.[1]);
+                const opponentName = convertToCapitalizedHelper(rest?.[1]);
 
                 result = `${opponentName}: Is defeated`;
                 break;
@@ -32,7 +32,7 @@ export const MessagesProvider = ({ children }: any): JSX.Element => {
     useEffect(() => {
         setTimeout(() => {
             setMessage(undefined)
-        }, 4000);
+        }, 2000);
     }, [message]);
 
     return (

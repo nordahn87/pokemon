@@ -1,19 +1,24 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from "react";
+import React, {FC, useCallback, useEffect, useState} from "react";
 import {PA_API} from "../../../interface/api";
 import {ENDPOINT_OPPONENT, ENDPOINT_PLAYER, ENDPOINT_POKEBALL, ENDPOINT_POTION} from "../../../constants/endpoints";
 import PA_Player from "../../molecules/pokemons/Player/Player.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import {FetchApi} from "../../../helpers/api.helper";
+import {ClassListAdd} from "../../../helpers/classList.helper";
 import {useMessages} from "../../../hooks/messages.provider";
 import {MessagesEnum} from "../../../models/messages.enum";
+import {usePokemons} from "../../../hooks/pokemon.provider";
 import './Arena.scss'
 
 const PA_Arena:FC = () => {
     //Game state - "LOADING", "READY_PLAYER1", "READY_PLAYER2", "PLAYER1_ACTING"
     // const [gamestate, SetGameState] = useState("LOADING")
 
-    // Show message Hook
+    // Show  Hooks
     const { showMessage } = useMessages();
+    const { playerElement, opponentElement } = usePokemons();
+
+    const [ buttonDisabled, setButtonDisabled ] = useState(false)
 
     //Pokémon data
     const [playerData, setPlayerData ] = useState<PA_API>({})
@@ -28,8 +33,6 @@ const PA_Arena:FC = () => {
 
     //Health state
     const [currentOppponentHealth, SetCurrentOppponentHealth ] = useState<number | null>(null)
-
-    const playerElement = useRef(null);
 
     const playerName = playerData.species?.name
     const opponentName = opponentData.species?.name
@@ -74,32 +77,24 @@ const PA_Arena:FC = () => {
         setQuickAttackDamage(7)
     },[])
 
-
-
-
-
     //Player doing quick attack
+
     const handlePlayerAttack = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
 
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOppponentHealth(0)
             showMessage(MessagesEnum.OPPONENT_KO, playerName, opponentName, quickAttackDamage);
-            return false
         } else {
-            // @ts-ignore
-            playerElement.current.classList.add("quick-attack-animation");
+            ClassListAdd(playerElement, "quick-attack-animation")
+            ClassListAdd (opponentElement, "damage-taken-animation")
+            setButtonDisabled(true)
             SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
         }
 
         showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
 
-    },[currentOppponentHealth, opponentName, playerName, quickAttackDamage, showMessage])
-
-
-
-
-
+    },[currentOppponentHealth, opponentElement, opponentName, playerElement, playerName, quickAttackDamage, showMessage])
 
     return (
         <div className="arena-wrapper">
@@ -107,8 +102,9 @@ const PA_Arena:FC = () => {
                 playerData={playerData}
                 potionData={potionData}
                 pokeBallData={pokeBallData}
-                playerElement={playerElement}
                 handlePlayerAttack={handlePlayerAttack}
+                buttonDisabled={buttonDisabled}
+                setButtonDisabled={setButtonDisabled}
             />
 
             <PA_Opponent

@@ -1,4 +1,4 @@
-export const convertToCapitalized = (value: string) => {
+export const convertToCapitalizedHelper = (value: string) => {
     const result: string[] = [];
 
     const characters = value.split("");

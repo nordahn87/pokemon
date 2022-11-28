@@ -2,7 +2,7 @@ import {FC} from "react";
 import {PA_AttackButtonProps} from "./AttackButton.props";
 import "./AttackButton.scss"
 
-const PA_AttackButton:FC<PA_AttackButtonProps> = ({playerData, handlePlayerAttack}) => {
+const PA_AttackButton:FC<PA_AttackButtonProps> = ({playerData, handlePlayerAttack, buttonDisabled}) => {
 
     const moves = playerData.moves?.filter((item: any) => {
         return item.move.name === "quick-attack"
@@ -10,11 +10,12 @@ const PA_AttackButton:FC<PA_AttackButtonProps> = ({playerData, handlePlayerAttac
 
     return (
         <>
-            {moves?.map((item:any, index:any) => {
+            {moves?.map((item: any, index: any) => {
                 return (
-                    <button className="btn-attack-container" key={index} onClick={handlePlayerAttack}>
+                    <button key={index} onClick={handlePlayerAttack} className="btn-attack-container"
+                            disabled={buttonDisabled}>
                         <div className="btn-content">
-                            {item.move?.name.replace('-',' ')}
+                            {item.move?.name.replace('-', ' ')}
                         </div>
                     </button>
                 )
@@ -22,5 +23,4 @@ const PA_AttackButton:FC<PA_AttackButtonProps> = ({playerData, handlePlayerAttac
         </>
     );
 };
-
 export default PA_AttackButton;
