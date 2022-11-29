@@ -5,10 +5,12 @@
     transform: translate(-50%, 0);
     image-rendering: pixelated;
     width: 250px;
+}
+
+.quick-attack-animation {
     animation-name: playerAttack;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
     animation-duration: 1s;
-    background-color: yellow;
 }
 
 @keyframes playerAttack {
