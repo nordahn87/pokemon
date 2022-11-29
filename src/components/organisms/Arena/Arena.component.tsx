@@ -14,26 +14,26 @@ const PA_Arena:FC = () => {
     //Game state - "LOADING", "READY_PLAYER1", "READY_PLAYER2", "PLAYER1_ACTING"
     // const [gamestate, SetGameState] = useState("LOADING")
 
-    // Show  Hooks
+    // Hooks
     const { showMessage } = useMessages();
     const { playerElement, opponentElement } = usePokemons();
 
+    // Disable button
     const [ buttonDisabled, setButtonDisabled ] = useState(false)
 
-    //Pokémon data
+    // API data
     const [playerData, setPlayerData ] = useState<PA_API>({})
     const [opponentData, setOpponentData ] = useState<PA_API>({})
-
-    //Item data
     const [potionData, setPotionData ] = useState<PA_API>({})
     const [pokeBallData, setPokeBallData ] = useState<PA_API>({})
 
-    //Attack
+    // Attack
     const [quickAttackDamage, setQuickAttackDamage] = useState<number | null>(null)
 
-    //Health state
+    // Health state
     const [currentOppponentHealth, SetCurrentOppponentHealth ] = useState<number | null>(null)
 
+    // Constants
     const playerName = playerData.species?.name
     const opponentName = opponentData.species?.name
 
@@ -69,7 +69,7 @@ const PA_Arena:FC = () => {
 
     // Opponent current health
     useEffect(() => {
-        SetCurrentOppponentHealth(130)
+        SetCurrentOppponentHealth(30)
     },[])
 
     //Player attacks - might add more damage types later on!
@@ -77,19 +77,19 @@ const PA_Arena:FC = () => {
         setQuickAttackDamage(7)
     },[])
 
-    //Player doing quick attack
-
+    // Player doing quick attack
     const handlePlayerAttack = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
+
 
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOppponentHealth(0)
             showMessage(MessagesEnum.OPPONENT_KO, playerName, opponentName, quickAttackDamage);
         } else {
+            SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
             ClassListAdd(playerElement, "quick-attack-animation")
             ClassListAdd (opponentElement, "damage-taken-animation")
             setButtonDisabled(true)
-            SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
         }
 
         showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
