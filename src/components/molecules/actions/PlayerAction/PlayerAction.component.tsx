@@ -11,7 +11,6 @@ const PA_PlayerAction:FC<PA_PlayerActionProps> = ({
     potionData,
     pokeBallData,
     handlePlayerAttack,
-    attackAnimationEnd,
     buttonDisabled
 }) => {
 
@@ -21,14 +20,16 @@ const PA_PlayerAction:FC<PA_PlayerActionProps> = ({
                 {playerData.name}
             </div>
             <PA_PlayerHealthBar />
+
             <div className="player-action-container">
                 <PA_AttackButton
                     playerData={playerData}
                     handlePlayerAttack={handlePlayerAttack}
-                    attackAnimationEnd={attackAnimationEnd}
                     buttonDisabled={buttonDisabled}
                 />
+
                 <PA_HealingButton potionData={potionData} />
+
                 <PA_CaptureButton pokeBallData={pokeBallData} />
             </div>
         </div>

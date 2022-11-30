@@ -1,13 +1,13 @@
 import React, {FC, useCallback, useEffect, useState} from "react";
-import {PA_API} from "../../../interface/api";
-import {ENDPOINT_OPPONENT, ENDPOINT_PLAYER, ENDPOINT_POKEBALL, ENDPOINT_POTION} from "../../../constants/endpoints";
+import {MessagesEnum} from "../../../models/messages.enum";
 import PA_Player from "../../molecules/pokemons/Player/Player.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
-import {FetchApi} from "../../../helpers/api.helper";
-import {ClassListAdd} from "../../../helpers/classList.helper";
+import {ClassListAdd, ClassListRemove} from "../../../helpers/classList.helper";
 import {useMessages} from "../../../hooks/messages.provider";
-import {MessagesEnum} from "../../../models/messages.enum";
 import {usePokemons} from "../../../hooks/pokemon.provider";
+import {useApiData} from "../../../hooks/apiData.provider";
+import PA_PlayerAction from "../../molecules/actions/PlayerAction/PlayerAction.component";
+import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import './Arena.scss'
 
 const PA_Arena:FC = () => {
@@ -17,15 +17,10 @@ const PA_Arena:FC = () => {
     // Hooks
     const { showMessage } = useMessages();
     const { playerElement, opponentElement } = usePokemons();
+    const { playerData, opponentData, potionData, pokeBallData } = useApiData();
 
     // Disable button
     const [ buttonDisabled, setButtonDisabled ] = useState(false)
-
-    // API data
-    const [playerData, setPlayerData ] = useState<PA_API>({})
-    const [opponentData, setOpponentData ] = useState<PA_API>({})
-    const [potionData, setPotionData ] = useState<PA_API>({})
-    const [pokeBallData, setPokeBallData ] = useState<PA_API>({})
 
     // Attack
     const [quickAttackDamage, setQuickAttackDamage] = useState<number | null>(null)
@@ -36,36 +31,6 @@ const PA_Arena:FC = () => {
     // Constants
     const playerName = playerData.species?.name
     const opponentName = opponentData.species?.name
-
-    // Fetch Pokémon
-    useEffect(() => {
-        FetchApi(ENDPOINT_PLAYER)
-            .then((data) => {
-                setPlayerData(data)
-            })
-    }, [setPlayerData]);
-
-    useEffect(() => {
-        FetchApi(ENDPOINT_OPPONENT)
-            .then((data) => {
-                setOpponentData(data)
-            })
-    }, [setOpponentData]);
-
-    // Fetch item
-    useEffect(() => {
-        FetchApi(ENDPOINT_POTION)
-            .then((data) => {
-                setPotionData(data)
-            })
-    }, [setPotionData]);
-
-    useEffect(() => {
-        FetchApi(ENDPOINT_POKEBALL)
-            .then((data) => {
-                setPokeBallData (data)
-            })
-    }, [setPokeBallData ]);
 
     // Opponent current health
     useEffect(() => {
@@ -81,7 +46,6 @@ const PA_Arena:FC = () => {
     const handlePlayerAttack = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
 
-
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOppponentHealth(0)
             showMessage(MessagesEnum.OPPONENT_KO, playerName, opponentName, quickAttackDamage);
@@ -96,21 +60,43 @@ const PA_Arena:FC = () => {
 
     },[currentOppponentHealth, opponentElement, opponentName, playerElement, playerName, quickAttackDamage, showMessage])
 
+
+    const attackAnimationEnd = () => {
+        ClassListRemove(playerElement, "quick-attack-animation");
+        ClassListRemove(opponentElement, "damage-taken-animation");
+        setButtonDisabled(false)
+    }
+
     return (
         <div className="arena-wrapper">
-            <PA_Player
-                playerData={playerData}
-                potionData={potionData}
-                pokeBallData={pokeBallData}
-                handlePlayerAttack={handlePlayerAttack}
-                buttonDisabled={buttonDisabled}
-                setButtonDisabled={setButtonDisabled}
-            />
-
-            <PA_Opponent
-                opponentData={opponentData}
-                currentOppponentHealth={currentOppponentHealth}
-            />
+            <div>
+                <PA_Player
+                    playerData={playerData}
+                    potionData={potionData}
+                    pokeBallData={pokeBallData}
+                    handlePlayerAttack={handlePlayerAttack}
+                    attackAnimationEnd={attackAnimationEnd}
+                    buttonDisabled={buttonDisabled}
+                    setButtonDisabled={setButtonDisabled}
+                />
+                <PA_PlayerAction
+                    playerData={playerData}
+                    potionData={potionData}
+                    pokeBallData={pokeBallData}
+                    handlePlayerAttack={handlePlayerAttack}
+                    buttonDisabled={buttonDisabled}
+                />
+            </div>
+            <div>
+                <PA_OpponentAction
+                    opponentData={opponentData}
+                    currentOppponentHealth={currentOppponentHealth}
+                />
+                <PA_Opponent
+                    opponentData={opponentData}
+                    currentOppponentHealth={currentOppponentHealth}
+                />
+            </div>
            <div className="arena-scene">
                 <span className="skye"></span>
                 <span className="ground"></span>

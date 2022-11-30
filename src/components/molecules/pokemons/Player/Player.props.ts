@@ -5,6 +5,7 @@ export interface PA_PlayerProps {
     potionData: PA_API;
     pokeBallData: PA_API;
     handlePlayerAttack: () => void;
+    attackAnimationEnd: () => void;
     buttonDisabled: boolean;
     setButtonDisabled: any;
 }

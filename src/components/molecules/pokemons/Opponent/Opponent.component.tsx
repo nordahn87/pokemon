@@ -9,17 +9,12 @@ const PA_Opponent:FC<PA_OpponentProps> = ({opponentData, currentOppponentHealth}
     const { opponentElement } = usePokemons();
 
     return (
-        <div>
-            <PA_OpponentAction
-                opponentData={opponentData}
-                currentOppponentHealth={currentOppponentHealth}/>
-            <div className="opponent-pokemon-container">
-                <img
-                    className="opponent-pokemon"
-                    ref={opponentElement}
-                    src={opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default}
-                    alt={opponentData.species?.name} />
-            </div>
+        <div className="opponent-pokemon-container">
+            <img
+                className="opponent-pokemon"
+                ref={opponentElement}
+                src={opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default}
+                alt={opponentData.species?.name} />
         </div>
     );
 };
