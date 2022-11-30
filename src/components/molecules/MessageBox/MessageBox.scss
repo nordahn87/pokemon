@@ -1,8 +1,9 @@
 .message-container {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   line-height: 1.6;
-  left: 5%;
-  top: 5%;
   height: 120px;
   width: 500px;
   padding: 20px;
