@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {MessagesEnum} from "../models/messages.enum";
 import {convertToCapitalizedHelper} from "../helpers/convertToCapitalized.helper";
-import {useApiData} from "./apiData.provider";
 
 const MessagesContext = React.createContext<any>({});
 

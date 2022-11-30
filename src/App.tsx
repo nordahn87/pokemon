@@ -1,16 +1,19 @@
 import "../src/styles/global/main.scss";
 import PA_Arena from "./components/organisms/Arena/Arena.component";
 import {MessagesProvider} from "./hooks/messages.provider";
-import {PokemonProvider} from "./hooks/pokemon.provider";
 import {ApiDataProvider} from "./hooks/apiData.provider";
+import {HeroProvider} from "./hooks/players/hero.provider";
+import {OpponentProvider} from "./hooks/players/opponent.provider";
 
 const App =() => {
     return (
         <ApiDataProvider>
             <MessagesProvider>
-                <PokemonProvider>
+                <HeroProvider>
+                    <OpponentProvider>
                     <PA_Arena />
-                </PokemonProvider>
+                    </OpponentProvider>
+                </HeroProvider>
             </MessagesProvider>
         </ApiDataProvider>
   );
