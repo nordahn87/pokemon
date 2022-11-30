@@ -1,20 +1,23 @@
 import {FC} from "react";
-import PA_OpponentAction from "../../actions/OpponentAction/OpponentAction.component";
 import {usePokemons} from "../../../../hooks/pokemon.provider";
-import {PA_OpponentProps} from "./Opponent.props";
+import {useApiData} from "../../../../hooks/apiData.provider";
 import './Opponent.scss'
 
-const PA_Opponent:FC<PA_OpponentProps> = ({opponentData, currentOppponentHealth}) => {
+const PA_Opponent:FC = () => {
 
+    const { opponentData } = useApiData();
     const { opponentElement } = usePokemons();
+    const opponentSprite = opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default;
+    const opponentName = opponentData.species?.name;
 
     return (
         <div className="opponent-pokemon-container">
             <img
                 className="opponent-pokemon"
                 ref={opponentElement}
-                src={opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default}
-                alt={opponentData.species?.name} />
+                src={opponentSprite}
+                alt={opponentName}
+            />
         </div>
     );
 };

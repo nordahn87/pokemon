@@ -17,7 +17,7 @@ const PA_Arena:FC = () => {
     // Hooks
     const { showMessage } = useMessages();
     const { playerElement, opponentElement } = usePokemons();
-    const { playerData, opponentData, potionData, pokeBallData } = useApiData();
+    const { playerData, opponentData } = useApiData();
 
     // Disable button
     const [ buttonDisabled, setButtonDisabled ] = useState(false)
@@ -60,7 +60,6 @@ const PA_Arena:FC = () => {
 
     },[currentOppponentHealth, opponentElement, opponentName, playerElement, playerName, quickAttackDamage, showMessage])
 
-
     const attackAnimationEnd = () => {
         ClassListRemove(playerElement, "quick-attack-animation");
         ClassListRemove(opponentElement, "damage-taken-animation");
@@ -70,32 +69,18 @@ const PA_Arena:FC = () => {
     return (
         <div className="arena-wrapper">
             <div>
-                <PA_Player
-                    playerData={playerData}
-                    potionData={potionData}
-                    pokeBallData={pokeBallData}
-                    handlePlayerAttack={handlePlayerAttack}
-                    attackAnimationEnd={attackAnimationEnd}
-                    buttonDisabled={buttonDisabled}
-                    setButtonDisabled={setButtonDisabled}
-                />
+                <PA_Player attackAnimationEnd={attackAnimationEnd} />
+
                 <PA_PlayerAction
-                    playerData={playerData}
-                    potionData={potionData}
-                    pokeBallData={pokeBallData}
                     handlePlayerAttack={handlePlayerAttack}
                     buttonDisabled={buttonDisabled}
                 />
             </div>
+
             <div>
-                <PA_OpponentAction
-                    opponentData={opponentData}
-                    currentOppponentHealth={currentOppponentHealth}
-                />
-                <PA_Opponent
-                    opponentData={opponentData}
-                    currentOppponentHealth={currentOppponentHealth}
-                />
+                <PA_OpponentAction currentOppponentHealth={currentOppponentHealth} />
+
+                <PA_Opponent />
             </div>
            <div className="arena-scene">
                 <span className="skye"></span>
