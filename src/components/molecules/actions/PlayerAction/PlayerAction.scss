@@ -1,8 +1,7 @@
 .player-action-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    z-index: 1;
+    justify-content: flex-end;
     border-radius: 5px;
     padding: 20px 10px;
     border: solid 2px #664027;
