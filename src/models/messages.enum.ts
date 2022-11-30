@@ -1,8 +1,8 @@
 export enum MessagesEnum {
     // Attack
-    PLAYER_ATTACK = "PLAYER_ATTACK",
+    HERO_ATTACK = "HERO_ATTACK",
     OPPONENT_ATTACK = "OPPONENT_KO",
     // KO
-    PLAYER_KO = "OPPONENT_KO",
+    HERO_KO = "HERO_KO",
     OPPONENT_KO = "OPPONENT_KO",
 }

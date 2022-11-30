@@ -1,15 +1,15 @@
 import React, {FC, useCallback, useEffect, useState} from "react";
 import {MessagesEnum} from "../../../models/messages.enum";
-import PA_Player from "../../molecules/pokemons/Player/Player.component";
-import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import {ClassListAdd, ClassListRemove} from "../../../helpers/classList.helper";
 import {useMessages} from "../../../hooks/messages.provider";
 import {usePokemons} from "../../../hooks/pokemon.provider";
-import {useApiData} from "../../../hooks/apiData.provider";
-import PA_PlayerAction from "../../molecules/actions/PlayerAction/PlayerAction.component";
+import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
+import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
+import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
-import './Arena.scss'
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
+import './Arena.scss'
+import {useApiData} from "../../../hooks/apiData.provider";
 
 const PA_Arena:FC = () => {
     //Game state - "LOADING", "READY_PLAYER1", "READY_PLAYER2", "PLAYER1_ACTING"
@@ -17,8 +17,8 @@ const PA_Arena:FC = () => {
 
     // Hooks
     const { showMessage } = useMessages();
-    const { playerElement, opponentElement } = usePokemons();
-    const { playerData, opponentData } = useApiData();
+    const { heroElement, opponentElement } = usePokemons();
+    const { heroData, opponentData } = useApiData();
     const { message } = useMessages();
 
     // Disable button
@@ -30,24 +30,23 @@ const PA_Arena:FC = () => {
     // Health state
     const [currentOppponentHealth, SetCurrentOppponentHealth ] = useState<number | null>(null)
 
-    // Constants
-    const playerName = playerData.species?.name
-    const opponentName = opponentData.species?.name
+    const heroName = heroData.species?.name;
+    const opponentName = opponentData.species?.name;
 
     // Opponent current health
     useEffect(() => {
         SetCurrentOppponentHealth(30)
     },[])
 
-    //Player attacks - might add more damage types later on!
+    //Hero attacks - might add more damage types later on!
     useEffect(() => {
         setQuickAttackDamage(7)
     },[])
 
-    // Player doing quick attack
+    // Hero doing quick attack
     const handlePlayerAttack = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
-        ClassListAdd(playerElement, "quick-attack-animation")
+        ClassListAdd(heroElement, "quick-attack-animation")
         ClassListAdd (opponentElement, "damage-taken-animation")
 
         if (updatedCurrentOpponentHealth <= 0) {
@@ -57,14 +56,14 @@ const PA_Arena:FC = () => {
         } else {
             SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
             setButtonDisabled(true)
-            showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
+            showMessage(MessagesEnum.HERO_ATTACK, heroName, opponentName, quickAttackDamage);
         }
         
-    },[currentOppponentHealth, opponentElement, opponentName, playerElement, playerName, quickAttackDamage, showMessage])
+    },[currentOppponentHealth, quickAttackDamage, heroElement, opponentElement, showMessage])
 
 
     const attackAnimationEnd = () => {
-        ClassListRemove(playerElement, "quick-attack-animation");
+        ClassListRemove(heroElement, "quick-attack-animation");
         ClassListRemove(opponentElement, "damage-taken-animation");
         setButtonDisabled(false)
     }
@@ -76,9 +75,9 @@ const PA_Arena:FC = () => {
                     <PA_MessageBox />
                 ) : null}
 
-                <PA_Player attackAnimationEnd={attackAnimationEnd} />
+                <PA_Hero attackAnimationEnd={attackAnimationEnd} />
 
-                <PA_PlayerAction
+                <PA_HeroAction
                     handlePlayerAttack={handlePlayerAttack}
                     buttonDisabled={buttonDisabled}
                 />

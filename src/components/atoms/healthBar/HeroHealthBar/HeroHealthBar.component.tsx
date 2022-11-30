@@ -1,10 +1,10 @@
 import {FC} from "react";
-import "./PlayerHealthBar.scss"
+import "./HeroHealthBar.scss"
 
 const PA_PlayerHealthBar:FC = () => {
     return (
-        <div className="player-healthbar-container">
-            <div className="player-healthbar-hp">HP</div>
+        <div className="hero-healthbar-container">
+            <div className="hero-healthbar-hp">HP</div>
             <div>*120/120</div>
         </div>
     );

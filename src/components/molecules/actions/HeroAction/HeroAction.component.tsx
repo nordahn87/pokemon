@@ -1,25 +1,25 @@
 import {FC} from "react";
-import {PA_PlayerActionProps} from "./PlayerAction.props";
+import {PA_PlayerActionProps} from "./HeroAction.props";
 import {useApiData} from "../../../../hooks/apiData.provider";
-import PA_PlayerHealthBar from "../../../atoms/healthBar/PlayerHealthBar/PlayerHealthBar.component";
+import PA_PlayerHealthBar from "../../../atoms/healthBar/HeroHealthBar/HeroHealthBar.component";
 import PA_AttackButton from "../../../atoms/buttons/AttackButton/AttackButton.component";
 import PA_CaptureButton from "../../../atoms/buttons/CaptureButton/CaptureButton.component";
 import PA_HealingButton from "../../../atoms/buttons/HealingButton/HealingButton.component";
-import './PlayerAction.scss'
+import './HeroAction.scss'
 
-const PA_PlayerAction:FC<PA_PlayerActionProps> = (props) => {
+const PA_HeroAction:FC<PA_PlayerActionProps> = (props) => {
 
-    const { playerData } = useApiData();
+    const { heroData } = useApiData();
 
     return (
-        <div className="player-action-wrapper">
-            <div className="player-name">
-                {playerData.name}
+        <div className="hero-action-wrapper">
+            <div className="hero-name">
+                {heroData.name}
             </div>
 
             <PA_PlayerHealthBar />
 
-            <div className="player-action-container">
+            <div className="hero-action-container">
                 <PA_AttackButton
                     handlePlayerAttack={props.handlePlayerAttack}
                     buttonDisabled={props.buttonDisabled}
@@ -33,4 +33,4 @@ const PA_PlayerAction:FC<PA_PlayerActionProps> = (props) => {
     );
 };
 
-export default PA_PlayerAction;
+export default PA_HeroAction;

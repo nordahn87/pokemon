@@ -5,9 +5,9 @@ import {useApiData} from "../../../../hooks/apiData.provider";
 
 const PA_AttackButton:FC<PA_AttackButtonProps> = (props) => {
 
-    const { playerData } = useApiData();
+    const { heroData } = useApiData();
 
-    const moves = playerData.moves?.filter((item: any) => {
+    const moves = heroData.moves?.filter((item: any) => {
         return item.move.name === "quick-attack"
     })
 
