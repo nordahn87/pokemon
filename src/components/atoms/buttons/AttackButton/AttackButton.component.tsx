@@ -1,12 +1,11 @@
 import {FC} from "react";
 import {PA_AttackButtonProps} from "./AttackButton.props";
 import "./AttackButton.scss"
+import {useApiData} from "../../../../hooks/apiData.provider";
 
-const PA_AttackButton:FC<PA_AttackButtonProps> = ({
-    playerData,
-    handlePlayerAttack,
-    buttonDisabled
-}) => {
+const PA_AttackButton:FC<PA_AttackButtonProps> = (props) => {
+
+    const { playerData } = useApiData();
 
     const moves = playerData.moves?.filter((item: any) => {
         return item.move.name === "quick-attack"
@@ -18,9 +17,9 @@ const PA_AttackButton:FC<PA_AttackButtonProps> = ({
                 return (
                     <button
                         key={index}
-                        onClick={handlePlayerAttack}
+                        onClick={props.handlePlayerAttack}
                         className="btn-attack-container"
-                        disabled={buttonDisabled}>
+                        disabled={props.buttonDisabled}>
 
                         <div className="btn-content">
                             {item.move?.name.replace('-', ' ')}
@@ -31,4 +30,5 @@ const PA_AttackButton:FC<PA_AttackButtonProps> = ({
         </>
     );
 };
+
 export default PA_AttackButton;

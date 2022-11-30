@@ -1,13 +1,18 @@
 import {FC} from "react";
-import {PA_CaptureButtonProps} from "./CaptureButton.props";
+import {useApiData} from "../../../../hooks/apiData.provider";
 import "./CaptureButton.scss"
 
-const PA_CaptureButton:FC<PA_CaptureButtonProps> = ({pokeBallData}) => {
+const PA_CaptureButton:FC = () => {
+
+    const { pokeBallData } = useApiData();
+    const pokeBallSprite = pokeBallData.sprites?.default;
+    const pokeBallName = pokeBallData.name;
+
     return (
         <>
             <button className="btn-capture-container" onClick={() => console.log("Capture pokemon")}>
-                    <img className="icon" src={pokeBallData.sprites?.default} alt="Pokeball" />
-                    {pokeBallData.name?.replace('-',' ')}
+                    <img className="icon" src={pokeBallSprite} alt="Pokeball" />
+                    {pokeBallName?.replace('-',' ')}
             </button>
         </>
     );

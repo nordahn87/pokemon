@@ -1,11 +1,15 @@
 import {FC} from "react";
-import {PA_HealingButtonProps} from "./HealingButton.props";
+import {useApiData} from "../../../../hooks/apiData.provider";
 import "./HealingButton.scss"
 
-const PA_HealingButton:FC<PA_HealingButtonProps> = ({potionData}) => {
+const PA_HealingButton:FC = () => {
+
+    const { potionData } = useApiData();
+    const potionSprite = potionData.sprites?.default;
+
     return (
         <button className="btn-healing-container" onClick={() => console.log("Use potion")}>
-            <img className="icon" src={potionData.sprites?.default} alt="Pokeball" />
+            <img className="icon" src={potionSprite} alt="Pokeball" />
             {potionData.name}
         </button>
     );
