@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from "react";
-import PA_MessageBox from "../components/molecules/MessageBox/MessageBox.component";
 import {MessagesEnum} from "../models/messages.enum";
 import {convertToCapitalizedHelper} from "../helpers/convertToCapitalized.helper";
 
@@ -20,7 +19,7 @@ export const MessagesProvider = ({ children }: any): JSX.Element => {
                 break;
             }
             case MessagesEnum.OPPONENT_KO: {
-                const opponentName = convertToCapitalizedHelper(rest?.[1]);
+                const opponentName = convertToCapitalizedHelper(rest?.[0]);
 
                 result = `${opponentName}: Is defeated`;
                 break;
@@ -41,10 +40,6 @@ export const MessagesProvider = ({ children }: any): JSX.Element => {
             showMessage,
 
         }}>
-            {message && message !== "" ? (
-                <PA_MessageBox />
-            ) : null}
-
             {children}
         </MessagesContext.Provider>
     );

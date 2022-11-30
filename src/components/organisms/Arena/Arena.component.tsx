@@ -9,6 +9,7 @@ import {useApiData} from "../../../hooks/apiData.provider";
 import PA_PlayerAction from "../../molecules/actions/PlayerAction/PlayerAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import './Arena.scss'
+import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 
 const PA_Arena:FC = () => {
     //Game state - "LOADING", "READY_PLAYER1", "READY_PLAYER2", "PLAYER1_ACTING"
@@ -18,6 +19,7 @@ const PA_Arena:FC = () => {
     const { showMessage } = useMessages();
     const { playerElement, opponentElement } = usePokemons();
     const { playerData, opponentData } = useApiData();
+    const { message } = useMessages();
 
     // Disable button
     const [ buttonDisabled, setButtonDisabled ] = useState(false)
@@ -45,20 +47,21 @@ const PA_Arena:FC = () => {
     // Player doing quick attack
     const handlePlayerAttack = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
+        ClassListAdd(playerElement, "quick-attack-animation")
+        ClassListAdd (opponentElement, "damage-taken-animation")
 
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOppponentHealth(0)
-            showMessage(MessagesEnum.OPPONENT_KO, playerName, opponentName, quickAttackDamage);
+            showMessage(MessagesEnum.OPPONENT_KO, opponentName);
+            setButtonDisabled(true)
         } else {
             SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
-            ClassListAdd(playerElement, "quick-attack-animation")
-            ClassListAdd (opponentElement, "damage-taken-animation")
             setButtonDisabled(true)
+            showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
         }
-
-        showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
-
+        
     },[currentOppponentHealth, opponentElement, opponentName, playerElement, playerName, quickAttackDamage, showMessage])
+
 
     const attackAnimationEnd = () => {
         ClassListRemove(playerElement, "quick-attack-animation");
@@ -69,6 +72,10 @@ const PA_Arena:FC = () => {
     return (
         <div className="arena-wrapper">
             <div>
+                {message && message !== "" ? (
+                    <PA_MessageBox />
+                ) : null}
+
                 <PA_Player attackAnimationEnd={attackAnimationEnd} />
 
                 <PA_PlayerAction
@@ -82,6 +89,7 @@ const PA_Arena:FC = () => {
 
                 <PA_Opponent />
             </div>
+
            <div className="arena-scene">
                 <span className="skye"></span>
                 <span className="ground"></span>
