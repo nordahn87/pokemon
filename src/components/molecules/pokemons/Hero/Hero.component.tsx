@@ -1,11 +1,11 @@
 import {FC} from "react";
-import {PA_PlayerProps} from "./Hero.props";
+import {PA_HeroProps} from "./Hero.props";
+import {useApiData} from "../../../../hooks/apiData.provider";
 import {usePokemons} from "../../../../hooks/pokemon.provider";
 import './Hero.scss'
-import {useApiData} from "../../../../hooks/apiData.provider";
 
+const PA_Hero:FC<PA_HeroProps> = (props) => {
 
-const PA_Hero:FC<PA_PlayerProps> = (props) => {
     const { heroElement } = usePokemons();
     const { heroData } = useApiData();
 

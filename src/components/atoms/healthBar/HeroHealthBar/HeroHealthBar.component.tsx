@@ -1,7 +1,7 @@
 import {FC} from "react";
 import "./HeroHealthBar.scss"
 
-const PA_PlayerHealthBar:FC = () => {
+const PA_HeroHealthBar:FC = () => {
     return (
         <div className="hero-healthbar-container">
             <div className="hero-healthbar-hp">HP</div>
@@ -10,4 +10,4 @@ const PA_PlayerHealthBar:FC = () => {
     );
 };
 
-export default PA_PlayerHealthBar;
+export default PA_HeroHealthBar;

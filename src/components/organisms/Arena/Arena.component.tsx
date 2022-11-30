@@ -3,18 +3,16 @@ import {MessagesEnum} from "../../../models/messages.enum";
 import {ClassListAdd, ClassListRemove} from "../../../helpers/classList.helper";
 import {useMessages} from "../../../hooks/messages.provider";
 import {usePokemons} from "../../../hooks/pokemon.provider";
+import {useApiData} from "../../../hooks/apiData.provider";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import './Arena.scss'
-import {useApiData} from "../../../hooks/apiData.provider";
 
 const PA_Arena:FC = () => {
-    //Game state - "LOADING", "READY_PLAYER1", "READY_PLAYER2", "PLAYER1_ACTING"
-    // const [gamestate, SetGameState] = useState("LOADING")
-
+    
     // Hooks
     const { showMessage } = useMessages();
     const { heroElement, opponentElement } = usePokemons();
@@ -44,7 +42,7 @@ const PA_Arena:FC = () => {
     },[])
 
     // Hero doing quick attack
-    const handlePlayerAttack = useCallback(() => {
+    const handleHeroAttack = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
         ClassListAdd(heroElement, "quick-attack-animation")
         ClassListAdd (opponentElement, "damage-taken-animation")
@@ -59,7 +57,7 @@ const PA_Arena:FC = () => {
             showMessage(MessagesEnum.HERO_ATTACK, heroName, opponentName, quickAttackDamage);
         }
         
-    },[currentOppponentHealth, quickAttackDamage, heroElement, opponentElement, showMessage])
+    },[currentOppponentHealth, quickAttackDamage, heroElement, opponentElement, showMessage, opponentName, heroName])
 
 
     const attackAnimationEnd = () => {
@@ -78,7 +76,7 @@ const PA_Arena:FC = () => {
                 <PA_Hero attackAnimationEnd={attackAnimationEnd} />
 
                 <PA_HeroAction
-                    handlePlayerAttack={handlePlayerAttack}
+                    handleHeroAttack={handleHeroAttack}
                     buttonDisabled={buttonDisabled}
                 />
             </div>

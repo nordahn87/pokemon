@@ -1,4 +1,4 @@
-export interface PA_PlayerActionProps {
-    handlePlayerAttack: () => void;
+export interface PA_HeroActionProps {
+    handleHeroAttack: () => void;
     buttonDisabled: boolean;
 }

@@ -17,7 +17,7 @@ const PA_AttackButton:FC<PA_AttackButtonProps> = (props) => {
                 return (
                     <button
                         key={index}
-                        onClick={props.handlePlayerAttack}
+                        onClick={props.handleHeroAttack}
                         className="btn-attack-container"
                         disabled={props.buttonDisabled}>
 

@@ -1,3 +1,3 @@
-export interface PA_PlayerProps {
+export interface PA_HeroProps {
     attackAnimationEnd: () => void;
 }
