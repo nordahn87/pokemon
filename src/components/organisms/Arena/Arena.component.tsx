@@ -72,12 +72,7 @@ const PA_Arena:FC = () => {
             <div>
                 <PA_Player
                     playerData={playerData}
-                    potionData={potionData}
-                    pokeBallData={pokeBallData}
-                    handlePlayerAttack={handlePlayerAttack}
                     attackAnimationEnd={attackAnimationEnd}
-                    buttonDisabled={buttonDisabled}
-                    setButtonDisabled={setButtonDisabled}
                 />
                 <PA_PlayerAction
                     playerData={playerData}
