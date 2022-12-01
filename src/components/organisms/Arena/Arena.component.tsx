@@ -1,91 +1,83 @@
 import React, {FC, useCallback, useEffect, useState} from "react";
 import {MessagesEnum} from "../../../models/messages.enum";
-import PA_Player from "../../molecules/pokemons/Player/Player.component";
-import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
+import {useApiData} from "../../../hooks/apiData.provider";
 import {ClassListAdd, ClassListRemove} from "../../../helpers/classList.helper";
 import {useMessages} from "../../../hooks/messages.provider";
-import {usePokemons} from "../../../hooks/pokemon.provider";
-import {useApiData} from "../../../hooks/apiData.provider";
-import PA_PlayerAction from "../../molecules/actions/PlayerAction/PlayerAction.component";
+import {useHero} from "../../../hooks/players/hero.provider";
+import {useOpponent} from "../../../hooks/players/opponent.provider";
+import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
+import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
+import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
-import './Arena.scss'
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
+import './Arena.scss'
 
 const PA_Arena:FC = () => {
-    //Game state - "LOADING", "READY_PLAYER1", "READY_PLAYER2", "PLAYER1_ACTING"
-    // const [gamestate, SetGameState] = useState("LOADING")
+
+    const [ gameState, setGameState ] = useState("IDLE");
 
     // Hooks
-    const { showMessage } = useMessages();
-    const { playerElement, opponentElement } = usePokemons();
-    const { playerData, opponentData } = useApiData();
+    const { heroData, opponentData } = useApiData();
+    const { showMessage, clearMessage } = useMessages();
     const { message } = useMessages();
-
-    // Disable button
-    const [ buttonDisabled, setButtonDisabled ] = useState(false)
+    const { heroElement} = useHero();
+    const { currentOpponentHealth, SetCurrentOpponentHealth, opponentElement } = useOpponent();
 
     // Attack
     const [quickAttackDamage, setQuickAttackDamage] = useState<number | null>(null)
 
-    // Health state
-    const [currentOppponentHealth, SetCurrentOppponentHealth ] = useState<number | null>(null)
+    const heroName = heroData.species?.name;
+    const opponentName = opponentData.species?.name;
 
-    // Constants
-    const playerName = playerData.species?.name
-    const opponentName = opponentData.species?.name
-
-    // Opponent current health
+    //Hero attacks - might add more damage types later on!
     useEffect(() => {
-        SetCurrentOppponentHealth(30)
-    },[])
+        setQuickAttackDamage(7);
+        setGameState("HERO_READY")
+    },[]);
 
-    //Player attacks - might add more damage types later on!
-    useEffect(() => {
-        setQuickAttackDamage(7)
-    },[])
-
-    // Player doing quick attack
-    const handlePlayerAttack = useCallback(() => {
-        const updatedCurrentOpponentHealth = currentOppponentHealth! - quickAttackDamage!
-        ClassListAdd(playerElement, "quick-attack-animation")
+    // Hero doing quick attack
+    const handleHeroAttack = useCallback(() => {
+        setGameState("HERO_ACT")
+        clearMessage();
+        ClassListAdd(heroElement, "quick-attack-animation")
         ClassListAdd (opponentElement, "damage-taken-animation")
-
-        if (updatedCurrentOpponentHealth <= 0) {
-            SetCurrentOppponentHealth(0)
-            showMessage(MessagesEnum.OPPONENT_KO, opponentName);
-            setButtonDisabled(true)
-        } else {
-            SetCurrentOppponentHealth(updatedCurrentOpponentHealth)
-            setButtonDisabled(true)
-            showMessage(MessagesEnum.PLAYER_ATTACK, playerName, opponentName, quickAttackDamage);
-        }
-        
-    },[currentOppponentHealth, opponentElement, opponentName, playerElement, playerName, quickAttackDamage, showMessage])
+    },[heroElement, opponentElement, clearMessage])
 
 
-    const attackAnimationEnd = () => {
-        ClassListRemove(playerElement, "quick-attack-animation");
+    const heroAttackCallback = useCallback(() => {
+        const updatedCurrentOpponentHealth = currentOpponentHealth! - quickAttackDamage!
+        setGameState("HERO_READY")
+
+        ClassListRemove(heroElement, "quick-attack-animation");
         ClassListRemove(opponentElement, "damage-taken-animation");
-        setButtonDisabled(false)
-    }
+        
+        if (updatedCurrentOpponentHealth <= 0) {
+            SetCurrentOpponentHealth(0)
+            showMessage(MessagesEnum.OPPONENT_KO, opponentName);
+        } else {
+            SetCurrentOpponentHealth(updatedCurrentOpponentHealth)
+            showMessage(MessagesEnum.HERO_ATTACK, heroName, opponentName, quickAttackDamage);
+        }
+    },[SetCurrentOpponentHealth, currentOpponentHealth, heroElement, heroName, opponentElement, opponentName, quickAttackDamage, showMessage])
 
     return (
         <div className="arena-wrapper">
+            {JSON.stringify(gameState)}
             <div>
                 {message && message !== "" ? (
                     <PA_MessageBox />
                 ) : null}
 
-                <PA_Player attackAnimationEnd={attackAnimationEnd} />
+                <PA_Hero heroAttackCallback={heroAttackCallback} />
 
-                <PA_PlayerAction
-                    handlePlayerAttack={handlePlayerAttack}
-                    buttonDisabled={buttonDisabled}
+                <PA_HeroAction
+                    handleHeroAttack={handleHeroAttack}
+                    disableButton={gameState !== "HERO_READY"}
                 />
             </div>
 
             <div>
-                <PA_OpponentAction currentOppponentHealth={currentOppponentHealth} />
+                <PA_OpponentAction />
 
                 <PA_Opponent />
             </div>

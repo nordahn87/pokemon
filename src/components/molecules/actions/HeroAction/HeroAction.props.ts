@@ -1,4 +1,4 @@
-export interface PA_AttackButtonProps {
+export interface PA_HeroActionProps {
     handleHeroAttack: () => void;
     disableButton: boolean;
 }

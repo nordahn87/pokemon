@@ -1,12 +1,12 @@
 import {FC} from "react";
-import {usePokemons} from "../../../../hooks/pokemon.provider";
 import {useApiData} from "../../../../hooks/apiData.provider";
+import {useOpponent} from "../../../../hooks/players/opponent.provider";
 import './Opponent.scss'
 
 const PA_Opponent:FC = () => {
 
     const { opponentData } = useApiData();
-    const { opponentElement } = usePokemons();
+    const { opponentElement } = useOpponent();
     const opponentSprite = opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default;
     const opponentName = opponentData.species?.name;
 

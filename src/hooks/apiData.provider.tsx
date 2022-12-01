@@ -1,22 +1,27 @@
 import React, {useContext, useEffect, useState} from "react";
 import {PA_API} from "../interface/api";
 import {FetchApi} from "../helpers/api.helper";
-import {ENDPOINT_OPPONENT, ENDPOINT_PLAYER, ENDPOINT_POKEBALL, ENDPOINT_POTION} from "../constants/endpoints";
+import {
+    ENDPOINT_HERO,
+    ENDPOINT_OPPONENT,
+    ENDPOINT_POKEBALL,
+    ENDPOINT_POTION
+} from "../constants/endpoints";
 
 const ApiDataContext = React.createContext<any>({});
 
 export const  ApiDataProvider = ({ children }: any): JSX.Element => {
-    const [playerData, setPlayerData ] = useState<PA_API>({})
+    const [heroData, setHeroData ] = useState<PA_API>({})
     const [opponentData, setOpponentData ] = useState<PA_API>({})
     const [potionData, setPotionData ] = useState<PA_API>({})
     const [pokeBallData, setPokeBallData ] = useState<PA_API>({})
 
     useEffect(() => {
-        FetchApi(ENDPOINT_PLAYER)
+        FetchApi(ENDPOINT_HERO)
             .then((data) => {
-                setPlayerData(data)
+                setHeroData(data)
             })
-    }, [setPlayerData]);
+    }, [setHeroData]);
 
     useEffect(() => {
         FetchApi(ENDPOINT_OPPONENT)
@@ -41,7 +46,7 @@ export const  ApiDataProvider = ({ children }: any): JSX.Element => {
 
     return (
         <ApiDataContext.Provider value={{
-            playerData,
+            heroData,
             opponentData,
             potionData,
             pokeBallData

@@ -1,4 +1,4 @@
-.player-action-wrapper {
+.hero-action-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -8,12 +8,12 @@
     background: linear-gradient(0deg, rgba(212,199,190,1) 5%, rgba(248,248,216,1) 5%, rgba(248,248,216,1) 95%, rgba(255,255,223,1) 95%);
 }
 
-.player-action-container {
+.hero-action-container {
     display: flex;
     gap: 10px;
 }
 
-.player-name {
+.hero-name {
     text-transform: capitalize;
     font-size: 1rem;
     margin-bottom: 5px;
