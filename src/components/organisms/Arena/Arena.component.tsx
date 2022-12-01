@@ -13,18 +13,15 @@ import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import './Arena.scss'
 
 const PA_Arena:FC = () => {
-    
+
+    const [ gameState, setGameState ] = useState("IDLE");
+
     // Hooks
-    const { showMessage } = useMessages();
     const { heroData, opponentData } = useApiData();
+    const { showMessage, clearMessage } = useMessages();
     const { message } = useMessages();
     const { heroElement} = useHero();
-    const { currentOpponentHealth, SetCurrentOpponentHealth,  opponentElement } = useOpponent();
-
-
-
-    // Disable button
-    const [ buttonDisabled, setButtonDisabled ] = useState(false)
+    const { currentOpponentHealth, SetCurrentOpponentHealth, opponentElement } = useOpponent();
 
     // Attack
     const [quickAttackDamage, setQuickAttackDamage] = useState<number | null>(null)
@@ -34,46 +31,48 @@ const PA_Arena:FC = () => {
 
     //Hero attacks - might add more damage types later on!
     useEffect(() => {
-        setQuickAttackDamage(7)
-    },[])
+        setQuickAttackDamage(7);
+        setGameState("HERO_READY")
+    },[]);
 
     // Hero doing quick attack
     const handleHeroAttack = useCallback(() => {
-        const updatedCurrentOpponentHealth = currentOpponentHealth! - quickAttackDamage!
+        setGameState("HERO_ACT")
+        clearMessage();
         ClassListAdd(heroElement, "quick-attack-animation")
         ClassListAdd (opponentElement, "damage-taken-animation")
+    },[heroElement, opponentElement, clearMessage])
 
+
+    const heroAttackCallback = useCallback(() => {
+        const updatedCurrentOpponentHealth = currentOpponentHealth! - quickAttackDamage!
+        setGameState("HERO_READY")
+
+        ClassListRemove(heroElement, "quick-attack-animation");
+        ClassListRemove(opponentElement, "damage-taken-animation");
+        
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOpponentHealth(0)
             showMessage(MessagesEnum.OPPONENT_KO, opponentName);
-            setButtonDisabled(true)
         } else {
             SetCurrentOpponentHealth(updatedCurrentOpponentHealth)
-            setButtonDisabled(true)
             showMessage(MessagesEnum.HERO_ATTACK, heroName, opponentName, quickAttackDamage);
         }
-        
-    },[currentOpponentHealth, quickAttackDamage, heroElement, opponentElement, SetCurrentOpponentHealth, showMessage, opponentName, heroName])
-
-
-    const attackAnimationEnd = () => {
-        ClassListRemove(heroElement, "quick-attack-animation");
-        ClassListRemove(opponentElement, "damage-taken-animation");
-        setButtonDisabled(false)
-    }
+    },[SetCurrentOpponentHealth, currentOpponentHealth, heroElement, heroName, opponentElement, opponentName, quickAttackDamage, showMessage])
 
     return (
         <div className="arena-wrapper">
+            {JSON.stringify(gameState)}
             <div>
                 {message && message !== "" ? (
                     <PA_MessageBox />
                 ) : null}
 
-                <PA_Hero attackAnimationEnd={attackAnimationEnd} />
+                <PA_Hero heroAttackCallback={heroAttackCallback} />
 
                 <PA_HeroAction
                     handleHeroAttack={handleHeroAttack}
-                    buttonDisabled={buttonDisabled}
+                    disableButton={gameState !== "HERO_READY"}
                 />
             </div>
 

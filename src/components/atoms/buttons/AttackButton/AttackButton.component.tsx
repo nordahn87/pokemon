@@ -19,7 +19,7 @@ const PA_AttackButton:FC<PA_AttackButtonProps> = (props) => {
                         key={index}
                         onClick={props.handleHeroAttack}
                         className="btn-attack-container"
-                        disabled={props.buttonDisabled}>
+                        disabled={props.disableButton}>
 
                         <div className="btn-content">
                             {item.move?.name.replace('-', ' ')}

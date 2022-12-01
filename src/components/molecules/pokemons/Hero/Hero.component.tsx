@@ -17,7 +17,7 @@ const PA_Hero:FC<PA_HeroProps> = (props) => {
             <img
                 className="hero-pokemon"
                 ref={heroElement}
-                onAnimationEnd={props.attackAnimationEnd}
+                onAnimationEnd={props.heroAttackCallback}
                 src={heroSprite}
                 alt={heroName}
             />

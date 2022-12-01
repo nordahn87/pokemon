@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {MessagesEnum} from "../models/messages.enum";
 import {convertToCapitalizedHelper} from "../helpers/convertToCapitalized.helper";
 
@@ -8,7 +8,7 @@ export const MessagesProvider = ({ children }: any): JSX.Element => {
     const [message, setMessage] = useState<string>();
 
     // @ts-ignore
-    const showMessage = (alias: string, ...rest) => {
+    const showMessage = (alias: string, ...rest ) => {
         let result = "";
         switch (alias) {
             case MessagesEnum.HERO_ATTACK: {
@@ -26,19 +26,29 @@ export const MessagesProvider = ({ children }: any): JSX.Element => {
             }
         }
         setMessage(result);
+        addSpaceBarEventListener();
     };
 
-    useEffect(() => {
-        setTimeout(() => {
+    const addSpaceBarEventListener = () => {
+        document.addEventListener('keyup', onKeyupClicked);
+    }
+
+    const onKeyupClicked = (event: any) => {
+        if(event.code === "Space"){
             setMessage(undefined)
-        }, 2000);
-    }, [message]);
+            document.removeEventListener('keyup', onKeyupClicked);
+        }
+    }
+
+    const clearMessage = () => {
+        setMessage(undefined)
+    };
 
     return (
         <MessagesContext.Provider value={{
             message,
             showMessage,
-
+            clearMessage,
         }}>
             {children}
         </MessagesContext.Provider>

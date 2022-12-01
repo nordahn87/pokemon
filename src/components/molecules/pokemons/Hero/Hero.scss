@@ -15,7 +15,7 @@
 
 @keyframes heroAttack {
     0%      {width: 250px;  bottom: -50px;}
-    50%     {width: 170px;  left: 100%; transform: translate(-100%, 0); bottom: 50px;}
+    50%     {width: 170px;  left: 100%; transform: translate(-100%, 0) rotate(5deg); bottom: 50px;}
     100%    {width: 250px;  bottom: -50px;}
 }
 
