@@ -31,9 +31,17 @@
 
 //hero keyframes
 @keyframes hero-attack-keyframes {
-    50%     { width: 150px;  left: 125%; transform: translate(-100%, 0) rotate(2deg); bottom: 110px; }
+    50% {
+        width: 150px;
+        left: 125%;
+        transform: translate(-100%, 0) rotate(2deg);
+        bottom: 110px;
+    }
 }
 
 @keyframes hero-takes-damage-keyframes {
-    50%     { right: 70%; transform: translate(-70%, 0) }
+    50% {
+        right: 70%;
+        transform: translate(-70%, 0);
+    }
 }

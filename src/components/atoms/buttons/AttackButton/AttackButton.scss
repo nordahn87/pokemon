@@ -1,7 +1,13 @@
 @import "../../../../styles/helpers/all";
 
 .attack-button-container {
-  @include clean-button;
-  @include action-button;
-  background: linear-gradient(0deg, rgba(194,81,58,1) 5%, rgba(231,110,85,1) 5%, rgba(231,110,85,1) 95%, rgba(255,152,131,1) 95%);
+    @include clean-button;
+    @include action-button;
+    background: linear-gradient(
+        0deg,
+        rgba(194, 81, 58, 1) 5%,
+        rgba(231, 110, 85, 1) 5%,
+        rgba(231, 110, 85, 1) 95%,
+        rgba(255, 152, 131, 1) 95%
+    );
 }

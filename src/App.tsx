@@ -1,12 +1,12 @@
 import "../src/styles/global/main.scss";
 import PA_Arena from "./components/organisms/Arena/Arena.component";
-import {MessagesProvider} from "./hooks/messages.provider";
-import {ApiDataProvider} from "./hooks/apiData.provider";
-import {HeroProvider} from "./hooks/players/hero.provider";
-import {OpponentProvider} from "./hooks/players/opponent.provider";
-import {AnimationProvider} from "./hooks/animation.provider";
+import { MessagesProvider } from "./hooks/messages.provider";
+import { ApiDataProvider } from "./hooks/apiData.provider";
+import { HeroProvider } from "./hooks/players/hero.provider";
+import { OpponentProvider } from "./hooks/players/opponent.provider";
+import { AnimationProvider } from "./hooks/animation.provider";
 
-const App =() => {
+const App = () => {
     return (
         <ApiDataProvider>
             <MessagesProvider>
@@ -16,10 +16,10 @@ const App =() => {
                             <PA_Arena />
                         </OpponentProvider>
                     </HeroProvider>
-                 </AnimationProvider>
+                </AnimationProvider>
             </MessagesProvider>
         </ApiDataProvider>
-  );
-}
+    );
+};
 
 export default App;

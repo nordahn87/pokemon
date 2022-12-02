@@ -1,15 +1,17 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 
 const AnimationContext = React.createContext<any>({});
 
 export const AnimationProvider = ({ children }: any): JSX.Element => {
-    const [runningAnimation, setRunningAnimation] = useState(undefined)
+    const [runningAnimation, setRunningAnimation] = useState(undefined);
 
     return (
-        <AnimationContext.Provider value={{
-            runningAnimation,
-            setRunningAnimation,
-        }}>
+        <AnimationContext.Provider
+            value={{
+                runningAnimation,
+                setRunningAnimation,
+            }}
+        >
             {children}
         </AnimationContext.Provider>
     );

@@ -6,11 +6,10 @@ export const convertToCapitalizedHelper = (value: string) => {
     characters.forEach((character, index) => {
         if (index === 0) {
             result.push(character.toUpperCase());
-        }
-        else {
+        } else {
             result.push(character);
         }
-    })
+    });
 
     return result.join("");
 };

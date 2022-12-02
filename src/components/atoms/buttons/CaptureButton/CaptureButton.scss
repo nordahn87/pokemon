@@ -1,7 +1,13 @@
 @import "../../../../styles/helpers/all";
 
 .capture-button-container {
-  @include clean-button;
-  @include action-button;
-  background: linear-gradient(0deg, rgba(203,173,7,1) 5%, rgba(247,213,29,1) 5%, rgba(247,213,29,1) 95%, rgba(255,232,105,1) 95%);
+    @include clean-button;
+    @include action-button;
+    background: linear-gradient(
+        0deg,
+        rgba(203, 173, 7, 1) 5%,
+        rgba(247, 213, 29, 1) 5%,
+        rgba(247, 213, 29, 1) 95%,
+        rgba(255, 232, 105, 1) 95%
+    );
 }

@@ -19,9 +19,21 @@
 }
 
 .skye {
-    background: linear-gradient(0deg, rgba(117,226,228,1) 25%, rgba(130,229,231,1) 25%, rgba(146,244,246,1) 60%, rgba(159,247,249,1) 60%);
+    background: linear-gradient(
+        0deg,
+        rgba(117, 226, 228, 1) 25%,
+        rgba(130, 229, 231, 1) 25%,
+        rgba(146, 244, 246, 1) 60%,
+        rgba(159, 247, 249, 1) 60%
+    );
 }
 
 .ground {
-    background: linear-gradient(-180deg, rgba(161,217,125,1) 25%, rgba(178,227,146,1) 25%, rgba(178,227,146,1) 60%, rgba(187,230,159,1) 60%);;
+    background: linear-gradient(
+        -180deg,
+        rgba(161, 217, 125, 1) 25%,
+        rgba(178, 227, 146, 1) 25%,
+        rgba(178, 227, 146, 1) 60%,
+        rgba(187, 230, 159, 1) 60%
+    );
 }
