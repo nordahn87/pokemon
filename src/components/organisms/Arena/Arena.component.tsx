@@ -12,6 +12,7 @@ import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.compone
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import './Arena.scss'
+import {useAnimation} from "../../../hooks/animation.provider";
 
 const PA_Arena:FC = () => {
 
@@ -22,6 +23,7 @@ const PA_Arena:FC = () => {
     const { showMessage, clearMessage } = useMessages();
     const { message } = useMessages();
     const { heroElement} = useHero();
+    const { runningAnimation, setRunningAnimation } =useAnimation();
     const { currentOpponentHealth, SetCurrentOpponentHealth, opponentElement } = useOpponent();
 
     // Attack
@@ -43,7 +45,8 @@ const PA_Arena:FC = () => {
         clearMessage();
         ClassListAdd(heroElement, "hero-attack-animation")
         ClassListAdd (opponentElement, "opponent-takes-damage-animation")
-    },[heroElement, opponentElement, clearMessage])
+        setRunningAnimation("HERO_ATTACK");
+    },[clearMessage, heroElement, opponentElement, setRunningAnimation])
 
 
     const heroAttackCallback = useCallback(() => {
@@ -62,36 +65,48 @@ const PA_Arena:FC = () => {
     },[SetCurrentOpponentHealth, currentOpponentHealth, heroElement, heroName, opponentElement, opponentName, quickAttackDamage, showMessage])
 
     return (
-        <div className="arena-wrapper">
-            {JSON.stringify(gameState)}
-            <div>
-                {message && message !== "" ? (
-                    <PA_MessageBox />
-                ) : null}
-
-                <PA_Hero heroAttackCallback={heroAttackCallback} />
-
-                <PA_HeroAction
-                    handleHeroAttack={handleHeroAttack}
-                    disableButton={gameState !== "HERO_READY"}
-                />
+        <>
+            <div style={{ backgroundColor: 'white', zIndex: 4 }}>
+                <div>
+                    Gamestate:
+                    {JSON.stringify(gameState)}
+                </div>
+                <div>
+                    Animationstate:
+                    {JSON.stringify(runningAnimation)}
+                </div>
             </div>
+            <div className="arena-wrapper">
 
-            <div>
-                <PA_OpponentAction />
+                <div>
+                    {message && message !== "" ? (
+                        <PA_MessageBox />
+                    ) : null}
 
-                <PA_Opponent />
+                    <PA_Hero heroAttackCallback={heroAttackCallback} />
 
-                <button onClick={() => {console.log("Opponent attack test")}}>
-                    ** TEMP Opponent Attack
-                 </button>
+                    <PA_HeroAction
+                        handleHeroAttack={handleHeroAttack}
+                        disableButton={gameState !== "HERO_READY"}
+                    />
+                </div>
+
+                <div>
+                    <PA_OpponentAction />
+
+                    <PA_Opponent />
+
+                    <button onClick={() => {console.log("Opponent attack test")}}>
+                        ** TEMP Opponent Attack
+                     </button>
+                </div>
+
+               <div className="arena-scene">
+                    <span className="skye"></span>
+                    <span className="ground"></span>
+                </div>
             </div>
-
-           <div className="arena-scene">
-                <span className="skye"></span>
-                <span className="ground"></span>
-            </div>
-        </div>
+        </>
     );
 };
 

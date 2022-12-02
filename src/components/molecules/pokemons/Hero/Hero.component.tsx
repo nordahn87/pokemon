@@ -3,21 +3,32 @@ import {PA_HeroProps} from "./Hero.props";
 import {useApiData} from "../../../../hooks/apiData.provider";
 import {useHero} from "../../../../hooks/players/hero.provider";
 import './Hero.scss'
+import {useAnimation} from "../../../../hooks/animation.provider";
 
 const PA_Hero:FC<PA_HeroProps> = (props) => {
 
     const { heroElement } = useHero();
     const { heroData } = useApiData();
+    const { runningAnimation, setRunningAnimation } = useAnimation();
 
     const heroSprite = heroData.sprites?.versions["generation-v"]["black-white"].animated.back_default;
     const heroName = heroData.species?.name;
+
+    const animationHeroCallBack = () => {
+        switch(runningAnimation) {
+            case "HERO_ATTACK":
+                props.heroAttackCallback();
+                setRunningAnimation(undefined);
+                break;
+        }
+    }
 
     return (
         <div className="hero-container">
             <img
                 className="hero-pokemon"
                 ref={heroElement}
-                onAnimationEnd={props.heroAttackCallback}
+                onAnimationEnd={animationHeroCallBack}
                 src={heroSprite}
                 alt={heroName}
             />
