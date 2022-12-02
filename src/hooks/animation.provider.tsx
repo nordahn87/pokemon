@@ -1,11 +1,20 @@
-/*
-export const onOpponentAnimationEnd = () => {
-    // TODO: Slå op i AnimationProvider og tjekke hvad for en animation der er i gang.
-    switch(getRunningAnimation) {
-        case "OPPONENT_ATTACK":
-            props.opponentAttackCallback();
-            finishAnimation("OPPONENT_ATTACK");
-            break;
-    }
-}
-*/
+import React, { useContext, useState } from "react";
+
+const AnimationContext = React.createContext<any>({});
+
+export const AnimationProvider = ({ children }: any): JSX.Element => {
+    const [runningAnimation, setRunningAnimation] = useState(undefined);
+
+    return (
+        <AnimationContext.Provider
+            value={{
+                runningAnimation,
+                setRunningAnimation,
+            }}
+        >
+            {children}
+        </AnimationContext.Provider>
+    );
+};
+
+export const useAnimation = (): any => useContext(AnimationContext);

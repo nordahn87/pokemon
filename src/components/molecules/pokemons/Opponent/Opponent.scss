@@ -32,10 +32,16 @@
 
 //Opponent keyframes
 @keyframes opponent-attack-keyframes {
-    50%     {  width: 230px; bottom: -120px; transform: translate(-200%, 0); }
+    50% {
+        width: 230px;
+        bottom: -120px;
+        transform: translate(-200%, 0);
+    }
 }
 
 @keyframes opponent-takes-damage-keyframes {
-    50%     {  left: 90%; transform: translate(-100%, 0); }
+    50% {
+        left: 90%;
+        transform: translate(-100%, 0);
+    }
 }
-
