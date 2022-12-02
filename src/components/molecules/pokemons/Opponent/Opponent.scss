@@ -1,20 +1,12 @@
+// Opponent
 .opponent-pokemon {
     position: absolute;
     left: 50%;
     bottom: 0;
+    width: 150px;
     transform: translate(-50%, 0);
     image-rendering: pixelated;
-    width: 150px;
-}
-
-.damage-taken-animation {
-    animation-name: opponentTakingDamage;
-    animation-iteration-count: 1;
-    animation-duration: 0.5s;
-}
-
-@keyframes opponentTakingDamage{
-    75%     { bottom: 10px; }
+    z-index: -3;
 }
 
 .opponent-pokemon-container {
@@ -24,3 +16,26 @@
     justify-content: center;
     padding-top: 40px;
 }
+
+//Opponent animation
+.opponent-attack-animation {
+    animation-name: opponent-attack-keyframes;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+}
+
+.opponent-takes-damage-animation {
+    animation-name: opponent-takes-damage-keyframes;
+    animation-iteration-count: 1;
+    animation-duration: 1.2s;
+}
+
+//Opponent keyframes
+@keyframes opponent-attack-keyframes {
+    50%     {  width: 230px; bottom: -120px; transform: translate(-200%, 0); }
+}
+
+@keyframes opponent-takes-damage-keyframes {
+    50%     {  left: 90%; transform: translate(-100%, 0); }
+}
+

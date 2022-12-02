@@ -1,4 +1,4 @@
-import {FC} from "react";
+import React, {FC} from "react";
 import {useApiData} from "../../../../hooks/apiData.provider";
 import {useOpponent} from "../../../../hooks/players/opponent.provider";
 import './Opponent.scss'

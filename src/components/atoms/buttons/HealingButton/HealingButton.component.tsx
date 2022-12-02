@@ -8,7 +8,7 @@ const PA_HealingButton:FC = () => {
     const potionSprite = potionData.sprites?.default;
 
     return (
-        <button className="btn-healing-container" onClick={() => console.log("Use potion")}>
+        <button className="healing-button-container" onClick={() => console.log("Use potion")}>
             <img className="icon" src={potionSprite} alt="Pokeball" />
             {potionData.name}
         </button>

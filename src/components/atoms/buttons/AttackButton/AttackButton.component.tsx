@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {PA_AttackButtonProps} from "./AttackButton.props";
-import "./AttackButton.scss"
 import {useApiData} from "../../../../hooks/apiData.provider";
+import "./AttackButton.scss"
 
 const PA_AttackButton:FC<PA_AttackButtonProps> = (props) => {
 
@@ -18,10 +18,10 @@ const PA_AttackButton:FC<PA_AttackButtonProps> = (props) => {
                     <button
                         key={index}
                         onClick={props.handleHeroAttack}
-                        className="btn-attack-container"
+                        className="attack-button-container"
                         disabled={props.disableButton}>
 
-                        <div className="btn-content">
+                        <div>
                             {item.move?.name.replace('-', ' ')}
                         </div>
                     </button>

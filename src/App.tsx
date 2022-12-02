@@ -11,7 +11,7 @@ const App =() => {
             <MessagesProvider>
                 <HeroProvider>
                     <OpponentProvider>
-                    <PA_Arena />
+                        <PA_Arena />
                     </OpponentProvider>
                 </HeroProvider>
             </MessagesProvider>

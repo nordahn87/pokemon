@@ -10,7 +10,7 @@ export const OpponentProvider = ({ children }: any): JSX.Element => {
 
     // Opponent health
     useEffect(() => {
-        let maxHealth = 12
+        let maxHealth = 110
 
         SetCurrentOpponentHealth(maxOpponentHealth);
         setMaxOpponentMaxHealth(maxHealth);

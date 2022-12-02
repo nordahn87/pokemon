@@ -1,3 +1,4 @@
+// Hero
 .hero-pokemon {
     position: absolute;
     bottom: -50px;
@@ -5,24 +6,34 @@
     transform: translate(-50%, 0);
     image-rendering: pixelated;
     width: 250px;
-}
-
-.quick-attack-animation {
-    animation-name: heroAttack;
-    animation-iteration-count: 1;
-    animation-duration: 1s;
-}
-
-@keyframes heroAttack {
-    0%      {width: 250px;  bottom: -50px;}
-    50%     {width: 170px;  left: 100%; transform: translate(-100%, 0) rotate(5deg); bottom: 50px;}
-    100%    {width: 250px;  bottom: -50px;}
+    z-index: -1;
 }
 
 .hero-container {
     position: relative;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     height: 400px;
+}
+
+// Hero animations
+.hero-attack-animation {
+    animation-name: hero-attack-keyframes;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+}
+
+.hero-takes-damage-animation {
+    animation-name: hero-takes-damage-keyframes;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+}
+
+//hero keyframes
+@keyframes hero-attack-keyframes {
+    50%     { width: 150px;  left: 125%; transform: translate(-100%, 0) rotate(2deg); bottom: 110px; }
+}
+
+@keyframes hero-takes-damage-keyframes {
+    50%     { right: 70%; transform: translate(-70%, 0) }
 }
