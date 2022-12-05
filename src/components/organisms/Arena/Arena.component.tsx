@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { MessagesEnum } from "../../../models/messages.enum";
 import { GameStateEnum } from "../../../models/gameState.enum";
+import { ActionsEnum } from "../../../models/actions.enum";
+import { MessagesEnum } from "../../../models/messages.enum";
 import { useApiData } from "../../../hooks/apiData.provider";
 import { useMessages } from "../../../hooks/messages.provider";
 import { useHero } from "../../../hooks/players/hero.provider";
@@ -19,23 +20,46 @@ const PA_Arena: FC = () => {
 
     // Hooks
     const { heroData, opponentData } = useApiData();
-    const { showMessage, clearMessage } = useMessages();
-    const { message } = useMessages();
-    const { heroElement } = useHero();
+    const { message, showMessage, clearMessage } = useMessages();
     const { runningAnimation, setRunningAnimation } = useAnimation();
+    const { currentHeroHealth, setCurrentHeroHealth, heroElement } = useHero();
     const { currentOpponentHealth, SetCurrentOpponentHealth, opponentElement } = useOpponent();
 
     // Attack
-    const [quickAttackDamage, setQuickAttackDamage] = useState<number | null>(null);
+    const [heroAttackDamage, setHeroAttackDamage] = useState<number | null>(null);
+    const [opponentAttackDamage, setOpponentAttackDamage] = useState<number | null>(null);
 
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
     //Hero attacks - might add more damage types later on!
     useEffect(() => {
-        setQuickAttackDamage(7);
+        setHeroAttackDamage(7);
+        setOpponentAttackDamage(4);
         setGameState(GameStateEnum.HERO_READY);
     }, []);
+
+    const handleOpponentAttack = useCallback(() => {
+        setGameState(GameStateEnum.OPPONENT_ACT);
+        ClassListAdd(opponentElement, "opponent-attack-animation");
+        ClassListAdd(heroElement, "hero-takes-damage-animation");
+        setRunningAnimation(ActionsEnum.OPPONENT_ACTION_ATTACK);
+    }, [heroElement, opponentElement, setRunningAnimation]);
+
+    const opponentAttackCallback = useCallback(() => {
+        const updatedCurrentHeroHealth = currentHeroHealth - (opponentAttackDamage || 0);
+
+        setGameState(GameStateEnum.OPPONENT_READY);
+
+        ClassListRemove(opponentElement, "opponent-attack-animation");
+        ClassListRemove(heroElement, "hero-takes-damage-animation");
+
+        if (updatedCurrentHeroHealth <= 0) {
+            setCurrentHeroHealth(0);
+        } else {
+            setCurrentHeroHealth(updatedCurrentHeroHealth);
+        }
+    }, [currentHeroHealth, opponentAttackDamage, heroElement, opponentElement, setCurrentHeroHealth]);
 
     // Hero doing quick attack
     const handleHeroAttack = useCallback(() => {
@@ -43,21 +67,21 @@ const PA_Arena: FC = () => {
         clearMessage();
         ClassListAdd(heroElement, "hero-attack-animation");
         ClassListAdd(opponentElement, "opponent-takes-damage-animation");
-        setRunningAnimation("HERO_ATTACK");
+        setRunningAnimation(ActionsEnum.HERO_ACTION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setRunningAnimation]);
 
     const heroAttackCallback = useCallback(() => {
-        const updatedCurrentOpponentHealth = currentOpponentHealth - (quickAttackDamage || 0);
+        const updatedCurrentOpponentHealth = currentOpponentHealth - (heroAttackDamage || 0);
         setGameState(GameStateEnum.HERO_READY);
         ClassListRemove(heroElement, "hero-attack-animation");
         ClassListRemove(opponentElement, "opponent-takes-damage-animation");
 
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOpponentHealth(0);
-            showMessage(MessagesEnum.OPPONENT_KO, opponentName);
+            showMessage(MessagesEnum.OPPONENT_MESSAGE_KO, opponentName);
         } else {
             SetCurrentOpponentHealth(updatedCurrentOpponentHealth);
-            showMessage(MessagesEnum.HERO_ATTACK, heroName, opponentName, quickAttackDamage);
+            showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, opponentName, heroAttackDamage);
         }
     }, [
         SetCurrentOpponentHealth,
@@ -66,7 +90,7 @@ const PA_Arena: FC = () => {
         heroName,
         opponentElement,
         opponentName,
-        quickAttackDamage,
+        heroAttackDamage,
         showMessage,
     ]);
 
@@ -94,15 +118,9 @@ const PA_Arena: FC = () => {
                 <div>
                     <PA_OpponentAction />
 
-                    <PA_Opponent />
+                    <PA_Opponent opponentAttackCallback={opponentAttackCallback} />
 
-                    <button
-                        onClick={() => {
-                            console.log("Opponent attack test");
-                        }}
-                    >
-                        ** TEMP Opponent Attack
-                    </button>
+                    <button onClick={handleOpponentAttack}>** TEMP Opponent Attack</button>
                 </div>
 
                 <div className="arena-scene">
