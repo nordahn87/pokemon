@@ -4,8 +4,8 @@ import { ActionsEnum } from "../../../models/actions.enum";
 import { MessagesEnum } from "../../../models/messages.enum";
 import { useApiData } from "../../../hooks/apiData.provider";
 import { useMessages } from "../../../hooks/messages.provider";
-import { useHero } from "../../../hooks/players/hero.provider";
-import { useOpponent } from "../../../hooks/players/opponent.provider";
+import { useAnimation } from "../../../hooks/animation.provider";
+import { usePlayers } from "../../../hooks/players.provider";
 import { ClassListAdd, ClassListRemove } from "../../../helpers/classList.helper";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
@@ -13,7 +13,6 @@ import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.compone
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import "./Arena.scss";
-import { useAnimation } from "../../../hooks/animation.provider";
 
 const PA_Arena: FC = () => {
     const [gameState, setGameState] = useState(GameStateEnum.GAME_IDLE);
@@ -22,10 +21,17 @@ const PA_Arena: FC = () => {
     const { heroData, opponentData } = useApiData();
     const { message, showMessage, clearMessage } = useMessages();
     const { runningAnimation, setRunningAnimation } = useAnimation();
-    const { currentHeroHealth, setCurrentHeroHealth, heroElement } = useHero();
-    const { currentOpponentHealth, SetCurrentOpponentHealth, opponentElement } = useOpponent();
 
-    // Attack
+    const {
+        currentOpponentHealth,
+        SetCurrentOpponentHealth,
+        opponentElement,
+        currentHeroHealth,
+        setCurrentHeroHealth,
+        heroElement,
+    } = usePlayers();
+
+    // Players attack damage
     const [heroAttackDamage, setHeroAttackDamage] = useState<number | null>(null);
     const [opponentAttackDamage, setOpponentAttackDamage] = useState<number | null>(null);
 

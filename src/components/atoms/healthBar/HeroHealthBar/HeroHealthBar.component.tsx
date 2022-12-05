@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { useHero } from "../../../../hooks/players/hero.provider";
+import { usePlayers } from "../../../../hooks/players.provider";
 import "./HeroHealthBar.scss";
 
 const PA_HeroHealthBar: FC = () => {
-    const { currentHeroHealth, maxHeroHealth } = useHero();
+    const { currentHeroHealth, maxHeroHealth } = usePlayers();
 
     return (
         <div className="hero-healthbar-container">

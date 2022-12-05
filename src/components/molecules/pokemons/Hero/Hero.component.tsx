@@ -2,12 +2,12 @@ import { FC } from "react";
 import { PA_HeroProps } from "./Hero.props";
 import { useApiData } from "../../../../hooks/apiData.provider";
 import { useAnimation } from "../../../../hooks/animation.provider";
-import { useHero } from "../../../../hooks/players/hero.provider";
+import { usePlayers } from "../../../../hooks/players.provider";
 import { ActionsEnum } from "../../../../models/actions.enum";
 import "./Hero.scss";
 
 const PA_Hero: FC<PA_HeroProps> = (props) => {
-    const { heroElement } = useHero();
+    const { heroElement } = usePlayers();
     const { heroData } = useApiData();
     const { runningAnimation, setRunningAnimation } = useAnimation();
 
