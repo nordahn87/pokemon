@@ -3,6 +3,7 @@ import { PA_HeroProps } from "./Hero.props";
 import { useApiData } from "../../../../hooks/apiData.provider";
 import { useAnimation } from "../../../../hooks/animation.provider";
 import { useHero } from "../../../../hooks/players/hero.provider";
+import { ActionsEnum } from "../../../../models/actions.enum";
 import "./Hero.scss";
 
 const PA_Hero: FC<PA_HeroProps> = (props) => {
@@ -15,7 +16,7 @@ const PA_Hero: FC<PA_HeroProps> = (props) => {
 
     const animationHeroCallBack = () => {
         switch (runningAnimation) {
-            case "HERO_ATTACK":
+            case ActionsEnum.HERO_ACTION_ATTACK:
                 props.heroAttackCallback();
                 setRunningAnimation(undefined);
                 break;

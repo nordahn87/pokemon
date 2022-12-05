@@ -4,4 +4,6 @@ export enum GameStateEnum {
     GAME_END = "GAME_END",
     HERO_ACT = "HERO_ACT",
     HERO_READY = "HERO_READY",
+    OPPONENT_ACT = "OPPONENT_ACT",
+    OPPONENT_READY = "OPPONENT_READY",
 }

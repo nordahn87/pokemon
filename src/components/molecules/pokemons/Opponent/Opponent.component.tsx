@@ -1,17 +1,37 @@
 import React, { FC } from "react";
 import { useApiData } from "../../../../hooks/apiData.provider";
 import { useOpponent } from "../../../../hooks/players/opponent.provider";
+import { ActionsEnum } from "../../../../models/actions.enum";
+import { PA_OpponentProps } from "./Opponent.props";
+import { useAnimation } from "../../../../hooks/animation.provider";
 import "./Opponent.scss";
 
-const PA_Opponent: FC = () => {
+const PA_Opponent: FC<PA_OpponentProps> = (props) => {
     const { opponentData } = useApiData();
     const { opponentElement } = useOpponent();
+    const { runningAnimation, setRunningAnimation } = useAnimation();
+
     const opponentSprite = opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default;
     const opponentName = opponentData.species?.name;
 
+    const animationOpponentCallBack = () => {
+        switch (runningAnimation) {
+            case ActionsEnum.OPPONENT_ACTION_ATTACK:
+                props.opponentAttackCallback();
+                setRunningAnimation(undefined);
+                break;
+        }
+    };
+
     return (
         <div className="opponent-pokemon-container">
-            <img className="opponent-pokemon" ref={opponentElement} src={opponentSprite} alt={opponentName} />
+            <img
+                className="opponent-pokemon"
+                ref={opponentElement}
+                onAnimationEnd={animationOpponentCallBack}
+                src={opponentSprite}
+                alt={opponentName}
+            />
         </div>
     );
 };

@@ -7,18 +7,17 @@ const MessagesContext = React.createContext<any>({});
 export const MessagesProvider = ({ children }: any): JSX.Element => {
     const [message, setMessage] = useState<string>();
 
-    // @ts-ignore
-    const showMessage = (alias: string, ...rest) => {
+    const showMessage = (alias: string, ...rest: string[]) => {
         let result = "";
         switch (alias) {
-            case MessagesEnum.HERO_ATTACK: {
+            case MessagesEnum.HERO_MESSAGE_ATTACK: {
                 const heroName = convertToCapitalizedHelper(rest?.[0]);
                 const damageAmount = rest?.[2];
 
                 result = `${heroName}: Does a quick attack and deals ${damageAmount} damage`;
                 break;
             }
-            case MessagesEnum.OPPONENT_KO: {
+            case MessagesEnum.OPPONENT_MESSAGE_KO: {
                 const opponentName = convertToCapitalizedHelper(rest?.[0]);
 
                 result = `${opponentName}: Is defeated`;
