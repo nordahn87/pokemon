@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 const PlayersContext = React.createContext<any>({});
 
-export const PlayersProvider = ({ children }: any): JSX.Element => {
+export const PlayersProvider = (props: any): JSX.Element => {
+    // TODO not sure having hero and opponent in same provider is the best way to handle global values
+
     // Hero health states
     const [currentHeroHealth, setCurrentHeroHealth] = useState<number | null>(null);
     const [maxHeroHealth, setMaxHeroHealth] = useState<number | null>(null);
@@ -37,8 +39,8 @@ export const PlayersProvider = ({ children }: any): JSX.Element => {
         setMaxOpponentMaxHealth(opponentMaxHealth);
 
         // Players initial attack damage
-        setHeroAttackDamage(heroAttackDamage);
-        setOpponentAttackDamage(opponentAttackDamage);
+        setHeroAttackDamage(heroAttackDamage || 0);
+        setOpponentAttackDamage(opponentAttackDamage || 0);
     }, [maxHeroHealth, maxOpponentHealth]);
 
     return (
@@ -61,7 +63,7 @@ export const PlayersProvider = ({ children }: any): JSX.Element => {
                     opponentElement,
                 }}
             >
-                {children}
+                {props.children}
             </PlayersContext.Provider>
         </>
     );

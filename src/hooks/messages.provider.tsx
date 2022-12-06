@@ -4,7 +4,7 @@ import { convertToCapitalizedHelper } from "../helpers/convertToCapitalized.help
 
 const MessagesContext = React.createContext<any>({});
 
-export const MessagesProvider = ({ children }: any): JSX.Element => {
+export const MessagesProvider = (props: any): JSX.Element => {
     const [message, setMessage] = useState<string>();
 
     const showMessage = (alias: string, ...rest: string[]) => {
@@ -15,6 +15,19 @@ export const MessagesProvider = ({ children }: any): JSX.Element => {
                 const damageAmount = rest?.[2];
 
                 result = `${heroName}: Does a quick attack and deals ${damageAmount} damage`;
+                break;
+            }
+            case MessagesEnum.OPPONENT_MESSAGE_ATTACK: {
+                const opponentName = convertToCapitalizedHelper(rest?.[0]);
+                const damageAmount = rest?.[1];
+
+                result = `${opponentName}: Does a quick attack and deals ${damageAmount} damage`;
+                break;
+            }
+            case MessagesEnum.OPPONENT_MESSAGE_MISS: {
+                const opponentName = convertToCapitalizedHelper(rest?.[0]);
+
+                result = `${opponentName}´s: attack missed`;
                 break;
             }
             case MessagesEnum.OPPONENT_MESSAGE_KO: {
@@ -51,7 +64,7 @@ export const MessagesProvider = ({ children }: any): JSX.Element => {
                 clearMessage,
             }}
         >
-            {children}
+            {props.children}
         </MessagesContext.Provider>
     );
 };

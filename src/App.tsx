@@ -4,17 +4,20 @@ import { MessagesProvider } from "./hooks/messages.provider";
 import { ApiDataProvider } from "./hooks/apiData.provider";
 import { AnimationProvider } from "./hooks/animation.provider";
 import { PlayersProvider } from "./hooks/players.provider";
+import { GameStateProvider } from "./hooks/gamestate.provider";
 
 const App = () => {
     return (
         <ApiDataProvider>
-            <MessagesProvider>
-                <AnimationProvider>
-                    <PlayersProvider>
-                        <PA_Arena />
-                    </PlayersProvider>
-                </AnimationProvider>
-            </MessagesProvider>
+            <GameStateProvider>
+                <MessagesProvider>
+                    <AnimationProvider>
+                        <PlayersProvider>
+                            <PA_Arena />
+                        </PlayersProvider>
+                    </AnimationProvider>
+                </MessagesProvider>
+            </GameStateProvider>
         </ApiDataProvider>
     );
 };
