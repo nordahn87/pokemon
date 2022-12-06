@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { useOpponent } from "../../../../hooks/players/opponent.provider";
+import { usePlayers } from "../../../../hooks/players.provider";
 import "./OpponentHealthBar.scss";
 
 const PA_OpponentHealthBar: FC = () => {
-    const { currentOpponentHealth, maxOpponentHealth } = useOpponent();
+    const { currentOpponentHealth, maxOpponentHealth } = usePlayers();
 
     return (
         <div className="opponent-healthbar-container">

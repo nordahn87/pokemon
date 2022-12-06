@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 
 const AnimationContext = React.createContext<any>({});
 
-export const AnimationProvider = ({ children }: any): JSX.Element => {
+export const AnimationProvider = (props: any): JSX.Element => {
     const [runningAnimation, setRunningAnimation] = useState(undefined);
 
     return (
@@ -12,7 +12,7 @@ export const AnimationProvider = ({ children }: any): JSX.Element => {
                 setRunningAnimation,
             }}
         >
-            {children}
+            {props.children}
         </AnimationContext.Provider>
     );
 };

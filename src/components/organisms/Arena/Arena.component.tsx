@@ -1,56 +1,73 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { GameStateEnum } from "../../../models/gameState.enum";
 import { ActionsEnum } from "../../../models/actions.enum";
 import { MessagesEnum } from "../../../models/messages.enum";
 import { useApiData } from "../../../hooks/apiData.provider";
 import { useMessages } from "../../../hooks/messages.provider";
-import { useHero } from "../../../hooks/players/hero.provider";
-import { useOpponent } from "../../../hooks/players/opponent.provider";
+import { useAnimation } from "../../../hooks/animation.provider";
+import { usePlayers } from "../../../hooks/players.provider";
+import { useGameState } from "../../../hooks/gamestate.provider";
 import { ClassListAdd, ClassListRemove } from "../../../helpers/classList.helper";
+import { turnOrder } from "../../../helpers/random.helper";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import "./Arena.scss";
-import { useAnimation } from "../../../hooks/animation.provider";
 
 const PA_Arena: FC = () => {
-    const [gameState, setGameState] = useState(GameStateEnum.GAME_IDLE);
-
     // Hooks
+    const { gameState, setGameState } = useGameState();
     const { heroData, opponentData } = useApiData();
     const { message, showMessage, clearMessage } = useMessages();
     const { runningAnimation, setRunningAnimation } = useAnimation();
-    const { currentHeroHealth, setCurrentHeroHealth, heroElement } = useHero();
-    const { currentOpponentHealth, SetCurrentOpponentHealth, opponentElement } = useOpponent();
 
-    // Attack
-    const [heroAttackDamage, setHeroAttackDamage] = useState<number | null>(null);
-    const [opponentAttackDamage, setOpponentAttackDamage] = useState<number | null>(null);
+    const {
+        currentOpponentHealth,
+        SetCurrentOpponentHealth,
+        opponentElement,
+        currentHeroHealth,
+        setCurrentHeroHealth,
+        heroElement,
+        heroAttackDamage,
+        opponentAttackDamage,
+    } = usePlayers();
 
+    // TODO find a better way to deal with names
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
-    //Hero attacks - might add more damage types later on!
+    // Games initial encounter
     useEffect(() => {
-        setHeroAttackDamage(7);
-        setOpponentAttackDamage(4);
-        setGameState(GameStateEnum.HERO_READY);
-    }, []);
+        turnOrder(GameStateEnum.HERO_READY, GameStateEnum.OPPONENT_READY, setGameState);
 
+        const test = () => {
+            const result = Math.floor(Math.random() * 10) + 1;
+
+            if (result <= 10 && result > 3) {
+                console.log("Attack deals damage");
+            } else {
+                console.log("Attack missed");
+            }
+            console.log(result);
+        };
+        test();
+    }, [setGameState]);
+
+    // Opponent attack
     const handleOpponentAttack = useCallback(() => {
         setGameState(GameStateEnum.OPPONENT_ACT);
+        clearMessage();
         ClassListAdd(opponentElement, "opponent-attack-animation");
         ClassListAdd(heroElement, "hero-takes-damage-animation");
         setRunningAnimation(ActionsEnum.OPPONENT_ACTION_ATTACK);
-    }, [heroElement, opponentElement, setRunningAnimation]);
+    }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
+    // Opponent ending animation
     const opponentAttackCallback = useCallback(() => {
-        const updatedCurrentHeroHealth = currentHeroHealth - (opponentAttackDamage || 0);
-
-        setGameState(GameStateEnum.OPPONENT_READY);
-
+        const updatedCurrentHeroHealth = currentHeroHealth - opponentAttackDamage;
+        setGameState(GameStateEnum.HERO_READY);
         ClassListRemove(opponentElement, "opponent-attack-animation");
         ClassListRemove(heroElement, "hero-takes-damage-animation");
 
@@ -58,21 +75,32 @@ const PA_Arena: FC = () => {
             setCurrentHeroHealth(0);
         } else {
             setCurrentHeroHealth(updatedCurrentHeroHealth);
+            showMessage(MessagesEnum.OPPONENT_MESSAGE_ATTACK, opponentName, opponentAttackDamage);
         }
-    }, [currentHeroHealth, opponentAttackDamage, heroElement, opponentElement, setCurrentHeroHealth]);
+    }, [
+        currentHeroHealth,
+        opponentAttackDamage,
+        setGameState,
+        opponentElement,
+        heroElement,
+        setCurrentHeroHealth,
+        showMessage,
+        opponentName,
+    ]);
 
-    // Hero doing quick attack
+    // Hero attack
     const handleHeroAttack = useCallback(() => {
         setGameState(GameStateEnum.HERO_ACT);
         clearMessage();
         ClassListAdd(heroElement, "hero-attack-animation");
         ClassListAdd(opponentElement, "opponent-takes-damage-animation");
         setRunningAnimation(ActionsEnum.HERO_ACTION_ATTACK);
-    }, [clearMessage, heroElement, opponentElement, setRunningAnimation]);
+    }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
+    // Hero ending animation
     const heroAttackCallback = useCallback(() => {
-        const updatedCurrentOpponentHealth = currentOpponentHealth - (heroAttackDamage || 0);
-        setGameState(GameStateEnum.HERO_READY);
+        const updatedCurrentOpponentHealth = currentOpponentHealth - heroAttackDamage;
+        setGameState(GameStateEnum.OPPONENT_READY);
         ClassListRemove(heroElement, "hero-attack-animation");
         ClassListRemove(opponentElement, "opponent-takes-damage-animation");
 
@@ -84,14 +112,15 @@ const PA_Arena: FC = () => {
             showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, opponentName, heroAttackDamage);
         }
     }, [
-        SetCurrentOpponentHealth,
         currentOpponentHealth,
-        heroElement,
-        heroName,
-        opponentElement,
-        opponentName,
         heroAttackDamage,
+        setGameState,
+        heroElement,
+        opponentElement,
+        SetCurrentOpponentHealth,
         showMessage,
+        opponentName,
+        heroName,
     ]);
 
     return (

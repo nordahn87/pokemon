@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { useApiData } from "../../../../hooks/apiData.provider";
-import { useOpponent } from "../../../../hooks/players/opponent.provider";
+import { usePlayers } from "../../../../hooks/players.provider";
+import { useAnimation } from "../../../../hooks/animation.provider";
 import { ActionsEnum } from "../../../../models/actions.enum";
 import { PA_OpponentProps } from "./Opponent.props";
-import { useAnimation } from "../../../../hooks/animation.provider";
 import "./Opponent.scss";
 
 const PA_Opponent: FC<PA_OpponentProps> = (props) => {
     const { opponentData } = useApiData();
-    const { opponentElement } = useOpponent();
+    const { opponentElement } = usePlayers();
     const { runningAnimation, setRunningAnimation } = useAnimation();
 
     const opponentSprite = opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default;
