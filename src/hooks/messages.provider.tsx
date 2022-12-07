@@ -17,6 +17,20 @@ export const MessagesProvider = (props: any): JSX.Element => {
                 result = `${heroName}: Does a quick attack and deals ${damageAmount} damage`;
                 break;
             }
+            case MessagesEnum.HERO_MESSAGE_MISS: {
+                const heroName = convertToCapitalizedHelper(rest?.[0]);
+
+                result = `${heroName}´s: attack missed`;
+                break;
+            }
+            case MessagesEnum.HERO_MESSAGE_KO: {
+                const opponentName = convertToCapitalizedHelper(rest?.[0]);
+                const damageAmount = rest?.[1];
+                const heroName = convertToCapitalizedHelper(rest?.[2]);
+
+                result = `${opponentName}: Does a quick attack and deals ${damageAmount} damage ${heroName}: Is defeated`;
+                break;
+            }
             case MessagesEnum.OPPONENT_MESSAGE_ATTACK: {
                 const opponentName = convertToCapitalizedHelper(rest?.[0]);
                 const damageAmount = rest?.[1];

@@ -24,11 +24,11 @@ export const PlayersProvider = (props: any): JSX.Element => {
     const opponentElement = useRef(null);
 
     useEffect(() => {
-        const heroMaxHealth = 121;
+        const heroMaxHealth = 15;
         const heroAttackDamage = 11;
 
-        const opponentMaxHealth = 132;
-        const opponentAttackDamage = 8;
+        const opponentMaxHealth = 17;
+        const opponentAttackDamage = 9;
 
         // Hero initial health
         setCurrentHeroHealth(maxHeroHealth);

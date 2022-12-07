@@ -2,13 +2,14 @@ import React, { FC, useCallback, useEffect } from "react";
 import { GameStateEnum } from "../../../models/gameState.enum";
 import { ActionsEnum } from "../../../models/actions.enum";
 import { MessagesEnum } from "../../../models/messages.enum";
+import { resultRandom } from "../../../constants/resultRandom";
 import { useApiData } from "../../../hooks/apiData.provider";
 import { useMessages } from "../../../hooks/messages.provider";
 import { useAnimation } from "../../../hooks/animation.provider";
 import { usePlayers } from "../../../hooks/players.provider";
 import { useGameState } from "../../../hooks/gamestate.provider";
 import { ClassListAdd, ClassListRemove } from "../../../helpers/classList.helper";
-import { turnOrder } from "../../../helpers/random.helper";
+import { isPlayerDefeated } from "../../../helpers/isDefeated.heper";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
@@ -38,23 +39,6 @@ const PA_Arena: FC = () => {
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
-    // Games initial encounter
-    useEffect(() => {
-        turnOrder(GameStateEnum.HERO_READY, GameStateEnum.OPPONENT_READY, setGameState);
-
-        const test = () => {
-            const result = Math.floor(Math.random() * 10) + 1;
-
-            if (result <= 10 && result > 3) {
-                console.log("Attack deals damage");
-            } else {
-                console.log("Attack missed");
-            }
-            console.log(result);
-        };
-        test();
-    }, [setGameState]);
-
     // Opponent attack
     const handleOpponentAttack = useCallback(() => {
         setGameState(GameStateEnum.OPPONENT_ACT);
@@ -67,25 +51,35 @@ const PA_Arena: FC = () => {
     // Opponent ending animation
     const opponentAttackCallback = useCallback(() => {
         const updatedCurrentHeroHealth = currentHeroHealth - opponentAttackDamage;
+
         setGameState(GameStateEnum.HERO_READY);
         ClassListRemove(opponentElement, "opponent-attack-animation");
         ClassListRemove(heroElement, "hero-takes-damage-animation");
 
         if (updatedCurrentHeroHealth <= 0) {
             setCurrentHeroHealth(0);
+            showMessage(MessagesEnum.HERO_MESSAGE_KO, opponentName, opponentAttackDamage, heroName);
+            return;
+        }
+
+        if (resultRandom <= 4) {
+            showMessage(MessagesEnum.OPPONENT_MESSAGE_MISS, opponentName);
+            return;
         } else {
             setCurrentHeroHealth(updatedCurrentHeroHealth);
             showMessage(MessagesEnum.OPPONENT_MESSAGE_ATTACK, opponentName, opponentAttackDamage);
         }
+        console.log(updatedCurrentHeroHealth);
     }, [
         currentHeroHealth,
         opponentAttackDamage,
         setGameState,
         opponentElement,
         heroElement,
-        setCurrentHeroHealth,
         showMessage,
         opponentName,
+        heroName,
+        setCurrentHeroHealth,
     ]);
 
     // Hero attack
@@ -122,6 +116,22 @@ const PA_Arena: FC = () => {
         opponentName,
         heroName,
     ]);
+
+    const turnOrder = useCallback(() => {
+        if (resultRandom <= 10 && resultRandom > 3) {
+            setGameState(GameStateEnum.HERO_READY);
+        } else {
+            setGameState(GameStateEnum.OPPONENT_READY);
+            handleOpponentAttack();
+        }
+    }, [handleOpponentAttack, setGameState]);
+
+    // Games initial encounter
+    useEffect(() => {
+        turnOrder();
+        isPlayerDefeated(currentHeroHealth, "Hero is defeated");
+        isPlayerDefeated(currentOpponentHealth, "Opponent is defeated");
+    }, [currentHeroHealth, currentOpponentHealth, heroName, setGameState, showMessage, turnOrder]);
 
     return (
         <>

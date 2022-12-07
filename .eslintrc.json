@@ -23,6 +23,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "import/newline-after-import": 1,
         "@typescript-eslint/no-explicit-any" : "off",
         "react/jsx-pascal-case" : "off",
         "react/react-in-jsx-scope": "off"
