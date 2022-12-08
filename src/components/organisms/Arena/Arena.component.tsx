@@ -32,12 +32,14 @@ const PA_Arena: FC = () => {
         heroElement,
         heroAttackDamage,
         opponentAttackDamage,
+        maxHeroHealth,
     } = usePlayers();
 
     // TODO find a better way to deal with names
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
+    // TODO Opponent button is only temp
     const isGameStateHeroReady = gameState !== "HERO_READY";
     const isGameStateOpponentReady = gameState !== "OPPONENT_READY";
 
@@ -134,6 +136,20 @@ const PA_Arena: FC = () => {
         heroName,
     ]);
 
+    // Healing potion
+    const handleHealingPotion = useCallback(() => {
+        const updatedCurrentHeroHealth = currentHeroHealth + 5;
+
+        if (updatedCurrentHeroHealth >= maxHeroHealth) {
+            setCurrentHeroHealth(maxHeroHealth);
+            alert("Healed 5HP");
+        } else {
+            setCurrentHeroHealth(updatedCurrentHeroHealth);
+        }
+        setGameState(GameStateEnum.OPPONENT_READY);
+        console.log(currentHeroHealth);
+    }, [currentHeroHealth, maxHeroHealth, setCurrentHeroHealth, setGameState]);
+
     return (
         <>
             <div style={{ backgroundColor: "white", zIndex: 4, padding: "5px" }}>
@@ -152,14 +168,18 @@ const PA_Arena: FC = () => {
 
                     <PA_Hero heroAttackCallback={heroAttackCallback} />
 
-                    <PA_HeroAction handleHeroAttack={handleHeroAttack} disableButton={isGameStateHeroReady} />
+                    <PA_HeroAction
+                        handleHeroAttack={handleHeroAttack}
+                        handleHealingPotion={handleHealingPotion}
+                        disableButton={isGameStateHeroReady}
+                    />
                 </div>
 
                 <div>
                     <PA_OpponentAction />
-
                     <PA_Opponent opponentAttackCallback={opponentAttackCallback} />
 
+                    {/* TODO This has to be a function running when hero has finished his turn*/}
                     <button onClick={handleOpponentAttack} disabled={isGameStateOpponentReady}>
                         ** TEMP Opponent Attack
                     </button>
