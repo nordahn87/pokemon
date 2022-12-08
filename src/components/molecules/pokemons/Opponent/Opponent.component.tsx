@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useApiData } from "../../../../hooks/apiData.provider";
 import { usePlayers } from "../../../../hooks/players.provider";
 import { useAnimation } from "../../../../hooks/animation.provider";
-import { ActionsEnum } from "../../../../models/actions.enum";
+import { AnimationEnum } from "../../../../models/animation.enum";
 import { PA_OpponentProps } from "./Opponent.props";
 import "./Opponent.scss";
 
@@ -16,7 +16,7 @@ const PA_Opponent: FC<PA_OpponentProps> = (props) => {
 
     const animationOpponentCallBack = () => {
         switch (runningAnimation) {
-            case ActionsEnum.OPPONENT_ACTION_ATTACK:
+            case AnimationEnum.OPPONENT_ANIMATION_ATTACK:
                 props.opponentAttackCallback();
                 setRunningAnimation(undefined);
                 break;

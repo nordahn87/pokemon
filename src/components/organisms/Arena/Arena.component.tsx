@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect } from "react";
 import { GameStateEnum } from "../../../models/gameState.enum";
-import { ActionsEnum } from "../../../models/actions.enum";
+import { AnimationEnum } from "../../../models/animation.enum";
 import { MessagesEnum } from "../../../models/messages.enum";
 import { useApiData } from "../../../hooks/apiData.provider";
 import { useMessages } from "../../../hooks/messages.provider";
@@ -61,7 +61,7 @@ const PA_Arena: FC = () => {
         clearMessage();
         ClassListAdd(opponentElement, "opponent-attack-animation");
         ClassListAdd(heroElement, "hero-takes-damage-animation");
-        setRunningAnimation(ActionsEnum.OPPONENT_ACTION_ATTACK);
+        setRunningAnimation(AnimationEnum.OPPONENT_ANIMATION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
     // Opponent ending animation
@@ -94,7 +94,7 @@ const PA_Arena: FC = () => {
         clearMessage();
         ClassListAdd(heroElement, "hero-attack-animation");
         ClassListAdd(opponentElement, "opponent-takes-damage-animation");
-        setRunningAnimation(ActionsEnum.HERO_ACTION_ATTACK);
+        setRunningAnimation(AnimationEnum.HERO_ANIMATION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
     // Hero ending animation
@@ -106,7 +106,7 @@ const PA_Arena: FC = () => {
 
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOpponentHealth(0);
-            showMessage(MessagesEnum.OPPONENT_MESSAGE_KO, opponentName);
+            showMessage(MessagesEnum.OPPONENT_MESSAGE_DEFEATED, opponentName);
         } else {
             SetCurrentOpponentHealth(updatedCurrentOpponentHealth);
             showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, opponentName, heroAttackDamage);
