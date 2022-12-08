@@ -12,7 +12,7 @@ export const MessagesProvider = (props: any): JSX.Element => {
         switch (alias) {
             case MessagesEnum.HERO_MESSAGE_ATTACK: {
                 const heroName = convertToCapitalizedHelper(rest?.[0]);
-                const damageAmount = rest?.[2];
+                const damageAmount = rest?.[1];
 
                 result = `${heroName}: Does a quick attack and deals ${damageAmount} damage`;
                 break;

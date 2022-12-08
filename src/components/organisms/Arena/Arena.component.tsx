@@ -39,6 +39,7 @@ const PA_Arena: FC = () => {
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
+    // TODO OPPONENT should be in a component
     // Opponent attack
     const handleOpponentAttack = useCallback(() => {
         setGameState(GameStateEnum.OPPONENT_ACT);
@@ -69,19 +70,20 @@ const PA_Arena: FC = () => {
             setCurrentHeroHealth(updatedCurrentHeroHealth);
             showMessage(MessagesEnum.OPPONENT_MESSAGE_ATTACK, opponentName, opponentAttackDamage);
         }
-        console.log(updatedCurrentHeroHealth);
     }, [
         currentHeroHealth,
         opponentAttackDamage,
         setGameState,
         opponentElement,
         heroElement,
+        setCurrentHeroHealth,
         showMessage,
         opponentName,
         heroName,
-        setCurrentHeroHealth,
     ]);
 
+    // TODO HERO should be in a component
+    // TODO Fix hero ready not going to opponent ready after hero action
     // Hero attack
     const handleHeroAttack = useCallback(() => {
         setGameState(GameStateEnum.HERO_ACT);
@@ -94,44 +96,60 @@ const PA_Arena: FC = () => {
     // Hero ending animation
     const heroAttackCallback = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOpponentHealth - heroAttackDamage;
+
         setGameState(GameStateEnum.OPPONENT_READY);
         ClassListRemove(heroElement, "hero-attack-animation");
         ClassListRemove(opponentElement, "opponent-takes-damage-animation");
 
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOpponentHealth(0);
-            showMessage(MessagesEnum.OPPONENT_MESSAGE_KO, opponentName);
+            showMessage(MessagesEnum.HERO_MESSAGE_KO, heroName, heroAttackDamage, opponentName);
+            return;
+        }
+
+        if (resultRandom <= 4) {
+            showMessage(MessagesEnum.HERO_MESSAGE_MISS, heroName);
+            return;
         } else {
             SetCurrentOpponentHealth(updatedCurrentOpponentHealth);
-            showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, opponentName, heroAttackDamage);
+            showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, heroAttackDamage);
         }
     }, [
         currentOpponentHealth,
         heroAttackDamage,
         setGameState,
-        heroElement,
         opponentElement,
+        heroElement,
         SetCurrentOpponentHealth,
         showMessage,
-        opponentName,
         heroName,
+        opponentName,
     ]);
 
+    // TODO Should be in its own component?
     const turnOrder = useCallback(() => {
         if (resultRandom <= 10 && resultRandom > 3) {
-            setGameState(GameStateEnum.HERO_READY);
+            setGameState(GameStateEnum.HERO_READY + "HEJ");
         } else {
             setGameState(GameStateEnum.OPPONENT_READY);
-            handleOpponentAttack();
         }
-    }, [handleOpponentAttack, setGameState]);
+    }, [setGameState]);
 
     // Games initial encounter
     useEffect(() => {
         turnOrder();
+
         isPlayerDefeated(currentHeroHealth, "Hero is defeated");
         isPlayerDefeated(currentOpponentHealth, "Opponent is defeated");
-    }, [currentHeroHealth, currentOpponentHealth, heroName, setGameState, showMessage, turnOrder]);
+    }, [
+        currentHeroHealth,
+        currentOpponentHealth,
+        handleOpponentAttack,
+        heroName,
+        setGameState,
+        showMessage,
+        turnOrder,
+    ]);
 
     return (
         <>
