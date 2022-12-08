@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { PA_HeroProps } from "./Hero.props";
+import { Action } from "../../../../models/action";
 import { useApiData } from "../../../../hooks/apiData.provider";
 import { useAnimation } from "../../../../hooks/animation.provider";
 import { usePlayers } from "../../../../hooks/players.provider";
-import { Action } from "../../../../models/action";
 import "./Hero.scss";
 
 const PA_Hero: FC<PA_HeroProps> = (props) => {

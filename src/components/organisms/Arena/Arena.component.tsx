@@ -8,7 +8,6 @@ import { useAnimation } from "../../../hooks/animation.provider";
 import { usePlayers } from "../../../hooks/players.provider";
 import { useGameState } from "../../../hooks/gamestate.provider";
 import { ClassListAdd, ClassListRemove } from "../../../helpers/classList.helper";
-import { turnOrder } from "../../../helpers/random.helper";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
@@ -39,22 +38,19 @@ const PA_Arena: FC = () => {
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
+    // Calculate turn order
+    const turnOrder = useCallback(() => {
+        if (CALCULATE_RANDOM_RESULT <= 10 && CALCULATE_RANDOM_RESULT >= 3) {
+            return setGameState(GameStateEnum.HERO_READY);
+        } else {
+            setGameState(GameStateEnum.OPPONENT_READY);
+        }
+    }, [setGameState]);
+
     // Games initial encounter
     useEffect(() => {
-        turnOrder(GameStateEnum.HERO_READY, GameStateEnum.OPPONENT_READY, setGameState);
-
-        /*const test = () => {
-            const result = Math.floor(Math.random() * 10) + 1;
-
-            if (result <= 10 && result > 3) {
-                console.log("Attack deals damage");
-            } else {
-                console.log("Attack missed");
-            }
-            console.log(result);
-        };
-        test();*/
-    }, [setGameState]);
+        turnOrder();
+    }, [setGameState, turnOrder]);
 
     // Opponent attack
     const handleOpponentAttack = useCallback(() => {
@@ -65,7 +61,7 @@ const PA_Arena: FC = () => {
         setRunningAnimation(Action.OPPONENT_ACTION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
-    // Opponent ending animation
+    // Opponent attack ending animation
     const opponentAttackCallback = useCallback(() => {
         const updatedCurrentHeroHealth = currentHeroHealth - opponentAttackDamage;
 
@@ -105,7 +101,7 @@ const PA_Arena: FC = () => {
         setRunningAnimation(Action.HERO_ACTION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
-    // Hero ending animation
+    // Hero attack ending animation
     const heroAttackCallback = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOpponentHealth - heroAttackDamage;
         setGameState(GameStateEnum.OPPONENT_READY);
