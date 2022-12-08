@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect } from "react";
 import { GameStateEnum } from "../../../models/gameState.enum";
-import { AnimationEnum } from "../../../models/animation.enum";
+import { Action } from "../../../models/action";
 import { MessagesEnum } from "../../../models/messages.enum";
 import { useApiData } from "../../../hooks/apiData.provider";
 import { useMessages } from "../../../hooks/messages.provider";
@@ -14,6 +14,7 @@ import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
+import { CALCULATE_RANDOM_RESULT } from "../../../constants/calculateRandomResult";
 import "./Arena.scss";
 
 const PA_Arena: FC = () => {
@@ -42,7 +43,7 @@ const PA_Arena: FC = () => {
     useEffect(() => {
         turnOrder(GameStateEnum.HERO_READY, GameStateEnum.OPPONENT_READY, setGameState);
 
-        const test = () => {
+        /*const test = () => {
             const result = Math.floor(Math.random() * 10) + 1;
 
             if (result <= 10 && result > 3) {
@@ -52,7 +53,7 @@ const PA_Arena: FC = () => {
             }
             console.log(result);
         };
-        test();
+        test();*/
     }, [setGameState]);
 
     // Opponent attack
@@ -61,18 +62,25 @@ const PA_Arena: FC = () => {
         clearMessage();
         ClassListAdd(opponentElement, "opponent-attack-animation");
         ClassListAdd(heroElement, "hero-takes-damage-animation");
-        setRunningAnimation(AnimationEnum.OPPONENT_ANIMATION_ATTACK);
+        setRunningAnimation(Action.OPPONENT_ACTION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
     // Opponent ending animation
     const opponentAttackCallback = useCallback(() => {
         const updatedCurrentHeroHealth = currentHeroHealth - opponentAttackDamage;
+
         setGameState(GameStateEnum.HERO_READY);
+
         ClassListRemove(opponentElement, "opponent-attack-animation");
         ClassListRemove(heroElement, "hero-takes-damage-animation");
 
         if (updatedCurrentHeroHealth <= 0) {
             setCurrentHeroHealth(0);
+            return showMessage(MessagesEnum.OPPONENT_MESSAGE_DEFEATED, opponentName);
+        }
+
+        if (CALCULATE_RANDOM_RESULT <= 10 && CALCULATE_RANDOM_RESULT >= 3) {
+            return showMessage(MessagesEnum.OPPONENT_MESSAGE_MISS, opponentName);
         } else {
             setCurrentHeroHealth(updatedCurrentHeroHealth);
             showMessage(MessagesEnum.OPPONENT_MESSAGE_ATTACK, opponentName, opponentAttackDamage);
@@ -94,7 +102,7 @@ const PA_Arena: FC = () => {
         clearMessage();
         ClassListAdd(heroElement, "hero-attack-animation");
         ClassListAdd(opponentElement, "opponent-takes-damage-animation");
-        setRunningAnimation(AnimationEnum.HERO_ANIMATION_ATTACK);
+        setRunningAnimation(Action.HERO_ACTION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
     // Hero ending animation
@@ -106,10 +114,14 @@ const PA_Arena: FC = () => {
 
         if (updatedCurrentOpponentHealth <= 0) {
             SetCurrentOpponentHealth(0);
-            showMessage(MessagesEnum.OPPONENT_MESSAGE_DEFEATED, opponentName);
+            return showMessage(MessagesEnum.OPPONENT_MESSAGE_DEFEATED, opponentName);
+        }
+
+        if (CALCULATE_RANDOM_RESULT <= 10 && CALCULATE_RANDOM_RESULT >= 3) {
+            return showMessage(MessagesEnum.HERO_MESSAGE_MISS, heroName);
         } else {
             SetCurrentOpponentHealth(updatedCurrentOpponentHealth);
-            showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, opponentName, heroAttackDamage);
+            showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, heroAttackDamage);
         }
     }, [
         currentOpponentHealth,
