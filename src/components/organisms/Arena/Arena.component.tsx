@@ -38,8 +38,8 @@ const PA_Arena: FC = () => {
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
-    const isGamstateHeroReady = gameState !== "HERO_READY";
-    const isGamstateOpponentReady = gameState !== "OPPONENT_READY";
+    const isGameStateHeroReady = gameState !== "HERO_READY";
+    const isGameStateOpponentReady = gameState !== "OPPONENT_READY";
 
     // Calculate turn order
     const turnOrder = useCallback(() => {
@@ -152,7 +152,7 @@ const PA_Arena: FC = () => {
 
                     <PA_Hero heroAttackCallback={heroAttackCallback} />
 
-                    <PA_HeroAction handleHeroAttack={handleHeroAttack} disableButton={isGamstateHeroReady} />
+                    <PA_HeroAction handleHeroAttack={handleHeroAttack} disableButton={isGameStateHeroReady} />
                 </div>
 
                 <div>
@@ -160,7 +160,7 @@ const PA_Arena: FC = () => {
 
                     <PA_Opponent opponentAttackCallback={opponentAttackCallback} />
 
-                    <button onClick={handleOpponentAttack} disabled={isGamstateOpponentReady}>
+                    <button onClick={handleOpponentAttack} disabled={isGameStateOpponentReady}>
                         ** TEMP Opponent Attack
                     </button>
                 </div>
