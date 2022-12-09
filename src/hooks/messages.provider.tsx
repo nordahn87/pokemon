@@ -29,6 +29,19 @@ export const MessagesProvider = (props: any): JSX.Element => {
                 result = `${heroName}: Is defeated`;
                 break;
             }
+            case MessagesEnum.HERO_MESSAGE_MAXHEALTH: {
+                const heroName = convertToCapitalizedHelper(rest?.[0]);
+
+                result = `${heroName}: Is already at max health`;
+                break;
+            }
+            case MessagesEnum.HERO_MESSAGE_HEALED: {
+                const heroName = convertToCapitalizedHelper(rest?.[0]);
+                const healingAmount = rest?.[1];
+
+                result = `${heroName}: Was healed for ${healingAmount}HP`;
+                break;
+            }
             case MessagesEnum.OPPONENT_MESSAGE_ATTACK: {
                 const opponentName = convertToCapitalizedHelper(rest?.[0]);
                 const damageAmount = rest?.[1];

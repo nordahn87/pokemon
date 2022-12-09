@@ -109,6 +109,7 @@ const PA_Arena: FC = () => {
     // Hero attack ending animation
     const heroAttackCallback = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOpponentHealth - heroAttackDamage;
+        const CALCULATE_RANDOM_RESULT = Math.floor(Math.random() * 10) + 1;
         setGameState(GameStateEnum.OPPONENT_READY);
         ClassListRemove(heroElement, "hero-attack-animation");
         ClassListRemove(opponentElement, "opponent-takes-damage-animation");
@@ -119,11 +120,12 @@ const PA_Arena: FC = () => {
         }
 
         if (CALCULATE_RANDOM_RESULT <= 10 && CALCULATE_RANDOM_RESULT >= 3) {
-            return showMessage(MessagesEnum.HERO_MESSAGE_MISS, heroName);
+            showMessage(MessagesEnum.HERO_MESSAGE_MISS, heroName);
         } else {
             SetCurrentOpponentHealth(updatedCurrentOpponentHealth);
             showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, heroAttackDamage);
         }
+        console.log(CALCULATE_RANDOM_RESULT);
     }, [
         currentOpponentHealth,
         heroAttackDamage,
@@ -138,17 +140,18 @@ const PA_Arena: FC = () => {
 
     // Healing potion
     const handleHealingPotion = useCallback(() => {
-        const updatedCurrentHeroHealth = currentHeroHealth + 5;
+        const healingAmount = 5;
+        const updatedCurrentHeroHealth = currentHeroHealth + healingAmount;
 
         if (updatedCurrentHeroHealth >= maxHeroHealth) {
             setCurrentHeroHealth(maxHeroHealth);
-            alert("Healed 5HP");
+            showMessage(MessagesEnum.HERO_MESSAGE_MAXHEALTH, heroName);
         } else {
             setCurrentHeroHealth(updatedCurrentHeroHealth);
+            showMessage(MessagesEnum.HERO_MESSAGE_HEALED, heroName, healingAmount);
+            setGameState(GameStateEnum.OPPONENT_READY);
         }
-        setGameState(GameStateEnum.OPPONENT_READY);
-        console.log(currentHeroHealth);
-    }, [currentHeroHealth, maxHeroHealth, setCurrentHeroHealth, setGameState]);
+    }, [currentHeroHealth, heroName, maxHeroHealth, setCurrentHeroHealth, setGameState, showMessage]);
 
     return (
         <>
