@@ -2,18 +2,19 @@ import React, { FC, useCallback, useEffect } from "react";
 import { GameStateEnum } from "../../../models/gameState.enum";
 import { Action } from "../../../models/action";
 import { MessagesEnum } from "../../../models/messages.enum";
+import { TURN_ORDER_CHANCE } from "../../../constants/turnOrderChance";
 import { useApiData } from "../../../hooks/apiData.provider";
 import { useMessages } from "../../../hooks/messages.provider";
 import { useAnimation } from "../../../hooks/animation.provider";
 import { usePlayers } from "../../../hooks/players.provider";
 import { useGameState } from "../../../hooks/gamestate.provider";
 import { ClassListAdd, ClassListRemove } from "../../../helpers/classList.helper";
+import { calculateRandomResult } from "../../../helpers/calculateRandomResult.helper";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
-import { CALCULATE_RANDOM_RESULT } from "../../../constants/calculateRandomResult";
 import "./Arena.scss";
 
 const PA_Arena: FC = () => {
@@ -45,10 +46,10 @@ const PA_Arena: FC = () => {
 
     // Calculate turn order
     const turnOrder = useCallback(() => {
-        if (CALCULATE_RANDOM_RESULT <= 10 && CALCULATE_RANDOM_RESULT >= 3) {
-            return setGameState(GameStateEnum.HERO_READY);
+        if (TURN_ORDER_CHANCE <= 4) {
+            return setGameState(GameStateEnum.OPPONENT_READY);
         } else {
-            setGameState(GameStateEnum.OPPONENT_READY);
+            setGameState(GameStateEnum.HERO_READY);
         }
     }, [setGameState]);
 
@@ -69,8 +70,7 @@ const PA_Arena: FC = () => {
     // Opponent attack ending animation
     const opponentAttackCallback = useCallback(() => {
         const updatedCurrentHeroHealth = currentHeroHealth - opponentAttackDamage;
-
-        setGameState(GameStateEnum.HERO_READY);
+        const hitChanceResult = calculateRandomResult(10);
 
         ClassListRemove(opponentElement, "opponent-attack-animation");
         ClassListRemove(heroElement, "hero-takes-damage-animation");
@@ -80,12 +80,14 @@ const PA_Arena: FC = () => {
             return showMessage(MessagesEnum.OPPONENT_MESSAGE_DEFEATED, opponentName);
         }
 
-        if (CALCULATE_RANDOM_RESULT <= 10 && CALCULATE_RANDOM_RESULT >= 3) {
-            return showMessage(MessagesEnum.OPPONENT_MESSAGE_MISS, opponentName);
+        if (hitChanceResult <= 3) {
+            showMessage(MessagesEnum.OPPONENT_MESSAGE_MISS, opponentName);
         } else {
             setCurrentHeroHealth(updatedCurrentHeroHealth);
             showMessage(MessagesEnum.OPPONENT_MESSAGE_ATTACK, opponentName, opponentAttackDamage);
         }
+        setGameState(GameStateEnum.HERO_READY);
+        console.log("Opponent:" + hitChanceResult);
     }, [
         currentHeroHealth,
         opponentAttackDamage,
@@ -109,8 +111,8 @@ const PA_Arena: FC = () => {
     // Hero attack ending animation
     const heroAttackCallback = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOpponentHealth - heroAttackDamage;
-        const CALCULATE_RANDOM_RESULT = Math.floor(Math.random() * 10) + 1;
-        setGameState(GameStateEnum.OPPONENT_READY);
+        const hitChanceResult = calculateRandomResult(10);
+
         ClassListRemove(heroElement, "hero-attack-animation");
         ClassListRemove(opponentElement, "opponent-takes-damage-animation");
 
@@ -119,13 +121,14 @@ const PA_Arena: FC = () => {
             return showMessage(MessagesEnum.OPPONENT_MESSAGE_DEFEATED, opponentName);
         }
 
-        if (CALCULATE_RANDOM_RESULT <= 10 && CALCULATE_RANDOM_RESULT >= 3) {
+        if (hitChanceResult <= 2) {
             showMessage(MessagesEnum.HERO_MESSAGE_MISS, heroName);
         } else {
             SetCurrentOpponentHealth(updatedCurrentOpponentHealth);
             showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, heroAttackDamage);
         }
-        console.log(CALCULATE_RANDOM_RESULT);
+        setGameState(GameStateEnum.OPPONENT_READY);
+        console.log("Hero:" + hitChanceResult);
     }, [
         currentOpponentHealth,
         heroAttackDamage,
