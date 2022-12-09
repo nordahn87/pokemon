@@ -17,13 +17,8 @@ const PA_HeroAction: FC<PA_HeroActionProps> = (props) => {
             <PA_PlayerHealthBar />
 
             <div className="hero-action-container">
-                <PA_AttackButton
-                    handleHeroAttack={props.handleHeroAttack}
-                    disableButton={props.disableButton}
-                />
-
-                <PA_HealingButton />
-
+                <PA_AttackButton handleHeroAttack={props.handleHeroAttack} disableButton={props.disableButton} />
+                <PA_HealingButton handleHealingPotion={props.handleHealingPotion} disableButton={props.disableButton} />
                 <PA_CaptureButton />
             </div>
         </div>
