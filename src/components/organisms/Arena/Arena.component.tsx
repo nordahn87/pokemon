@@ -40,20 +40,6 @@ const PA_Arena: FC = () => {
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
-    // Calculate turn order
-    const turnOrder = useCallback(() => {
-        if (TURN_ORDER_CHANCE <= 4) {
-            return setGameState(GameStateEnum.OPPONENT_READY);
-        } else {
-            setGameState(GameStateEnum.HERO_READY);
-        }
-    }, [setGameState]);
-
-    // Games initial encounter
-    useEffect(() => {
-        turnOrder();
-    }, [setGameState, turnOrder]);
-
     // Opponent attack
     const handleOpponentAttack = useCallback(() => {
         setGameState(GameStateEnum.OPPONENT_ACT);
@@ -151,6 +137,26 @@ const PA_Arena: FC = () => {
             setGameState(GameStateEnum.OPPONENT_READY);
         }
     }, [currentHeroHealth, heroName, maxHeroHealth, setCurrentHeroHealth, setGameState, showMessage]);
+
+    // Calculate turn order
+    const turnOrder = useCallback(() => {
+        if (TURN_ORDER_CHANCE <= 4) {
+            return setGameState(GameStateEnum.OPPONENT_READY);
+        } else {
+            setGameState(GameStateEnum.HERO_READY);
+        }
+    }, [setGameState]);
+
+    const hund = useCallback(() => {
+        if (runningAnimation) {
+            console.log("Hund");
+        }
+    }, [runningAnimation]);
+
+    // Games initial encounter
+    useEffect(() => {
+        turnOrder();
+    }, [setGameState, turnOrder]);
 
     return (
         <>
