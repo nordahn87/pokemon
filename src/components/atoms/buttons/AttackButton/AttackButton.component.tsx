@@ -5,7 +5,6 @@ import "./AttackButton.scss";
 
 const PA_AttackButton: FC<PA_AttackButtonProps> = (props) => {
     const { heroData } = useApiData();
-
     const moves = heroData.moves?.filter((item: any) => {
         return item.move.name === "quick-attack";
     });
@@ -14,12 +13,7 @@ const PA_AttackButton: FC<PA_AttackButtonProps> = (props) => {
         <>
             {moves?.map((item: any, index: any) => {
                 return (
-                    <button
-                        key={index}
-                        onClick={props.handleHeroAttack}
-                        className="attack-button-container"
-                        disabled={props.disableButton}
-                    >
+                    <button key={index} onClick={props.handleHeroAttack} className="attack-button-container">
                         <div>{item.move?.name.replace("-", " ")}</div>
                     </button>
                 );

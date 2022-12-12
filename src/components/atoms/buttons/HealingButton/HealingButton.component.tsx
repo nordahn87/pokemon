@@ -8,7 +8,7 @@ const PA_HealingButton: FC<PA_HealingButtonProps> = (props) => {
     const potionSprite = potionData.sprites?.default;
 
     return (
-        <button className="healing-button-container" onClick={props.handleHealingPotion} disabled={props.disableButton}>
+        <button className="healing-button-container" onClick={props.handleHealingPotion}>
             <img className="icon" src={potionSprite} alt="Pokeball" />
             {potionData.name}
         </button>

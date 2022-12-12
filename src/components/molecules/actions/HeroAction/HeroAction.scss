@@ -1,16 +1,17 @@
 .hero-action-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     border-radius: 5px;
+    width: 650px;
+    height: 180px;
     padding: 20px 10px;
     border: solid 2px #664027;
     background: linear-gradient(
         0deg,
-        rgba(212, 199, 190, 1) 5%,
-        rgba(248, 248, 216, 1) 5%,
-        rgba(248, 248, 216, 1) 95%,
-        rgba(255, 255, 223, 1) 95%
+        rgba(212, 199, 190, 1) 2%,
+        rgba(248, 248, 216, 1) 2%,
+        rgba(248, 248, 216, 1) 98%,
+        rgba(255, 255, 223, 1) 98%
     );
 }
 
@@ -23,4 +24,12 @@
     text-transform: capitalize;
     font-size: 1rem;
     margin-bottom: 5px;
+}
+
+.opponents-turn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: rgb(248, 70, 70);
 }

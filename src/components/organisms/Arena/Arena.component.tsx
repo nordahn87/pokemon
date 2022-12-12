@@ -19,7 +19,7 @@ import "./Arena.scss";
 
 const PA_Arena: FC = () => {
     // Hooks
-    const { gameState, setGameState } = useGameState();
+    const { gameState, setGameState, isGameStateOpponentReady } = useGameState();
     const { heroData, opponentData } = useApiData();
     const { message, showMessage, clearMessage } = useMessages();
     const { runningAnimation, setRunningAnimation } = useAnimation();
@@ -39,10 +39,6 @@ const PA_Arena: FC = () => {
     // TODO find a better way to deal with names
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
-
-    // TODO Opponent button is only temp
-    const isGameStateHeroReady = gameState !== "HERO_READY";
-    const isGameStateOpponentReady = gameState !== "OPPONENT_READY";
 
     // Calculate turn order
     const turnOrder = useCallback(() => {
@@ -87,7 +83,7 @@ const PA_Arena: FC = () => {
             showMessage(MessagesEnum.OPPONENT_MESSAGE_ATTACK, opponentName, opponentAttackDamage);
         }
         setGameState(GameStateEnum.HERO_READY);
-        console.log("Opponent:" + hitChanceResult);
+        console.log("Opponent attack hit chance:" + hitChanceResult);
     }, [
         currentHeroHealth,
         opponentAttackDamage,
@@ -128,7 +124,7 @@ const PA_Arena: FC = () => {
             showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, heroAttackDamage);
         }
         setGameState(GameStateEnum.OPPONENT_READY);
-        console.log("Hero:" + hitChanceResult);
+        console.log("Hero attack hit chance:" + hitChanceResult);
     }, [
         currentOpponentHealth,
         heroAttackDamage,
@@ -174,11 +170,7 @@ const PA_Arena: FC = () => {
 
                     <PA_Hero heroAttackCallback={heroAttackCallback} />
 
-                    <PA_HeroAction
-                        handleHeroAttack={handleHeroAttack}
-                        handleHealingPotion={handleHealingPotion}
-                        disableButton={isGameStateHeroReady}
-                    />
+                    <PA_HeroAction handleHeroAttack={handleHeroAttack} handleHealingPotion={handleHealingPotion} />
                 </div>
 
                 <div>

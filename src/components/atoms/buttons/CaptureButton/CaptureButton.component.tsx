@@ -9,10 +9,7 @@ const PA_CaptureButton: FC = () => {
 
     return (
         <>
-            <button
-                className="capture-button-container"
-                onClick={() => console.log("Capture pokemon")}
-            >
+            <button className="capture-button-container" onClick={() => console.log("Capture pokemon")}>
                 <img className="icon" src={pokeBallSprite} alt="Pokeball" />
                 {pokeBallName?.replace("-", " ")}
             </button>

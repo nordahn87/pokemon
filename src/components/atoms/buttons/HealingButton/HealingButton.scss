@@ -3,11 +3,21 @@
 .healing-button-container {
     @include clean-button;
     @include action-button;
-    background: linear-gradient(
-        0deg,
-        rgba(102, 147, 41, 1) 5%,
-        rgba(146, 205, 65, 1) 5%,
-        rgba(146, 205, 65, 1) 95%,
-        rgba(186, 238, 114, 1) 95%
+    background-image: linear-gradient(
+                    0deg,
+                    rgb(102, 147, 41) 5%,
+                    rgb(146, 205, 65) 5%,
+                    rgb(146, 205, 65) 95%,
+                    rgb(186, 238, 114) 95%
+    );
+}
+
+.healing-button-container:active {
+    background-image: linear-gradient(
+                    0deg,
+                    rgb(164, 213, 74) 5%,
+                    rgb(122, 179, 46) 5%,
+                    rgb(122, 179, 46) 95%,
+                    rgb(93, 137, 35) 95%
     );
 }
