@@ -6,9 +6,11 @@ import PA_AttackButton from "../../../atoms/buttons/AttackButton/AttackButton.co
 import PA_CaptureButton from "../../../atoms/buttons/CaptureButton/CaptureButton.component";
 import PA_HealingButton from "../../../atoms/buttons/HealingButton/HealingButton.component";
 import "./HeroAction.scss";
+import { useGameState } from "../../../../hooks/gamestate.provider";
 
 const PA_HeroAction: FC<PA_HeroActionProps> = (props) => {
     const { heroData } = useApiData();
+    const { isGameStateOpponentReady } = useGameState();
 
     return (
         <div className="hero-action-wrapper">
@@ -16,11 +18,15 @@ const PA_HeroAction: FC<PA_HeroActionProps> = (props) => {
 
             <PA_PlayerHealthBar />
 
-            <div className="hero-action-container">
-                <PA_AttackButton handleHeroAttack={props.handleHeroAttack} disableButton={props.disableButton} />
-                <PA_HealingButton handleHealingPotion={props.handleHealingPotion} disableButton={props.disableButton} />
-                <PA_CaptureButton />
-            </div>
+            {isGameStateOpponentReady ? (
+                <div className="hero-action-container">
+                    <PA_AttackButton handleHeroAttack={props.handleHeroAttack} />
+                    <PA_HealingButton handleHealingPotion={props.handleHealingPotion} />
+                    <PA_CaptureButton />
+                </div>
+            ) : (
+                <div className="opponents-turn-container">Opponents turn</div>
+            )}
         </div>
     );
 };
