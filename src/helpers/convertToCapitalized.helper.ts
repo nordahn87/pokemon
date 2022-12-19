@@ -1,6 +1,9 @@
 export const convertToCapitalizedHelper = (value: string) => {
     const result: string[] = [];
 
+    /* Negate conditional */
+    if (!value) return;
+
     const characters = value.split("");
 
     characters.forEach((character, index) => {

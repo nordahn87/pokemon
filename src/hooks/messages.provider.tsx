@@ -42,6 +42,12 @@ export const MessagesProvider = (props: any): JSX.Element => {
                 result = `${heroName}: Was healed for ${healingAmount}HP`;
                 break;
             }
+            case MessagesEnum.HERO_MESSAGE_TURN: {
+                const heroName = convertToCapitalizedHelper(rest?.[0]);
+
+                result = `${heroName}'s: Turn`;
+                break;
+            }
             case MessagesEnum.OPPONENT_MESSAGE_ATTACK: {
                 const opponentName = convertToCapitalizedHelper(rest?.[0]);
                 const damageAmount = rest?.[1];
@@ -59,6 +65,12 @@ export const MessagesProvider = (props: any): JSX.Element => {
                 const opponentName = convertToCapitalizedHelper(rest?.[0]);
 
                 result = `${opponentName}: Is defeated`;
+                break;
+            }
+            case MessagesEnum.OPPONENT_MESSAGE_TURN: {
+                const opponentName = convertToCapitalizedHelper(rest?.[0]);
+
+                result = `${opponentName}'s: Turn`;
                 break;
             }
         }

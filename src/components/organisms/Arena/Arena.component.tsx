@@ -40,20 +40,6 @@ const PA_Arena: FC = () => {
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
-    // Calculate turn order
-    const turnOrder = useCallback(() => {
-        if (TURN_ORDER_CHANCE <= 4) {
-            return setGameState(GameStateEnum.OPPONENT_READY);
-        } else {
-            setGameState(GameStateEnum.HERO_READY);
-        }
-    }, [setGameState]);
-
-    // Games initial encounter
-    useEffect(() => {
-        turnOrder();
-    }, [setGameState, turnOrder]);
-
     // Opponent attack
     const handleOpponentAttack = useCallback(() => {
         setGameState(GameStateEnum.OPPONENT_ACT);
@@ -82,7 +68,7 @@ const PA_Arena: FC = () => {
             setCurrentHeroHealth(updatedCurrentHeroHealth);
             showMessage(MessagesEnum.OPPONENT_MESSAGE_ATTACK, opponentName, opponentAttackDamage);
         }
-        setGameState(GameStateEnum.HERO_READY);
+        setGameState(GameStateEnum.OPPONENT_DONE);
         console.log("Opponent attack hit chance:" + hitChanceResult);
     }, [
         currentHeroHealth,
@@ -123,7 +109,7 @@ const PA_Arena: FC = () => {
             SetCurrentOpponentHealth(updatedCurrentOpponentHealth);
             showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, heroAttackDamage);
         }
-        setGameState(GameStateEnum.OPPONENT_READY);
+        setGameState(GameStateEnum.HERO_DONE);
         console.log("Hero attack hit chance:" + hitChanceResult);
     }, [
         currentOpponentHealth,
@@ -151,6 +137,37 @@ const PA_Arena: FC = () => {
             setGameState(GameStateEnum.OPPONENT_READY);
         }
     }, [currentHeroHealth, heroName, maxHeroHealth, setCurrentHeroHealth, setGameState, showMessage]);
+
+    // Calculate turn order
+    const turnOrder = useCallback(() => {
+        if (TURN_ORDER_CHANCE <= 4) {
+            setGameState(GameStateEnum.OPPONENT_READY);
+            showMessage(MessagesEnum.OPPONENT_MESSAGE_TURN, opponentName);
+        } else {
+            setGameState(GameStateEnum.HERO_READY);
+            showMessage(MessagesEnum.HERO_MESSAGE_TURN, heroName);
+        }
+    }, [heroName, opponentName, setGameState, showMessage]);
+
+    // Games initial encounter
+    useEffect(() => {
+        if (gameState === GameStateEnum.GAME_INIT && heroName && opponentName) {
+            turnOrder();
+            console.count("Rerender");
+        }
+
+        if (gameState === GameStateEnum.HERO_DONE && message === undefined) {
+            showMessage(MessagesEnum.OPPONENT_MESSAGE_TURN, opponentName);
+            setGameState(GameStateEnum.OPPONENT_READY);
+            console.log(message);
+        }
+
+        if (gameState === GameStateEnum.OPPONENT_DONE && message === undefined) {
+            showMessage(MessagesEnum.HERO_MESSAGE_TURN, heroName);
+            setGameState(GameStateEnum.HERO_READY);
+            console.log(message);
+        }
+    }, [clearMessage, gameState, heroName, message, opponentName, setGameState, showMessage, turnOrder]);
 
     return (
         <>
