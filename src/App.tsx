@@ -5,6 +5,7 @@ import { ApiDataProvider } from "./hooks/apiData.provider";
 import { AnimationProvider } from "./hooks/animation.provider";
 import { PlayersProvider } from "./hooks/players.provider";
 import { GameStateProvider } from "./hooks/gamestate.provider";
+import { CaptureOpponentProvider } from "./hooks/capture.provider";
 
 const App = () => {
     return (
@@ -12,9 +13,11 @@ const App = () => {
             <GameStateProvider>
                 <MessagesProvider>
                     <AnimationProvider>
-                        <PlayersProvider>
-                            <PA_Arena />
-                        </PlayersProvider>
+                        <CaptureOpponentProvider>
+                            <PlayersProvider>
+                                <PA_Arena />
+                            </PlayersProvider>
+                        </CaptureOpponentProvider>
                     </AnimationProvider>
                 </MessagesProvider>
             </GameStateProvider>

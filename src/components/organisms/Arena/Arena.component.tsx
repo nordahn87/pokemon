@@ -16,12 +16,15 @@ import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.compone
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import "./Arena.scss";
+import { calculatePercentResult } from "../../../helpers/calculatePercentResult";
+import { useCaptureOpponent } from "../../../hooks/capture.provider";
 
 const PA_Arena: FC = () => {
     // Hooks
     const { gameState, setGameState, isGameStateOpponentReady } = useGameState();
     const { heroData, opponentData } = useApiData();
     const { message, showMessage, clearMessage } = useMessages();
+    const { setCaptureOpponent } = useCaptureOpponent();
     const { runningAnimation, setRunningAnimation } = useAnimation();
 
     const {
@@ -34,6 +37,7 @@ const PA_Arena: FC = () => {
         heroAttackDamage,
         opponentAttackDamage,
         maxHeroHealth,
+        maxOpponentHealth,
     } = usePlayers();
 
     // TODO find a better way to deal with names
@@ -138,6 +142,30 @@ const PA_Arena: FC = () => {
         }
     }, [currentHeroHealth, heroName, maxHeroHealth, setCurrentHeroHealth, setGameState, showMessage]);
 
+    // Capture opponent
+    const handleCaptureOpponent = useCallback(() => {
+        const opponentHealthPercentResult = calculatePercentResult(currentOpponentHealth, maxOpponentHealth);
+        const captureOpponentChanceResult = calculateRandomResult(10);
+        setCaptureOpponent(true);
+
+        if (
+            opponentHealthPercentResult === 100 ||
+            (opponentHealthPercentResult > 40 && captureOpponentChanceResult >= 3)
+        ) {
+            setTimeout(() => {
+                console.log("NOT CAPTURE");
+                setCaptureOpponent(false);
+                setGameState(GameStateEnum.HERO_DONE);
+            }, 3000);
+        } else {
+            setGameState(GameStateEnum.GAME_END);
+            console.log("CAPTURED");
+        }
+
+        console.log("Health % : " + opponentHealthPercentResult);
+        console.log("capture chance : " + captureOpponentChanceResult);
+    }, [currentOpponentHealth, maxOpponentHealth, setCaptureOpponent, setGameState]);
+
     // Calculate turn order
     const turnOrder = useCallback(() => {
         if (TURN_ORDER_CHANCE <= 4) {
@@ -187,7 +215,11 @@ const PA_Arena: FC = () => {
 
                     <PA_Hero heroAttackCallback={heroAttackCallback} />
 
-                    <PA_HeroAction handleHeroAttack={handleHeroAttack} handleHealingPotion={handleHealingPotion} />
+                    <PA_HeroAction
+                        handleCaptureOpponent={handleCaptureOpponent}
+                        handleHeroAttack={handleHeroAttack}
+                        handleHealingPotion={handleHealingPotion}
+                    />
                 </div>
 
                 <div>

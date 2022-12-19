@@ -1,9 +1,10 @@
 import { FC } from "react";
+import { PA_CaptureButtonProps } from "./CaptureButton.props";
 import { useApiData } from "../../../../hooks/apiData.provider";
-import "./CaptureButton.scss";
 import { useGameState } from "../../../../hooks/gamestate.provider";
+import "./CaptureButton.scss";
 
-const PA_CaptureButton: FC = () => {
+const PA_CaptureButton: FC<PA_CaptureButtonProps> = (props) => {
     const { pokeBallData } = useApiData();
     const { isGameStateHeroDone } = useGameState();
     const pokeBallSprite = pokeBallData.sprites?.default;
@@ -14,7 +15,7 @@ const PA_CaptureButton: FC = () => {
             <button
                 className="capture-button-container"
                 disabled={isGameStateHeroDone}
-                onClick={() => console.log("Capture pokemon")}
+                onClick={props.handleCaptureOpponent}
             >
                 <img className="icon" src={pokeBallSprite} alt="Pokeball" />
                 {pokeBallName?.replace("-", " ")}

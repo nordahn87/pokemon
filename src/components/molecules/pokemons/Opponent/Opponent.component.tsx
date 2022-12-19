@@ -5,9 +5,11 @@ import { useApiData } from "../../../../hooks/apiData.provider";
 import { usePlayers } from "../../../../hooks/players.provider";
 import { useAnimation } from "../../../../hooks/animation.provider";
 import "./Opponent.scss";
+import { useCaptureOpponent } from "../../../../hooks/capture.provider";
 
 const PA_Opponent: FC<PA_OpponentProps> = (props) => {
-    const { opponentData } = useApiData();
+    const { opponentData, pokeBallData } = useApiData();
+    const { captureOpponent } = useCaptureOpponent();
     const { opponentElement } = usePlayers();
     const { runningAnimation, setRunningAnimation } = useAnimation();
 
@@ -23,15 +25,21 @@ const PA_Opponent: FC<PA_OpponentProps> = (props) => {
         }
     };
 
+    const pokeBallSprite = pokeBallData.sprites?.default;
+
     return (
         <div className="opponent-pokemon-container">
-            <img
-                className="opponent-pokemon"
-                ref={opponentElement}
-                onAnimationEnd={animationOpponentCallBack}
-                src={opponentSprite}
-                alt={opponentName}
-            />
+            {captureOpponent ? (
+                <img className="pokeball" src={pokeBallSprite} alt="Pokeball" />
+            ) : (
+                <img
+                    className="opponent-pokemon"
+                    ref={opponentElement}
+                    onAnimationEnd={animationOpponentCallBack}
+                    src={opponentSprite}
+                    alt={opponentName}
+                />
+            )}
         </div>
     );
 };

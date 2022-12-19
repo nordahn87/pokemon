@@ -25,7 +25,7 @@ export const PlayersProvider = (props: any): JSX.Element => {
 
     useEffect(() => {
         const heroMaxHealth = 121;
-        const heroAttackDamage = 11;
+        const heroAttackDamage = 37;
 
         const opponentMaxHealth = 132;
         const opponentAttackDamage = 8;

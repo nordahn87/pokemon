@@ -22,7 +22,7 @@ const PA_HeroAction: FC<PA_HeroActionProps> = (props) => {
                 <div className="hero-action-container">
                     <PA_AttackButton handleHeroAttack={props.handleHeroAttack} />
                     <PA_HealingButton handleHealingPotion={props.handleHealingPotion} />
-                    <PA_CaptureButton />
+                    <PA_CaptureButton handleCaptureOpponent={props.handleCaptureOpponent} />
                 </div>
             ) : (
                 <div className="opponents-turn-container">Opponents turn</div>
