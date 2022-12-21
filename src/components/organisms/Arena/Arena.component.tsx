@@ -36,10 +36,11 @@ const PA_Arena: FC = () => {
         maxHeroHealth,
     } = usePlayers();
 
-    // TODO find a better way to deal with names
+    // TODO Find a better way to deal with names
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
+    // TODO Need to refactor handleOpponentAttack
     // Opponent attack
     const handleOpponentAttack = useCallback(() => {
         setGameState(GameStateEnum.OPPONENT_ACT);
@@ -49,6 +50,7 @@ const PA_Arena: FC = () => {
         setRunningAnimation(Action.OPPONENT_ACTION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
+    // TODO Need to refactor opponentAttackCallback
     // Opponent attack ending animation
     const opponentAttackCallback = useCallback(() => {
         const updatedCurrentHeroHealth = currentHeroHealth - opponentAttackDamage;
@@ -81,6 +83,7 @@ const PA_Arena: FC = () => {
         opponentName,
     ]);
 
+    // TODO Need to refactor handleHeroAttack
     // Hero attack
     const handleHeroAttack = useCallback(() => {
         setGameState(GameStateEnum.HERO_ACT);
@@ -90,6 +93,7 @@ const PA_Arena: FC = () => {
         setRunningAnimation(Action.HERO_ACTION_ATTACK);
     }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
 
+    // TODO Need to refactor heroAttackCallback
     // Hero attack ending animation
     const heroAttackCallback = useCallback(() => {
         const updatedCurrentOpponentHealth = currentOpponentHealth - heroAttackDamage;
@@ -123,6 +127,7 @@ const PA_Arena: FC = () => {
         heroName,
     ]);
 
+    // TODO Need to refactor handleHealingPotion
     // Healing potion
     const handleHealingPotion = useCallback(() => {
         const healingAmount = 5;
@@ -138,6 +143,7 @@ const PA_Arena: FC = () => {
         }
     }, [currentHeroHealth, heroName, maxHeroHealth, setCurrentHeroHealth, setGameState, showMessage]);
 
+    // TODO Need to refactor turnOrder
     // Calculate turn order
     const turnOrder = useCallback(() => {
         if (TURN_ORDER_CHANCE <= 4) {
