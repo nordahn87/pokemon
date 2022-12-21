@@ -21,7 +21,7 @@ import { useOpponentAttackCallback } from "../../../providers/players/hooks/atta
 
 const PA_Arena: FC = () => {
     // Hooks
-    const { heroData, opponentData } = useApiData();
+    const { heroData, opponentData, potionData, pokeBallData } = useApiData();
     const { gameState, setGameState, isGameStateOpponentReady } = useGameState();
     const { message, showMessage, clearMessage } = useMessages();
 
@@ -38,7 +38,7 @@ const PA_Arena: FC = () => {
         maxHeroHealth,
     } = usePlayers();
 
-    // TODO Find a better way to deal with names
+    // Data items
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
@@ -104,7 +104,11 @@ const PA_Arena: FC = () => {
 
                     <PA_Hero heroAttackCallback={heroAttackCallback} />
 
-                    <PA_HeroAction handleHeroAttack={handleHeroAttack} handleHealingPotion={handleHealingPotion} />
+                    <PA_HeroAction
+                        heroName={heroName}
+                        handleHeroAttack={handleHeroAttack}
+                        handleHealingPotion={handleHealingPotion}
+                    />
                 </div>
 
                 <div>

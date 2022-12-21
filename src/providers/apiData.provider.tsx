@@ -15,25 +15,19 @@ export const ApiDataProvider = (props: any): JSX.Element => {
         FetchApi(ENDPOINT_HERO).then((data) => {
             setHeroData(data);
         });
-    }, [setHeroData]);
 
-    useEffect(() => {
         FetchApi(ENDPOINT_OPPONENT).then((data) => {
             setOpponentData(data);
         });
-    }, [setOpponentData]);
 
-    useEffect(() => {
         FetchApi(ENDPOINT_POTION).then((data) => {
             setPotionData(data);
         });
-    }, [setPotionData]);
 
-    useEffect(() => {
         FetchApi(ENDPOINT_POKEBALL).then((data) => {
             setPokeBallData(data);
         });
-    }, [setPokeBallData]);
+    }, []);
 
     return (
         <ApiDataContext.Provider
