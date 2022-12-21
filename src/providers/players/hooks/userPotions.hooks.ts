@@ -6,15 +6,13 @@ import { useGameState } from "../../gamestate.provider";
 import { useApiData } from "../../apiData.provider";
 
 export const usePotion = (
+    heroName: string,
     currentHeroHealth: number,
     maxHeroHealth: number,
     setCurrentHeroHealth: Dispatch<SetStateAction<number | null>>,
 ) => {
-    const { heroData } = useApiData();
     const { setGameState } = useGameState();
     const { showMessage } = useMessages();
-
-    const heroName = heroData.species?.name;
 
     const handleHealingPotion = useCallback(() => {
         const healingAmount = 5;
