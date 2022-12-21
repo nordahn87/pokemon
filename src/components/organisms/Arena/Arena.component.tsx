@@ -17,6 +17,7 @@ import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAc
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import PA_GameStates from "../../molecules/gameStates/GameStates.component";
 import "./Arena.scss";
+import { usePotion } from "../../../providers/players/hooks/userPotions.hooks";
 
 const PA_Arena: FC = () => {
     // Hooks
@@ -24,6 +25,8 @@ const PA_Arena: FC = () => {
     const { heroData, opponentData } = useApiData();
     const { message, showMessage, clearMessage } = useMessages();
     const { setRunningAnimation } = useAnimation();
+    // TODO Look into this later
+    /* const {addClass, removeClass} = usePlayerElement(opponentElement);*/
 
     const {
         currentOpponentHealth,
@@ -128,21 +131,8 @@ const PA_Arena: FC = () => {
         heroName,
     ]);
 
-    // TODO Need to refactor handleHealingPotion
     // Healing potion
-    const handleHealingPotion = useCallback(() => {
-        const healingAmount = 5;
-        const updatedCurrentHeroHealth = currentHeroHealth + healingAmount;
-
-        if (updatedCurrentHeroHealth >= maxHeroHealth) {
-            setCurrentHeroHealth(maxHeroHealth);
-            showMessage(MessagesEnum.HERO_MESSAGE_MAXHEALTH, heroName);
-        } else {
-            setCurrentHeroHealth(updatedCurrentHeroHealth);
-            showMessage(MessagesEnum.HERO_MESSAGE_HEALED, heroName, healingAmount);
-            setGameState(GameStateEnum.OPPONENT_READY);
-        }
-    }, [currentHeroHealth, heroName, maxHeroHealth, setCurrentHeroHealth, setGameState, showMessage]);
+    const { handleHealingPotion } = usePotion(currentHeroHealth, maxHeroHealth, setCurrentHeroHealth);
 
     // TODO Need to refactor turnOrder
     // Calculate turn order
