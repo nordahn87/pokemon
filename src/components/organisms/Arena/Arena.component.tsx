@@ -16,6 +16,7 @@ import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.compone
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import "./Arena.scss";
+import PA_GameStates from "../../molecules/gameStates/GameStates.component";
 
 const PA_Arena: FC = () => {
     // Hooks
@@ -177,16 +178,7 @@ const PA_Arena: FC = () => {
 
     return (
         <>
-            <div style={{ backgroundColor: "white", zIndex: 4, padding: "5px" }}>
-                <div>
-                    Gamestate:
-                    {JSON.stringify(gameState)}
-                </div>
-                <div>
-                    Animationstate:
-                    {JSON.stringify(runningAnimation)}
-                </div>
-            </div>
+            <PA_GameStates />
             <div className="arena-wrapper">
                 <div>
                     {message && message !== "" ? <PA_MessageBox /> : null}
