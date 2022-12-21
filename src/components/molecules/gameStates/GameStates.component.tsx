@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { useGameState } from "../../../hooks/gamestate.provider";
-import { useAnimation } from "../../../hooks/animation.provider";
+import { useGameState } from "../../../providers/gamestate.provider";
+import { useAnimation } from "../../../providers/animation.provider";
 import "./GameStates.scss";
 
 const PA_GameStates: FC = () => {

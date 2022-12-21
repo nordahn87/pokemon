@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { useApiData } from "../../../../hooks/apiData.provider";
+import { useApiData } from "../../../../providers/apiData.provider";
 import { PA_HealingButtonProps } from "./HealingButton.props";
 import "./HealingButton.scss";
-import { useGameState } from "../../../../hooks/gamestate.provider";
+import { useGameState } from "../../../../providers/gamestate.provider";
 
 const PA_HealingButton: FC<PA_HealingButtonProps> = (props) => {
     const { potionData } = useApiData();

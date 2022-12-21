@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { PA_AttackButtonProps } from "./AttackButton.props";
-import { useApiData } from "../../../../hooks/apiData.provider";
+import { useApiData } from "../../../../providers/apiData.provider";
 import "./AttackButton.scss";
-import { useGameState } from "../../../../hooks/gamestate.provider";
+import { useGameState } from "../../../../providers/gamestate.provider";
 
 const PA_AttackButton: FC<PA_AttackButtonProps> = (props) => {
     const { heroData } = useApiData();

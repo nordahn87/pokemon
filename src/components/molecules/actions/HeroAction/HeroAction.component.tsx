@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { PA_HeroActionProps } from "./HeroAction.props";
-import { useApiData } from "../../../../hooks/apiData.provider";
+import { useApiData } from "../../../../providers/apiData.provider";
 import PA_PlayerHealthBar from "../../../atoms/healthBar/HeroHealthBar/HeroHealthBar.component";
 import PA_AttackButton from "../../../atoms/buttons/AttackButton/AttackButton.component";
 import PA_CaptureButton from "../../../atoms/buttons/CaptureButton/CaptureButton.component";
 import PA_HealingButton from "../../../atoms/buttons/HealingButton/HealingButton.component";
 import "./HeroAction.scss";
-import { useGameState } from "../../../../hooks/gamestate.provider";
+import { useGameState } from "../../../../providers/gamestate.provider";
 
 const PA_HeroAction: FC<PA_HeroActionProps> = (props) => {
     const { heroData } = useApiData();

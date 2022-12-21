@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useApiData } from "../../../../hooks/apiData.provider";
+import { useApiData } from "../../../../providers/apiData.provider";
 import PA_OpponentHealthBar from "../../../atoms/healthBar/OpponentHealthBar/OpponentHealthBar.component";
 import "./OpponentAction.scss";
 

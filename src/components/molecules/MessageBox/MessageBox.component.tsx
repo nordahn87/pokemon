@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useMessages } from "../../../hooks/messages.provider";
+import { useMessages } from "../../../providers/messages.provider";
 import "./MessageBox.scss";
 
 const PA_MessageBox: FC = () => {

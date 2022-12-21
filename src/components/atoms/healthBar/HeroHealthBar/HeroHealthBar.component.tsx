@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { usePlayers } from "../../../../hooks/players.provider";
+import { usePlayers } from "../../../../providers/players/players.provider";
 import "./HeroHealthBar.scss";
 
 const PA_HeroHealthBar: FC = () => {

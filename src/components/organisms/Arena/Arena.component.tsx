@@ -3,11 +3,11 @@ import { GameStateEnum } from "../../../models/gameState.enum";
 import { Action } from "../../../models/action";
 import { MessagesEnum } from "../../../models/messages.enum";
 import { TURN_ORDER_CHANCE } from "../../../constants/turnOrderChance";
-import { useApiData } from "../../../hooks/apiData.provider";
-import { useMessages } from "../../../hooks/messages.provider";
-import { useAnimation } from "../../../hooks/animation.provider";
-import { usePlayers } from "../../../hooks/players.provider";
-import { useGameState } from "../../../hooks/gamestate.provider";
+import { useApiData } from "../../../providers/apiData.provider";
+import { useMessages } from "../../../providers/messages.provider";
+import { useAnimation } from "../../../providers/animation.provider";
+import { usePlayers } from "../../../providers/players/players.provider";
+import { useGameState } from "../../../providers/gamestate.provider";
 import { ClassListAdd, ClassListRemove } from "../../../helpers/classList.helper";
 import { calculateRandomResult } from "../../../helpers/calculateRandomResult.helper";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
@@ -15,15 +15,15 @@ import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
-import "./Arena.scss";
 import PA_GameStates from "../../molecules/gameStates/GameStates.component";
+import "./Arena.scss";
 
 const PA_Arena: FC = () => {
     // Hooks
     const { gameState, setGameState, isGameStateOpponentReady } = useGameState();
     const { heroData, opponentData } = useApiData();
     const { message, showMessage, clearMessage } = useMessages();
-    const { runningAnimation, setRunningAnimation } = useAnimation();
+    const { setRunningAnimation } = useAnimation();
 
     const {
         currentOpponentHealth,
