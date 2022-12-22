@@ -3,8 +3,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 const PlayersContext = React.createContext<any>({});
 
 export const PlayersProvider = (props: any): JSX.Element => {
-    // TODO not sure having hero and opponent in same provider is the best way to handle global values
-
     // Hero health states
     const [currentHeroHealth, setCurrentHeroHealth] = useState<number | null>(null);
     const [maxHeroHealth, setMaxHeroHealth] = useState<number | null>(null);

@@ -1,14 +1,14 @@
 import "../src/styles/global/main.scss";
 import PA_Arena from "./components/organisms/Arena/Arena.component";
-import { MessagesProvider } from "./hooks/messages.provider";
-import { ApiDataProvider } from "./hooks/apiData.provider";
-import { AnimationProvider } from "./hooks/animation.provider";
-import { PlayersProvider } from "./hooks/players.provider";
-import { GameStateProvider } from "./hooks/gamestate.provider";
+import { MessagesProvider } from "./providers/messages.provider";
+import { DataProvider } from "./providers/data.provider";
+import { AnimationProvider } from "./providers/animation.provider";
+import { PlayersProvider } from "./providers/players/players.provider";
+import { GameStateProvider } from "./providers/gamestate.provider";
 
 const App = () => {
     return (
-        <ApiDataProvider>
+        <DataProvider>
             <GameStateProvider>
                 <MessagesProvider>
                     <AnimationProvider>
@@ -18,7 +18,7 @@ const App = () => {
                     </AnimationProvider>
                 </MessagesProvider>
             </GameStateProvider>
-        </ApiDataProvider>
+        </DataProvider>
     );
 };
 

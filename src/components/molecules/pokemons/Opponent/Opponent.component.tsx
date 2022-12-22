@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { Action } from "../../../../models/action";
 import { PA_OpponentProps } from "./Opponent.props";
-import { useApiData } from "../../../../hooks/apiData.provider";
-import { usePlayers } from "../../../../hooks/players.provider";
-import { useAnimation } from "../../../../hooks/animation.provider";
+import { useApiData } from "../../../../providers/data.provider";
+import { usePlayers } from "../../../../providers/players/players.provider";
+import { useAnimation } from "../../../../providers/animation.provider";
 import "./Opponent.scss";
 
 const PA_Opponent: FC<PA_OpponentProps> = (props) => {

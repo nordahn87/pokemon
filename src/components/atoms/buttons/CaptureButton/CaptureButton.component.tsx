@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { useApiData } from "../../../../hooks/apiData.provider";
+import { useApiData } from "../../../../providers/data.provider";
 import "./CaptureButton.scss";
-import { useGameState } from "../../../../hooks/gamestate.provider";
+import { useGameState } from "../../../../providers/gamestate.provider";
 
 const PA_CaptureButton: FC = () => {
     const { pokeBallData } = useApiData();
