@@ -1,18 +1,13 @@
 import { FC } from "react";
 import { PA_HeroProps } from "./Hero.props";
 import { Action } from "../../../../models/action";
-import { useApiData } from "../../../../providers/data.provider";
 import { useAnimation } from "../../../../providers/animation.provider";
 import { usePlayers } from "../../../../providers/players/players.provider";
 import "./Hero.scss";
 
 const PA_Hero: FC<PA_HeroProps> = (props) => {
-    const { heroElement } = usePlayers();
-    const { heroData } = useApiData();
+    const { hero } = usePlayers();
     const { runningAnimation, setRunningAnimation } = useAnimation();
-
-    const heroSprite = heroData.sprites?.versions["generation-v"]["black-white"].animated.back_default;
-    const heroName = heroData.species?.name;
 
     const animationHeroCallBack = () => {
         switch (runningAnimation) {
@@ -27,10 +22,10 @@ const PA_Hero: FC<PA_HeroProps> = (props) => {
         <div className="hero-container">
             <img
                 className="hero-pokemon"
-                ref={heroElement}
+                ref={hero.heroElement}
                 onAnimationEnd={animationHeroCallBack}
-                src={heroSprite}
-                alt={heroName}
+                src={hero.heroSprite}
+                alt={hero.heroName}
             />
         </div>
     );

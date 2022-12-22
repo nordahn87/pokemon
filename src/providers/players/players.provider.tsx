@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useApiData } from "../data.provider";
 
 const PlayersContext = React.createContext<any>({});
 
 export const PlayersProvider = (props: any): JSX.Element => {
+    const { heroData, opponentData } = useApiData();
     // Hero health states
     const [currentHeroHealth, setCurrentHeroHealth] = useState<number | null>(null);
     const [maxHeroHealth, setMaxHeroHealth] = useState<number | null>(null);
@@ -41,24 +43,45 @@ export const PlayersProvider = (props: any): JSX.Element => {
         setOpponentAttackDamage(opponentAttackDamage || 0);
     }, [maxHeroHealth, maxOpponentHealth]);
 
+    const heroName = heroData.species?.name;
+    const opponentName = opponentData.species?.name;
+    const heroSprite = heroData.sprites?.versions["generation-v"]["black-white"].animated.back_default;
+    const opponentSprite = opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default;
+
     return (
         <>
             <PlayersContext.Provider
                 value={{
-                    currentHeroHealth,
-                    setCurrentHeroHealth,
-                    maxHeroHealth,
-                    setMaxHeroHealth,
-                    heroElement,
-                    currentOpponentHealth,
-                    SetCurrentOpponentHealth,
-                    maxOpponentHealth,
-                    setMaxOpponentMaxHealth,
-                    heroAttackDamage,
-                    setHeroAttackDamage,
-                    opponentAttackDamage,
-                    setOpponentAttackDamage,
-                    opponentElement,
+                    hero: {
+                        heroName,
+                        heroSprite,
+                        heroElement,
+                        health: {
+                            currentHeroHealth,
+                            setCurrentHeroHealth,
+                            maxHeroHealth,
+                            setMaxHeroHealth,
+                        },
+                        damage: {
+                            heroAttackDamage,
+                            setHeroAttackDamage,
+                        },
+                    },
+                    opponent: {
+                        opponentName,
+                        opponentSprite,
+                        opponentElement,
+                        health: {
+                            currentOpponentHealth,
+                            SetCurrentOpponentHealth,
+                            maxOpponentHealth,
+                            setMaxOpponentMaxHealth,
+                        },
+                        damage: {
+                            opponentAttackDamage,
+                            setOpponentAttackDamage,
+                        },
+                    },
                 }}
             >
                 {props.children}
