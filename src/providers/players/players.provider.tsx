@@ -1,52 +1,33 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useApiData } from "../data.provider";
+import React, { useContext } from "react";
+import { usePlayer } from "./hooks/players/usePlayer.hook";
+import { useOpponent } from "./hooks/items/useOpponent.hook";
 
 const PlayersContext = React.createContext<any>({});
 
 export const PlayersProvider = (props: any): JSX.Element => {
-    const { heroData, opponentData } = useApiData();
-    // Hero health states
-    const [currentHeroHealth, setCurrentHeroHealth] = useState<number | null>(null);
-    const [maxHeroHealth, setMaxHeroHealth] = useState<number | null>(null);
+    const {
+        heroElement,
+        heroName,
+        heroSprite,
+        currentHeroHealth,
+        setCurrentHeroHealth,
+        maxHeroHealth,
+        setMaxHeroHealth,
+        heroAttackDamage,
+        setHeroAttackDamage,
+    } = usePlayer();
 
-    // Opponent health states
-    const [currentOpponentHealth, SetCurrentOpponentHealth] = useState<number | null>(null);
-    const [maxOpponentHealth, setMaxOpponentMaxHealth] = useState<number | null>(null);
-
-    // Players attack damage states
-    const [heroAttackDamage, setHeroAttackDamage] = useState<number | null>(null);
-    const [opponentAttackDamage, setOpponentAttackDamage] = useState<number | null>(null);
-
-    // Hero elementRef
-    const heroElement = useRef(null);
-
-    // Opponent elementRef
-    const opponentElement = useRef(null);
-
-    useEffect(() => {
-        const heroMaxHealth = 121;
-        const heroAttackDamage = 11;
-
-        const opponentMaxHealth = 132;
-        const opponentAttackDamage = 8;
-
-        // Hero initial health
-        setCurrentHeroHealth(maxHeroHealth);
-        setMaxHeroHealth(heroMaxHealth);
-
-        // Opponent initial health
-        SetCurrentOpponentHealth(maxOpponentHealth);
-        setMaxOpponentMaxHealth(opponentMaxHealth);
-
-        // Players initial attack damage
-        setHeroAttackDamage(heroAttackDamage || 0);
-        setOpponentAttackDamage(opponentAttackDamage || 0);
-    }, [maxHeroHealth, maxOpponentHealth]);
-
-    const heroName = heroData.species?.name;
-    const opponentName = opponentData.species?.name;
-    const heroSprite = heroData.sprites?.versions["generation-v"]["black-white"].animated.back_default;
-    const opponentSprite = opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default;
+    const {
+        opponentElement,
+        opponentName,
+        opponentSprite,
+        currentOpponentHealth,
+        setCurrentOpponentHealth,
+        maxOpponentHealth,
+        setMaxOpponentHealth,
+        opponentAttackDamage,
+        setOpponentAttackDamage,
+    } = useOpponent();
 
     return (
         <>
@@ -73,9 +54,9 @@ export const PlayersProvider = (props: any): JSX.Element => {
                         opponentElement,
                         health: {
                             currentOpponentHealth,
-                            SetCurrentOpponentHealth,
+                            setCurrentOpponentHealth,
                             maxOpponentHealth,
-                            setMaxOpponentMaxHealth,
+                            setMaxOpponentHealth,
                         },
                         damage: {
                             opponentAttackDamage,

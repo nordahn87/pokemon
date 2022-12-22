@@ -10,7 +10,7 @@ import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.compone
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import PA_GameStates from "../../molecules/gameStates/GameStates.component";
-import { usePotion } from "../../../providers/players/hooks/userPotions.hooks";
+import { usePotion } from "../../../providers/players/hooks/players/userPotions.hooks";
 import { useOpponentAttack } from "../../../providers/players/hooks/attack/useOpponentAttack.hooks";
 import { useHeroAttack } from "../../../providers/players/hooks/attack/useHeroAttack.hooks";
 import { useHeroAttackCallback } from "../../../providers/players/hooks/attackCallback/useHeroAttackCallback.hook";
