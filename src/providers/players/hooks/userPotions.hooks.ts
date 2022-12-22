@@ -3,7 +3,7 @@ import { MessagesEnum } from "../../../models/messages.enum";
 import { GameStateEnum } from "../../../models/gameState.enum";
 import { useMessages } from "../../messages.provider";
 import { useGameState } from "../../gamestate.provider";
-import { useApiData } from "../../apiData.provider";
+import { useApiData } from "../../data.provider";
 
 export const usePotion = (
     heroName: string,

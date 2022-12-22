@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { PA_HeroProps } from "./Hero.props";
 import { Action } from "../../../../models/action";
-import { useApiData } from "../../../../providers/apiData.provider";
+import { useApiData } from "../../../../providers/data.provider";
 import { useAnimation } from "../../../../providers/animation.provider";
 import { usePlayers } from "../../../../providers/players/players.provider";
 import "./Hero.scss";

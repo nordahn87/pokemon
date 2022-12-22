@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { PA_AttackButtonProps } from "./AttackButton.props";
-import { useApiData } from "../../../../providers/apiData.provider";
+import { useApiData } from "../../../../providers/data.provider";
 import "./AttackButton.scss";
 import { useGameState } from "../../../../providers/gamestate.provider";
 

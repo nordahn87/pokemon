@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect } from "react";
 import { GameStateEnum } from "../../../models/gameState.enum";
 import { MessagesEnum } from "../../../models/messages.enum";
 import { TURN_ORDER_CHANCE } from "../../../constants/turnOrderChance";
-import { useApiData } from "../../../providers/apiData.provider";
+import { useApiData } from "../../../providers/data.provider";
 import { useMessages } from "../../../providers/messages.provider";
 import { usePlayers } from "../../../providers/players/players.provider";
 import { useGameState } from "../../../providers/gamestate.provider";

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useApiData } from "../../../../providers/apiData.provider";
+import { useApiData } from "../../../../providers/data.provider";
 import "./CaptureButton.scss";
 import { useGameState } from "../../../../providers/gamestate.provider";
 

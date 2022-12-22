@@ -5,7 +5,7 @@ import { ENDPOINT_HERO, ENDPOINT_OPPONENT, ENDPOINT_POKEBALL, ENDPOINT_POTION } 
 
 const ApiDataContext = React.createContext<any>({});
 
-export const ApiDataProvider = (props: any): JSX.Element => {
+export const DataProvider = (props: any): JSX.Element => {
     const [heroData, setHeroData] = useState<PA_API>({});
     const [opponentData, setOpponentData] = useState<PA_API>({});
     const [potionData, setPotionData] = useState<PA_API>({});
