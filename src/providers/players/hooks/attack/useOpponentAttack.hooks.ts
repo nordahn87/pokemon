@@ -9,16 +9,16 @@ import { usePlayers } from "../../players.provider";
 export const useOpponentAttack = (clearMessage: () => void) => {
     const { setGameState } = useGameState();
     const { setRunningAnimation } = useAnimation();
-    const { opponentElement, heroElement } = usePlayers();
+    const { opponent, hero } = usePlayers();
 
     // Handle opponent attack
     const handleOpponentAttack = useCallback(() => {
         setGameState(GameStateEnum.OPPONENT_ACT);
         clearMessage();
-        AddClass(opponentElement, "opponent-attack-animation");
-        AddClass(heroElement, "hero-takes-damage-animation");
+        AddClass(opponent.opponentElement, "opponent-attack-animation");
+        AddClass(hero.heroElement, "hero-takes-damage-animation");
         setRunningAnimation(Action.OPPONENT_ACTION_ATTACK);
-    }, [clearMessage, heroElement, opponentElement, setGameState, setRunningAnimation]);
+    }, [clearMessage, hero.heroElement, opponent.opponentElement, setGameState, setRunningAnimation]);
 
     return {
         handleOpponentAttack,

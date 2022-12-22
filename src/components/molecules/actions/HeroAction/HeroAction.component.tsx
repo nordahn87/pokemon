@@ -6,13 +6,15 @@ import PA_CaptureButton from "../../../atoms/buttons/CaptureButton/CaptureButton
 import PA_HealingButton from "../../../atoms/buttons/HealingButton/HealingButton.component";
 import "./HeroAction.scss";
 import { useGameState } from "../../../../providers/gamestate.provider";
+import { usePlayers } from "../../../../providers/players/players.provider";
 
 const PA_HeroAction: FC<PA_HeroActionProps> = (props) => {
     const { isGameStateOpponentReady } = useGameState();
+    const { hero } = usePlayers();
 
     return (
         <div className="hero-action-wrapper">
-            <div className="hero-name">{props.heroName}</div>
+            <div className="hero-name">{hero.heroName}</div>
 
             <PA_PlayerHealthBar />
 

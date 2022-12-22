@@ -3,13 +3,13 @@ import { usePlayers } from "../../../../providers/players/players.provider";
 import "./OpponentHealthBar.scss";
 
 const PA_OpponentHealthBar: FC = () => {
-    const { currentOpponentHealth, maxOpponentHealth } = usePlayers();
+    const { opponent } = usePlayers();
 
     return (
         <div className="opponent-healthbar-container">
             <div className="opponent-healthbar-hp">HP</div>
             <div>
-                {currentOpponentHealth}/{maxOpponentHealth}
+                {opponent.health.currentOpponentHealth}/{opponent.health.maxOpponentHealth}
             </div>
         </div>
     );

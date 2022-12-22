@@ -1,18 +1,13 @@
 import React, { FC } from "react";
 import { Action } from "../../../../models/action";
 import { PA_OpponentProps } from "./Opponent.props";
-import { useApiData } from "../../../../providers/data.provider";
 import { usePlayers } from "../../../../providers/players/players.provider";
 import { useAnimation } from "../../../../providers/animation.provider";
 import "./Opponent.scss";
 
 const PA_Opponent: FC<PA_OpponentProps> = (props) => {
-    const { opponentData } = useApiData();
-    const { opponentElement } = usePlayers();
+    const { opponent } = usePlayers();
     const { runningAnimation, setRunningAnimation } = useAnimation();
-
-    const opponentSprite = opponentData.sprites?.versions["generation-v"]["black-white"].animated.front_default;
-    const opponentName = opponentData.species?.name;
 
     const animationOpponentCallBack = () => {
         switch (runningAnimation) {
@@ -27,10 +22,10 @@ const PA_Opponent: FC<PA_OpponentProps> = (props) => {
         <div className="opponent-pokemon-container">
             <img
                 className="opponent-pokemon"
-                ref={opponentElement}
+                ref={opponent.opponentElement}
                 onAnimationEnd={animationOpponentCallBack}
-                src={opponentSprite}
-                alt={opponentName}
+                src={opponent.opponentSprite}
+                alt={opponent.opponentName}
             />
         </div>
     );

@@ -16,15 +16,15 @@ export const useOpponentAttackCallback = (
 ) => {
     const { setGameState } = useGameState();
     const { showMessage } = useMessages();
-    const { opponentElement, heroElement } = usePlayers();
+    const { opponent, hero } = usePlayers();
 
     // Opponent attack ending animation
     const opponentAttackCallback = useCallback(() => {
         const updatedCurrentHeroHealth = currentHeroHealth - opponentAttackDamage;
         const hitChanceResult = calculateRandomResult(10);
 
-        RemoveClass(opponentElement, "opponent-attack-animation");
-        RemoveClass(heroElement, "hero-takes-damage-animation");
+        RemoveClass(opponent.opponentElement, "opponent-attack-animation");
+        RemoveClass(hero.heroElement, "hero-takes-damage-animation");
 
         if (updatedCurrentHeroHealth <= 0) {
             setCurrentHeroHealth(0);
@@ -42,9 +42,9 @@ export const useOpponentAttackCallback = (
     }, [
         currentHeroHealth,
         opponentAttackDamage,
+        opponent.opponentElement,
+        hero.heroElement,
         setGameState,
-        opponentElement,
-        heroElement,
         setCurrentHeroHealth,
         showMessage,
         opponentName,

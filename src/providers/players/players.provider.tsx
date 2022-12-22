@@ -1,64 +1,68 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext } from "react";
+import { usePlayer } from "./hooks/players/usePlayer.hook";
+import { useOpponent } from "./hooks/players/useOpponent.hook";
 
 const PlayersContext = React.createContext<any>({});
 
 export const PlayersProvider = (props: any): JSX.Element => {
-    // Hero health states
-    const [currentHeroHealth, setCurrentHeroHealth] = useState<number | null>(null);
-    const [maxHeroHealth, setMaxHeroHealth] = useState<number | null>(null);
+    const {
+        heroElement,
+        heroName,
+        heroSprite,
+        currentHeroHealth,
+        setCurrentHeroHealth,
+        maxHeroHealth,
+        setMaxHeroHealth,
+        heroAttackDamage,
+        setHeroAttackDamage,
+    } = usePlayer();
 
-    // Opponent health states
-    const [currentOpponentHealth, SetCurrentOpponentHealth] = useState<number | null>(null);
-    const [maxOpponentHealth, setMaxOpponentMaxHealth] = useState<number | null>(null);
-
-    // Players attack damage states
-    const [heroAttackDamage, setHeroAttackDamage] = useState<number | null>(null);
-    const [opponentAttackDamage, setOpponentAttackDamage] = useState<number | null>(null);
-
-    // Hero elementRef
-    const heroElement = useRef(null);
-
-    // Opponent elementRef
-    const opponentElement = useRef(null);
-
-    useEffect(() => {
-        const heroMaxHealth = 121;
-        const heroAttackDamage = 11;
-
-        const opponentMaxHealth = 132;
-        const opponentAttackDamage = 8;
-
-        // Hero initial health
-        setCurrentHeroHealth(maxHeroHealth);
-        setMaxHeroHealth(heroMaxHealth);
-
-        // Opponent initial health
-        SetCurrentOpponentHealth(maxOpponentHealth);
-        setMaxOpponentMaxHealth(opponentMaxHealth);
-
-        // Players initial attack damage
-        setHeroAttackDamage(heroAttackDamage || 0);
-        setOpponentAttackDamage(opponentAttackDamage || 0);
-    }, [maxHeroHealth, maxOpponentHealth]);
+    const {
+        opponentElement,
+        opponentName,
+        opponentSprite,
+        currentOpponentHealth,
+        setCurrentOpponentHealth,
+        maxOpponentHealth,
+        setMaxOpponentHealth,
+        opponentAttackDamage,
+        setOpponentAttackDamage,
+    } = useOpponent();
 
     return (
         <>
             <PlayersContext.Provider
                 value={{
-                    currentHeroHealth,
-                    setCurrentHeroHealth,
-                    maxHeroHealth,
-                    setMaxHeroHealth,
-                    heroElement,
-                    currentOpponentHealth,
-                    SetCurrentOpponentHealth,
-                    maxOpponentHealth,
-                    setMaxOpponentMaxHealth,
-                    heroAttackDamage,
-                    setHeroAttackDamage,
-                    opponentAttackDamage,
-                    setOpponentAttackDamage,
-                    opponentElement,
+                    hero: {
+                        heroName,
+                        heroSprite,
+                        heroElement,
+                        health: {
+                            currentHeroHealth,
+                            setCurrentHeroHealth,
+                            maxHeroHealth,
+                            setMaxHeroHealth,
+                        },
+                        damage: {
+                            heroAttackDamage,
+                            setHeroAttackDamage,
+                        },
+                    },
+                    opponent: {
+                        opponentName,
+                        opponentSprite,
+                        opponentElement,
+                        health: {
+                            currentOpponentHealth,
+                            setCurrentOpponentHealth,
+                            maxOpponentHealth,
+                            setMaxOpponentHealth,
+                        },
+                        damage: {
+                            opponentAttackDamage,
+                            setOpponentAttackDamage,
+                        },
+                    },
                 }}
             >
                 {props.children}
