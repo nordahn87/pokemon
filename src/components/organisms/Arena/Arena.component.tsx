@@ -4,18 +4,18 @@ import { MessagesEnum } from "../../../models/messages.enum";
 import { useMessages } from "../../../providers/messages.provider";
 import { usePlayers } from "../../../providers/players/players.provider";
 import { useGameState } from "../../../providers/gamestate.provider";
+import { usePotion } from "../../../providers/players/hooks/items/userPotions.hooks";
+import { useOpponentAttack } from "../../../providers/players/hooks/attack/useOpponentAttack.hooks";
+import { useHeroAttack } from "../../../providers/players/hooks/attack/useHeroAttack.hooks";
+import { useHeroAttackCallback } from "../../../providers/players/hooks/attackCallback/useHeroAttackCallback.hook";
+import { useOpponentAttackCallback } from "../../../providers/players/hooks/attackCallback/useOpponentAttackCallback.hook";
+import { useTurnOrder } from "../../../hooks/useTurnOrder.hook";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
 import PA_OpponentAction from "../../molecules/actions/OpponentAction/OpponentAction.component";
 import PA_MessageBox from "../../molecules/MessageBox/MessageBox.component";
 import PA_GameStates from "../../molecules/gameStates/GameStates.component";
-import { usePotion } from "../../../providers/players/hooks/players/userPotions.hooks";
-import { useOpponentAttack } from "../../../providers/players/hooks/attack/useOpponentAttack.hooks";
-import { useHeroAttack } from "../../../providers/players/hooks/attack/useHeroAttack.hooks";
-import { useHeroAttackCallback } from "../../../providers/players/hooks/attackCallback/useHeroAttackCallback.hook";
-import { useOpponentAttackCallback } from "../../../providers/players/hooks/attackCallback/useOpponentAttackCallback.hook";
-import { useTurnOrder } from "../../../hooks/useTurnOrder.hook";
 import "./Arena.scss";
 
 const PA_Arena: FC = () => {
@@ -46,7 +46,7 @@ const PA_Arena: FC = () => {
         opponent.opponentName,
         opponent.health.currentOpponentHealth,
         hero.damage.heroAttackDamage,
-        opponent.health.SetCurrentOpponentHealth,
+        opponent.health.setCurrentOpponentHealth,
     );
 
     // Initial encounter turn order

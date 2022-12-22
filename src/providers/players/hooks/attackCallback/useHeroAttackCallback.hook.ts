@@ -12,7 +12,7 @@ export const useHeroAttackCallback = (
     opponentName: string,
     currentOpponentHealth: number,
     heroAttackDamage: number,
-    SetCurrentOpponentHealth: Dispatch<SetStateAction<number | null>>,
+    setCurrentOpponentHealth: Dispatch<SetStateAction<number | null>>,
 ) => {
     const { setGameState } = useGameState();
     const { showMessage } = useMessages();
@@ -27,14 +27,14 @@ export const useHeroAttackCallback = (
         RemoveClass(opponent.opponentElement, "opponent-takes-damage-animation");
 
         if (updatedCurrentOpponentHealth <= 0) {
-            SetCurrentOpponentHealth(0);
+            setCurrentOpponentHealth(0);
             return showMessage(MessagesEnum.OPPONENT_MESSAGE_DEFEATED, opponentName);
         }
 
         if (hitChanceResult <= 2) {
             showMessage(MessagesEnum.HERO_MESSAGE_MISS, heroName);
         } else {
-            SetCurrentOpponentHealth(updatedCurrentOpponentHealth);
+            setCurrentOpponentHealth(updatedCurrentOpponentHealth);
             showMessage(MessagesEnum.HERO_MESSAGE_ATTACK, heroName, heroAttackDamage);
         }
         setGameState(GameStateEnum.HERO_DONE);
@@ -45,7 +45,7 @@ export const useHeroAttackCallback = (
         hero.heroElement,
         opponent.opponentElement,
         setGameState,
-        SetCurrentOpponentHealth,
+        setCurrentOpponentHealth,
         showMessage,
         opponentName,
         heroName,

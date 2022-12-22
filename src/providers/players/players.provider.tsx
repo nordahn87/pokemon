@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { usePlayer } from "./hooks/players/usePlayer.hook";
-import { useOpponent } from "./hooks/items/useOpponent.hook";
+import { useOpponent } from "./hooks/players/useOpponent.hook";
 
 const PlayersContext = React.createContext<any>({});
 

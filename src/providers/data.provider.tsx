@@ -24,20 +24,11 @@ export const DataProvider = (props: any): JSX.Element => {
             .then(([responseHero, responseOpponent, responsePokeball, responsePortion]) => {
                 setHeroData(responseHero);
                 setOpponentData(responseOpponent);
-                setPotionData(responsePokeball);
-                setPokeBallData(responsePortion);
+                setPokeBallData(responsePokeball);
+                setPotionData(responsePortion);
             })
             .catch((error) => console.warn(error));
     }, [fetchHero, fetchOpponent, fetchPokeball, fetchPortion]);
-
-    const heroName = heroData.species?.name;
-    const opponentName = opponentData.species?.name;
-    const pokeBallSprite = pokeBallData.sprites?.default;
-    const pokeBallName = pokeBallData.name;
-    const potionSprite = potionData.sprites?.default;
-    const moves = heroData.moves?.filter((item: any) => {
-        return item.move.name === "quick-attack";
-    });
 
     return (
         <ApiDataContext.Provider
