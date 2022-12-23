@@ -10,6 +10,7 @@ import { useHeroAttack } from "../../../providers/players/hooks/attack/useHeroAt
 import { useHeroAttackCallback } from "../../../providers/players/hooks/attackCallback/useHeroAttackCallback.hook";
 import { useOpponentAttackCallback } from "../../../providers/players/hooks/attackCallback/useOpponentAttackCallback.hook";
 import { useTurnOrder } from "../../../hooks/useTurnOrder.hook";
+import { useCaptureOpponent } from "../../../hooks/useCaptureOpponent.hook";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
 import PA_HeroAction from "../../molecules/actions/HeroAction/HeroAction.component";
@@ -37,6 +38,11 @@ const PA_Arena: FC = () => {
         hero.health.currentHeroHealth,
         hero.health.maxHeroHealth,
         hero.health.setCurrentHeroHealth,
+    );
+
+    const { handleCaptureOpponent, captureOpponent, setCaptureOpponent } = useCaptureOpponent(
+        opponent.health.currentOpponentHealth,
+        opponent.health.maxOpponentHealth,
     );
 
     // Opponent actions
@@ -79,12 +85,16 @@ const PA_Arena: FC = () => {
 
                     <PA_Hero heroAttackCallback={heroAttackCallback} />
 
-                    <PA_HeroAction handleHeroAttack={handleHeroAttack} handleHealingPotion={handleHealingPotion} />
+                    <PA_HeroAction
+                        handleHeroAttack={handleHeroAttack}
+                        handleHealingPotion={handleHealingPotion}
+                        handleCaptureOpponent={handleCaptureOpponent}
+                    />
                 </div>
 
                 <div>
                     <PA_OpponentAction />
-                    <PA_Opponent opponentAttackCallback={opponentAttackCallback} />
+                    <PA_Opponent opponentAttackCallback={opponentAttackCallback} captureOpponent={captureOpponent} />
 
                     {/* TODO This has to be a function running when hero has finished his turn*/}
                     <button onClick={handleOpponentAttack} disabled={isGameStateOpponentReady}>
