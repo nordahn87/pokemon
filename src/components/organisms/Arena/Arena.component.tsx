@@ -40,7 +40,7 @@ const PA_Arena: FC = () => {
         hero.health.setCurrentHeroHealth,
     );
 
-    const { handleCaptureOpponent, captureOpponent, setCaptureOpponent } = useCaptureOpponent(
+    const { handleCaptureOpponent, captureOpponent } = useCaptureOpponent(
         opponent.health.currentOpponentHealth,
         opponent.health.maxOpponentHealth,
     );

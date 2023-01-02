@@ -11,24 +11,24 @@ export const DataProvider = (props: any): JSX.Element => {
     const [potionData, setPotionData] = useState<PA_API>({});
     const [pokeBallData, setPokeBallData] = useState<PA_API>({});
 
-    const fetchHero = fetch(`${API_BASE_URL}/${ENDPOINT_HERO}`);
-    const fetchOpponent = fetch(`${API_BASE_URL}/${ENDPOINT_OPPONENT}`);
-    const fetchPokeball = fetch(`${API_BASE_URL}/${ENDPOINT_POKEBALL}`);
-    const fetchPortion = fetch(`${API_BASE_URL}/${ENDPOINT_POTION}`);
-
     useEffect(() => {
-        Promise.all([fetchHero, fetchOpponent, fetchPokeball, fetchPortion])
+        const fetchHero = fetch(`${API_BASE_URL}/${ENDPOINT_HERO}`);
+        const fetchOpponent = fetch(`${API_BASE_URL}/${ENDPOINT_OPPONENT}`);
+        const fetchPokeball = fetch(`${API_BASE_URL}/${ENDPOINT_POKEBALL}`);
+        const fetchPotion = fetch(`${API_BASE_URL}/${ENDPOINT_POTION}`);
+
+        Promise.all([fetchHero, fetchOpponent, fetchPokeball, fetchPotion])
             .then((values) => {
                 return Promise.all(values.map((response) => response.json()));
             })
-            .then(([responseHero, responseOpponent, responsePokeball, responsePortion]) => {
+            .then(([responseHero, responseOpponent, responsePokeball, responsePotion]) => {
                 setHeroData(responseHero);
                 setOpponentData(responseOpponent);
                 setPokeBallData(responsePokeball);
-                setPotionData(responsePortion);
+                setPotionData(responsePotion);
             })
             .catch((error) => console.warn(error));
-    }, [fetchHero, fetchOpponent, fetchPokeball, fetchPortion]);
+    }, []);
 
     return (
         <ApiDataContext.Provider

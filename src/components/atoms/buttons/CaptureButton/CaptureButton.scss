@@ -25,25 +25,4 @@
 .capture-button-container:disabled,
 .capture-button-container[disabled]{
    opacity: 0.5;
-    red
-}
-
-.pokeball {
-    position: absolute;
-    bottom: 0;
-    image-rendering: pixelated;
-    height: 100px;
-    transform-origin: bottom center;
-    animation-name: pokeball-keyframes;
-    animation-iteration-count: infinite;
-    animation-duration: 1.2s;
-}
-
-@keyframes pokeball-keyframes {
-    25% {
-        transform: rotate(-15deg);
-    }
-    75% {
-        transform: rotate(15deg);
-    }
 }
