@@ -76,13 +76,13 @@ export const MessagesProvider = (props: any): JSX.Element => {
             case MessagesEnum.OPPONENT_MESSAGE_CAPTURED_SUCCEED: {
                 const opponentName = convertToCapitalizedHelper(rest?.[0]);
 
-                result = `Capturing ${opponentName} succeeded`;
+                result = `${opponentName}: Is captured`;
                 break;
             }
             case MessagesEnum.OPPONENT_MESSAGE_CAPTURED_FAILED: {
                 const opponentName = convertToCapitalizedHelper(rest?.[0]);
 
-                result = `Capturing ${opponentName} failed`;
+                result = `${opponentName}: could not be captured`;
                 break;
             }
         }

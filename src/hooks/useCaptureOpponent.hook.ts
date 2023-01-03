@@ -19,8 +19,6 @@ export const useCaptureOpponent = (currentOpponentHealth: number, maxOpponentHea
     const captureOpponentResult = useCallback(() => {
         const opponentHealthPercentResult = calculatePercentResult(currentOpponentHealth, maxOpponentHealth);
         const captureOpponentChanceResult = calculateRandomResult(10);
-        console.log(opponentHealthPercentResult);
-        console.log(captureOpponentChanceResult);
 
         // 40 = 40%
         if (opponentHealthPercentResult > 40) {
@@ -49,13 +47,20 @@ export const useCaptureOpponent = (currentOpponentHealth: number, maxOpponentHea
             AddClass(pokeBall.pokeBallElement, "capture-success");
             showMessage(MessagesEnum.OPPONENT_MESSAGE_CAPTURED_SUCCEED, opponent.opponentName);
         }
-    }, [currentOpponentHealth, maxOpponentHealth, opponent.opponentName, pokeBall.pokeBallElement, showMessage]);
+    }, [
+        currentOpponentHealth,
+        maxOpponentHealth,
+        opponent.opponentName,
+        pokeBall.pokeBallElement,
+        setGameState,
+        showMessage,
+    ]);
 
     const handleCaptureOpponent = useCallback(() => {
         setCaptureOpponent(true);
         clearMessage();
         setTimeout(captureOpponentResult, 3000);
-    }, [captureOpponentResult]);
+    }, [captureOpponentResult, clearMessage]);
 
     return {
         handleCaptureOpponent,
