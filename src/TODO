@@ -5,7 +5,9 @@ TODO Bug and issues
 
 * Hero can still attack even if opponent i captured.
 
-* Had issues with opponents auto attack only playing animation, not dealing damage.
+* If hero heal lost health, opponent does not auto attack and gets stucked.
+
+* Had issues with opponents auto attack only playing animation, not dealing damage. *FIXED*
 
 TODO I wonder if...
 

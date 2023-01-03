@@ -23,7 +23,7 @@ export const usePotion = (
         } else {
             setCurrentHeroHealth(updatedCurrentHeroHealth);
             showMessage(MessagesEnum.HERO_MESSAGE_HEALED, heroName, healingAmount);
-            setGameState(GameStateEnum.OPPONENT_READY);
+            setGameState(GameStateEnum.HERO_DONE);
         }
     }, [currentHeroHealth, heroName, maxHeroHealth, setCurrentHeroHealth, setGameState, showMessage]);
 
