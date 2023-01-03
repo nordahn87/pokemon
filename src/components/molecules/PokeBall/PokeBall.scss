@@ -1,0 +1,36 @@
+// Poke Ball
+.poke-ball {
+    position: absolute;
+    bottom: 0;
+    image-rendering: pixelated;
+    height: 100px;
+    transform-origin: bottom center;
+}
+
+.capture {
+    animation-name: capture-keyframes;
+    animation-iteration-count: infinite;
+    animation-duration: 1.2s;
+}
+
+.capture-success {
+    animation-name: capture-success-keyframes;
+    animation-iteration-count: 1;
+    animation-duration: 1.2s;
+    animation-fill-mode: forwards
+}
+
+@keyframes capture-keyframes {
+    25% {
+        transform: rotate(-10deg);
+    }
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+@keyframes capture-success-keyframes {
+    100% {
+        transform: rotate(15deg);
+    }
+}

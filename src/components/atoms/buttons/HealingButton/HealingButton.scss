@@ -12,7 +12,7 @@
     );
 }
 
-.healing-button-container:active {
+.healing-button-container:active:enabled {
     background-image: linear-gradient(
                     0deg,
                     rgb(164, 213, 74) 5%,
@@ -20,4 +20,9 @@
                     rgb(122, 179, 46) 95%,
                     rgb(93, 137, 35) 95%
     );
+}
+
+.healing-button-container:disabled,
+.healing-button-container[disabled]{
+    opacity: 0.5;
 }

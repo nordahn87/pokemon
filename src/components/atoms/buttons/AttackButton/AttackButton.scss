@@ -12,7 +12,7 @@
     );
 }
 
-.attack-button-container:active {
+.attack-button-container:active:enabled {
     background-image: linear-gradient(
                     0deg,
                     rgb(237, 126, 106) 5%,
@@ -20,4 +20,9 @@
                     rgb(209, 91, 68) 95%,
                     rgb(174, 70, 48) 95%
     );
+}
+
+.attack-button-container:disabled,
+.attack-button-container[disabled]{
+    opacity: 0.5;
 }

@@ -3,6 +3,7 @@ import { Action } from "../../../../models/action";
 import { PA_OpponentProps } from "./Opponent.props";
 import { usePlayers } from "../../../../providers/players/players.provider";
 import { useAnimation } from "../../../../providers/animation.provider";
+import PA_Pokeball from "../../PokeBall/PokeBall.component";
 import "./Opponent.scss";
 
 const PA_Opponent: FC<PA_OpponentProps> = (props) => {
@@ -20,13 +21,17 @@ const PA_Opponent: FC<PA_OpponentProps> = (props) => {
 
     return (
         <div className="opponent-pokemon-container">
-            <img
-                className="opponent-pokemon"
-                ref={opponent.opponentElement}
-                onAnimationEnd={animationOpponentCallBack}
-                src={opponent.opponentSprite}
-                alt={opponent.opponentName}
-            />
+            {props.captureOpponent ? (
+                <PA_Pokeball />
+            ) : (
+                <img
+                    className="opponent-pokemon"
+                    ref={opponent.opponentElement}
+                    onAnimationEnd={animationOpponentCallBack}
+                    src={opponent.opponentSprite}
+                    alt={opponent.opponentName}
+                />
+            )}
         </div>
     );
 };

@@ -73,6 +73,18 @@ export const MessagesProvider = (props: any): JSX.Element => {
                 result = `${opponentName}'s: Turn`;
                 break;
             }
+            case MessagesEnum.OPPONENT_MESSAGE_CAPTURED_SUCCEED: {
+                const opponentName = convertToCapitalizedHelper(rest?.[0]);
+
+                result = `${opponentName}: Is captured`;
+                break;
+            }
+            case MessagesEnum.OPPONENT_MESSAGE_CAPTURED_FAILED: {
+                const opponentName = convertToCapitalizedHelper(rest?.[0]);
+
+                result = `${opponentName}: could not be captured`;
+                break;
+            }
         }
         setMessage(result);
         addSpaceBarEventListener();

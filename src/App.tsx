@@ -4,6 +4,7 @@ import { MessagesProvider } from "./providers/messages.provider";
 import { DataProvider } from "./providers/data.provider";
 import { AnimationProvider } from "./providers/animation.provider";
 import { PlayersProvider } from "./providers/players/players.provider";
+import { ItemsProvider } from "./providers/items/items.provider";
 import { GameStateProvider } from "./providers/gamestate.provider";
 
 const App = () => {
@@ -13,7 +14,9 @@ const App = () => {
                 <MessagesProvider>
                     <AnimationProvider>
                         <PlayersProvider>
-                            <PA_Arena />
+                            <ItemsProvider>
+                                <PA_Arena />
+                            </ItemsProvider>
                         </PlayersProvider>
                     </AnimationProvider>
                 </MessagesProvider>
