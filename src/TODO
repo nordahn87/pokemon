@@ -1,0 +1,29 @@
+TODO Bug and issues
+
+* Starting players message box f.ex.. "Pikachu's: Turn" always shows,
+  while secondary player never appears.
+
+* Hero can still attack even if opponent i captured.
+
+* Had issues with opponents auto attack only playing animation, not dealing damage.
+
+TODO I wonder if...
+
+* Rethinking how the message box should work.
+
+* Using a redbox with "Oppoents turn" as overlay on hero buttons, could I use this for other states?
+
+TODO list:
+- Make game over screen
+- Remove temp opponent attack button and code auto attack
+- Work on turn order see its TODO
+- Make MODAL for Pokedex
+- List Pokemons
+- Sort Pokemons
+
+
+
+
+
+
+

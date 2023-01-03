@@ -6,13 +6,14 @@
     height: 100px;
     transform-origin: bottom center;
 }
-
+// TODO might have to rename this
 .capture {
     animation-name: capture-keyframes;
     animation-iteration-count: infinite;
     animation-duration: 1.2s;
 }
 
+// TODO might have to rename this
 .capture-success {
     animation-name: capture-success-keyframes;
     animation-iteration-count: 1;
@@ -20,6 +21,7 @@
     animation-fill-mode: forwards
 }
 
+// TODO might have to rename this
 @keyframes capture-keyframes {
     25% {
         transform: rotate(-10deg);
@@ -29,6 +31,7 @@
     }
 }
 
+// TODO might have to rename this
 @keyframes capture-success-keyframes {
     100% {
         transform: rotate(15deg);

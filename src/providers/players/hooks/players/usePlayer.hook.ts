@@ -19,7 +19,7 @@ export const usePlayer = () => {
 
     useEffect(() => {
         const heroMaxHealth = 121;
-        const heroAttackDamage = 130;
+        const heroAttackDamage = 34;
 
         // Hero initial health
         setCurrentHeroHealth(maxHeroHealth);
