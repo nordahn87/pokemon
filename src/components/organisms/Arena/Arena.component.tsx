@@ -46,7 +46,7 @@ const PA_Arena: FC = () => {
     );
 
     // Opponent actions
-    const { handleOpponentAttack } = useOpponentAttack(clearMessage);
+    const { handleOpponentAttack } = useOpponentAttack();
     const { heroAttackCallback } = useHeroAttackCallback(
         hero.heroName,
         opponent.opponentName,
@@ -68,13 +68,23 @@ const PA_Arena: FC = () => {
         if (gameState === GameStateEnum.HERO_DONE && message === undefined) {
             showMessage(MessagesEnum.OPPONENT_MESSAGE_TURN, opponent.opponentName);
             setGameState(GameStateEnum.OPPONENT_READY);
+            setTimeout(handleOpponentAttack, 2000);
         }
 
         if (gameState === GameStateEnum.OPPONENT_DONE && message === undefined) {
             showMessage(MessagesEnum.HERO_MESSAGE_TURN, hero.heroName);
             setGameState(GameStateEnum.HERO_READY);
         }
-    }, [gameState, hero.heroName, message, opponent.opponentName, setGameState, showMessage, turnOrder]);
+    }, [
+        gameState,
+        handleOpponentAttack,
+        hero.heroName,
+        message,
+        opponent.opponentName,
+        setGameState,
+        showMessage,
+        turnOrder,
+    ]);
 
     return (
         <>
