@@ -7,7 +7,7 @@ import { useGameState } from "../providers/gamestate.provider";
 import { useMessages } from "../providers/messages.provider";
 import { useOpponentAttack } from "../providers/players/hooks/attack/useOpponentAttack.hooks";
 
-export const useTurnOrder = () => {
+export const useInitTurnOrder = () => {
     const { heroData, opponentData } = useApiData();
     const { handleOpponentAttack } = useOpponentAttack();
     const { setGameState } = useGameState();
@@ -16,7 +16,7 @@ export const useTurnOrder = () => {
     const heroName = heroData.species?.name;
     const opponentName = opponentData.species?.name;
 
-    const turnOrder = useCallback(() => {
+    const initTurnOrder = useCallback(() => {
         if (TURN_ORDER_CHANCE <= 4) {
             setGameState(GameStateEnum.OPPONENT_READY);
             showMessage(MessagesEnum.OPPONENT_MESSAGE_TURN, opponentName);
@@ -28,6 +28,6 @@ export const useTurnOrder = () => {
     }, [handleOpponentAttack, heroName, opponentName, setGameState, showMessage]);
 
     return {
-        turnOrder,
+        initTurnOrder,
     };
 };

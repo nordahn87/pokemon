@@ -9,7 +9,7 @@ import { useOpponentAttack } from "../../../providers/players/hooks/attack/useOp
 import { useHeroAttack } from "../../../providers/players/hooks/attack/useHeroAttack.hooks";
 import { useHeroAttackCallback } from "../../../providers/players/hooks/attackCallback/useHeroAttackCallback.hook";
 import { useOpponentAttackCallback } from "../../../providers/players/hooks/attackCallback/useOpponentAttackCallback.hook";
-import { useTurnOrder } from "../../../hooks/useTurnOrder.hook";
+import { useInitTurnOrder } from "../../../hooks/useInitTurnOrder.hook";
 import { useCaptureOpponent } from "../../../hooks/useCaptureOpponent.hook";
 import PA_Hero from "../../molecules/pokemons/Hero/Hero.component";
 import PA_Opponent from "../../molecules/pokemons/Opponent/Opponent.component";
@@ -21,7 +21,7 @@ import "./Arena.scss";
 
 const PA_Arena: FC = () => {
     const { hero, opponent } = usePlayers();
-    const { gameState, setGameState, isGameStateOpponentReady } = useGameState();
+    const { gameState, setGameState } = useGameState();
     const { message, clearMessage, showMessage } = useMessages();
 
     // Hero actions
@@ -56,13 +56,13 @@ const PA_Arena: FC = () => {
     );
 
     // Initial encounter turn order
-    const { turnOrder } = useTurnOrder();
+    const { initTurnOrder } = useInitTurnOrder();
 
     // TODO Have to fix this at some point
     // Games initial encounter
     useEffect(() => {
         if (gameState === GameStateEnum.GAME_INIT && hero.heroName && opponent.opponentName) {
-            turnOrder();
+            initTurnOrder();
         }
 
         if (gameState === GameStateEnum.HERO_DONE && message === undefined) {
@@ -79,11 +79,11 @@ const PA_Arena: FC = () => {
         gameState,
         handleOpponentAttack,
         hero.heroName,
+        initTurnOrder,
         message,
         opponent.opponentName,
         setGameState,
         showMessage,
-        turnOrder,
     ]);
 
     return (
@@ -105,11 +105,6 @@ const PA_Arena: FC = () => {
                 <div>
                     <PA_OpponentAction />
                     <PA_Opponent opponentAttackCallback={opponentAttackCallback} captureOpponent={captureOpponent} />
-
-                    {/* TODO This has to be a function running when hero has finished his turn*/}
-                    <button onClick={handleOpponentAttack} disabled={isGameStateOpponentReady}>
-                        ** TEMP Opponent Attack
-                    </button>
                 </div>
 
                 <div className="arena-scene">
