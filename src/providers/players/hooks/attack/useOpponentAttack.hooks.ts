@@ -5,11 +5,13 @@ import { useGameState } from "../../../gamestate.provider";
 import { AddClass } from "../../../../helpers/classList.helper";
 import { useAnimation } from "../../../animation.provider";
 import { usePlayers } from "../../players.provider";
+import { useMessages } from "../../../messages.provider";
 
-export const useOpponentAttack = (clearMessage: () => void) => {
+export const useOpponentAttack = () => {
     const { setGameState } = useGameState();
     const { setRunningAnimation } = useAnimation();
     const { opponent, hero } = usePlayers();
+    const { clearMessage } = useMessages();
 
     // Handle opponent attack
     const handleOpponentAttack = useCallback(() => {
